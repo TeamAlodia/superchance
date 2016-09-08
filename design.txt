@@ -1,0 +1,88 @@
+RT Stratego Game
+
+Concept:
+  The game takes place on a procedurally generated map, composed of different terrain types that affect the power of the units stationed on them. Multiplayer functionality, with each team composed of a certain number of units, each with different abilities and/or strength values. The identity of enemy units is, by default, unknown until they are engaged by friendly units. However, certain units will have the ability to 'scout' an enemy unit's location. The goal of the game is for each side to capture the enemy's HQ.
+
+Gameplay:
+  At game start, player may place their units anywhere on their 1/3 of the board. Once both players are ready, RT game begins. Player selects their units with their mouse and keyboard, moving their mouse to an area where their units are, pressing the number, or numbers, corresponding to the Strength rating of the unit they want to select, and then moving with a right-click.
+
+  Combat is resolved on contact between units, with the unit of higher power winning. Defeated units are respawned according to a timer based on their unit's strength, multiplied by how many times they've been defeated. All units respawn at their team's respective HQ.
+
+  Victory condition is the destruction of enemy HQ. Destruction is achieved by reducing the HQ's health to 0. Each unit attacking the HQ decreases its power by their strength.
+
+Terrain:
+  Plains/Farmland - No Modifier
+  Hills - +1 to Defender
+  Mountains - Impassable
+  Rivers - Half speed
+  Lakes - Impassable
+  Forest - Obfuscates unit identification
+
+Units:
+  # - Name (Strength) (Seconds to respawn) - Special Ability
+  1 - Marshal (1) (60)- Can be captured by Spy
+  1 - General (2) (55)
+  2 - Colonel (3) (50)
+  3 - Major (4) (45)
+  4 - Captain (5) (40)
+  4 - Lieutenant (6) (35)
+  4 - Sergeant (7) (30)
+  5 - Sapper (8) (20) - Can Defuse Bombs
+  8 - Scout (9) (10) - Move twice as fast
+  1 - Spy (S) (20) - Can defeat Marshal
+  6 - Bomb (B) (30) - Destroy all adjacent units
+  1 - Headquarters
+
+Tasks:
+  Multiplayer - Alaina
+  Map Generation - Justin
+  Turn Resolution
+
+Base Outline:
+  Game start
+    Set Up Period
+      Generate Map
+        Terrain Placement
+      Draw HUD
+      HQ Placement
+      Unit Placement
+      End Set Up Verification
+    Begin Play
+
+  Turn Outline
+    Update Respawn Timers
+    Check for User Input
+    Check for Conflict Resolution
+    Check for Removed Units
+    Redraw Altered Map
+    Draw HUD
+
+Classes
+  Game
+    Team
+
+  Unit
+    int Strength
+    bool Alive
+    int LocationX
+    int LocationY
+    int MoveToX
+    int MoveToY
+    int Speed
+    bool SeenByEnemy
+    bool HasMoved
+    int RespawnTimer
+    int TimeLeftUntilRespawn
+    bool Selected
+
+  Headquarter
+    int Health
+
+  Team
+    Array Unit
+    Array Headquarter
+    String TeamColor
+
+  Map
+    Array Terrain
+    Array Topographical
