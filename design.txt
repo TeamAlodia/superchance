@@ -1,12 +1,14 @@
-RT Stratego Game
+RTStratego
 
 Concept:
   The game takes place on a procedurally generated map, composed of different terrain types that affect the power of the units stationed on them. Multiplayer functionality, with each team composed of a certain number of units, each with different abilities and/or strength values. The identity of enemy units is, by default, unknown until they are engaged by friendly units. However, certain units will have the ability to 'scout' an enemy unit's location. The goal of the game is for each side to capture the enemy's HQ.
 
 Gameplay:
-  At game start, player may place their units anywhere on their 1/3 of the board. Once both players are ready, RT game begins. Player selects their units with their mouse and keyboard, moving their mouse to an area where their units are, pressing the number, or numbers, corresponding to the Strength rating of the unit they want to select, and then moving with a right-click.
+  The board is initially evenly divided into three areas. Each player owns an area on opposing sides of the map, with a neutral section in between. At game start, players may place their units anywhere on their area of the board. Once both players are ready, the game switches to real-time mode.
 
-  Combat is resolved on contact between units, with the unit of higher power winning. Defeated units are respawned according to a timer based on their unit's strength, multiplied by how many times they've been defeated. All units respawn at their team's respective HQ.
+  Unit selection is done with the mouse and keyboard. The mouse has a circle of a constant radius around it. The player then presses the corresponding key (1-0) to select units of that rank. Multiple units may be selected in this fashion. Selected units can then be moved by right-clicking on different areas of the map.
+
+  Players select their units and send them into battle. Combat is 'touch-based' where a unit simply needs to move into another unit's location in order to triggle combat. The combat is then resolved immediately, with the lower rank, i.e., more powerful, unit winning. Defeated units are respawned according to a timer based on their unit's strength, multiplied by how many times they've been defeated. All units respawn at their team's respective HQ.
 
   Victory condition is the destruction of enemy HQ. Destruction is achieved by reducing the HQ's health to 0. Each unit attacking the HQ decreases its power by their strength.
 
