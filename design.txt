@@ -35,56 +35,17 @@ Units:
   6 - Bomb (B) (30) - Destroy all adjacent units
   1 - Headquarters
 
-Tasks:
-  Multiplayer - Alaina
-  Map Generation - Justin
-  Turn Resolution
-
-Base Outline:
-  Game start
-    Set Up Period
-      Generate Map
-        Terrain Placement
-      Draw HUD
-      HQ Placement
-      Unit Placement
-      End Set Up Verification
-    Begin Play
-
-  Turn Outline
+Minimum Requirements
+  Board Generation
+  Multiplayer Functionality
+  Unit Pathing
+  Combat Resolution
+  
+ 
+ Turn Outline
     Update Respawn Timers
     Check for User Input
     Check for Conflict Resolution
     Check for Removed Units
     Redraw Altered Map
     Draw HUD
-
-Classes
-  Game
-    Team
-
-  Unit
-    int Strength
-    bool Alive
-    int LocationX
-    int LocationY
-    int MoveToX
-    int MoveToY
-    int Speed
-    bool SeenByEnemy
-    bool HasMoved
-    int RespawnTimer
-    int TimeLeftUntilRespawn
-    bool Selected
-
-  Headquarter
-    int Health
-
-  Team
-    Array Unit
-    Array Headquarter
-    String TeamColor
-
-  Map
-    Array Terrain
-    Array Topographical
