@@ -71,11 +71,11 @@ ALTER SEQUENCE abilities_id_seq OWNED BY abilities.id;
 --
 
 CREATE TABLE battles (
-    id integer NOT NULL,
     first_monster_id integer,
     second_monster_id integer,
     first_monster_done boolean,
-    second_monster_done boolean
+    second_monster_done boolean,
+    id integer NOT NULL
 );
 
 
@@ -107,12 +107,12 @@ ALTER SEQUENCE battles_id_seq OWNED BY battles.id;
 --
 
 CREATE TABLE cards (
-    id integer NOT NULL,
+    name character varying,
     card_type character varying,
     element_id integer,
     description character varying,
     target character varying,
-    name character varying
+    id integer NOT NULL
 );
 
 
@@ -277,6 +277,40 @@ ALTER SEQUENCE elements_vs_id_seq OWNED BY elements_vs.id;
 
 
 --
+-- Name: hands; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE hands (
+    id integer NOT NULL,
+    monster_id integer,
+    card_id integer
+);
+
+
+ALTER TABLE hands OWNER TO postgres;
+
+--
+-- Name: hand_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hand_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hand_id_seq OWNER TO postgres;
+
+--
+-- Name: hand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hand_id_seq OWNED BY hands.id;
+
+
+--
 -- Name: monsters; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -438,7 +472,8 @@ ALTER SEQUENCE species_id_seq OWNED BY species.id;
 CREATE TABLE species_potential_cards (
     id integer NOT NULL,
     card_id integer,
-    species_id integer
+    species_id integer,
+    number_of integer
 );
 
 
@@ -515,6 +550,13 @@ ALTER TABLE ONLY elements_vs ALTER COLUMN id SET DEFAULT nextval('elements_vs_id
 
 
 --
+-- Name: hands id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hands ALTER COLUMN id SET DEFAULT nextval('hand_id_seq'::regclass);
+
+
+--
 -- Name: monsters id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -568,7 +610,7 @@ SELECT pg_catalog.setval('abilities_id_seq', 1, false);
 -- Data for Name: battles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY battles (id, first_monster_id, second_monster_id, first_monster_done, second_monster_done) FROM stdin;
+COPY battles (first_monster_id, second_monster_id, first_monster_done, second_monster_done, id) FROM stdin;
 \.
 
 
@@ -583,7 +625,7 @@ SELECT pg_catalog.setval('battles_id_seq', 1, false);
 -- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY cards (id, card_type, element_id, description, target, name) FROM stdin;
+COPY cards (name, card_type, element_id, description, target, id) FROM stdin;
 \.
 
 
@@ -655,6 +697,21 @@ SELECT pg_catalog.setval('elements_vs_id_seq', 1, false);
 
 
 --
+-- Name: hand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hand_id_seq', 1, false);
+
+
+--
+-- Data for Name: hands; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hands (id, monster_id, card_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -674,6 +731,7 @@ SELECT pg_catalog.setval('monsters_id_seq', 1, false);
 --
 
 COPY players (id, name, created, password) FROM stdin;
+1	Alaina	2016-10-03 15:46:13.075	simple10
 \.
 
 
@@ -681,7 +739,7 @@ COPY players (id, name, created, password) FROM stdin;
 -- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('players_id_seq', 1, false);
+SELECT pg_catalog.setval('players_id_seq', 1, true);
 
 
 --
@@ -718,7 +776,7 @@ SELECT pg_catalog.setval('species_id_seq', 1, false);
 -- Data for Name: species_potential_cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY species_potential_cards (id, card_id, species_id) FROM stdin;
+COPY species_potential_cards (id, card_id, species_id, number_of) FROM stdin;
 \.
 
 
@@ -783,6 +841,14 @@ ALTER TABLE ONLY elements
 
 ALTER TABLE ONLY elements_vs
     ADD CONSTRAINT elements_vs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hands hand_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hands
+    ADD CONSTRAINT hand_pkey PRIMARY KEY (id);
 
 
 --
