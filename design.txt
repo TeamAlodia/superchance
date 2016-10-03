@@ -51,7 +51,7 @@ Game Design
 -Player Creation
 --Choose name
 --Choose one of the monsters
---Receive 13 cards (2 Monster-Specific, 3 Type-Specific, 8 Basic)
+--Receive 13 cards (1 Monster-Specific, 3 Type-Specific, 9 Basic)
 
 -Available Options
 --Interact with Monster
