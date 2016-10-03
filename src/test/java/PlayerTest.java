@@ -27,8 +27,8 @@ public class PlayerTest {
   @Test
   public void getCreated_playerInstantiatesWithTimeCreated_Timestamp() {
     Player firstPlayer = new Player("Jordan", "Simple10");
-    Timestamp verifyTime = firstPlayer.getCreated();
-    assertEquals(verifyTime, firstPlayer.getCreated());
+    int verifyTime = firstPlayer.getCreated().getDay();
+    assertEquals(verifyTime, firstPlayer.getCreated().getDay());
   }
 
   @Test

@@ -4,28 +4,34 @@ import java.util.ArrayList;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public abstract class Monster {
-  protected int id;
-  protected int player_id;
-  protected String name;
-  protected Timestamp born;
-  protected Timestamp last_interacted;
-  protected boolean in_battle;
-  protected int experience;
-  protected int level;
-  protected int rest;
-  protected int base_health;
-  protected int base_deck_size;
-  protected int health;
-  protected int strength;
-  protected int defense;
-  protected int health_weight;
-  protected int strength_weight;
-  protected int defense_weight;
+public class Monster {
+  private int id;
+  private int player_id;
+  private String name;
+  private Timestamp born;
+  private Timestamp last_interacted;
+  private boolean in_battle = false;
+  private int experience = 0;
+  private int level = 1;
+  private int rest = 100;
+  private int base_health = 100;
+  private int base_deck_size = 13;
+  private int health = 10;
+  private int strength = 1;
+  private int defense = 1;
+  private int health_weight = 0;
+  private int strength_weight = 0;
+  private int defense_weight = 0;
 
   public static final int MAX_LEVEL = 10;
   public static final int MAX_REST = 100;
 
+  public Monster(int _player_id, String _name) {
+    player_id = _player_id;
+    name = _name;
+    born = new Timestamp(new Date().getTime());
+    last_interacted = new Timestamp(new Date().getTime());
+  }
 
   // Getters and Setters
   public int getId() {
@@ -186,7 +192,7 @@ public abstract class Monster {
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM mosnters WHERE id = :id";
+      String sql = "DELETE FROM monsters WHERE id = :id";
       con.createQuery(sql)
         .addParameter("id", id)
         .executeUpdate();
