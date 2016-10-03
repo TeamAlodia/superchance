@@ -31,6 +31,8 @@ public class Monster {
   public static final int MAX_REST = 100;
   public static final int MAX_EXPERIENCE = 100;
   public static final int TRAINING_COST = 20;
+  public static final int EXPERIENCE_FOR_LEVEL = 100;
+  public static final int POINTS_GAINED_PER_LEVEL = 10;
 
   public Monster(int _player_id, String _name) {
     player_id = _player_id;
@@ -137,11 +139,14 @@ public class Monster {
 
   // Increment Functions
   public void incrementExp(int _gain) {
+    // Increase experience by an amount determined by level
     exp += Math.ceil(_gain/level);
-    if(exp >= 100) {
+
+    // If new experience total is above the set experience required for level, then attempt level up. Return exception if at max level.
+    if(exp >= EXPERIENCE_FOR_LEVEL) {
       try {
         this.incrementLevel(1);
-        exp = exp - 100;
+        exp = exp - EXPERIENCE_FOR_LEVEL;
       } catch (UnsupportedOperationException exception) {
         maxLevel = true;
       }
@@ -153,6 +158,43 @@ public class Monster {
     if (level >= MAX_LEVEL) {
       throw new UnsupportedOperationException("This monster has reached its full potential");
     }
+
+    int totalGain = 0;
+    int weightTotal = health_weight + defense_weight + strength_weight;
+    int healthGain = 0;
+    int strengthGain = 0;
+    int defenseGain = 0;
+
+    if(weightTotal > 0) {
+      healthGain = (int)((health_weight / weightTotal) * POINTS_GAINED_PER_LEVEL * 10);
+      strengthGain = (int)((strength_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      defenseGain = (int)((defense_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      totalGain = healthGain/10 + strengthGain + defenseGain;
+    }
+
+
+    while(totalGain < POINTS_GAINED_PER_LEVEL) {
+      Random random = new Random();
+      int number = random.nextInt(3) + 1;
+      if(number == 1) {
+        healthGain += 10;
+      } else if (number == 2) {
+        strengthGain += 1;
+      } else {
+        defenseGain += 1;
+      }
+      totalGain += 1;
+    }
+
+    base_health += healthGain;
+    health += healthGain;
+    strength += strengthGain;
+    defense += defenseGain;
+    base_deck_size += 3;
+    health_weight = 0;
+    defense_weight = 0;
+    strength_weight = 0;
+
     level += _gain;
   }
 
@@ -174,8 +216,14 @@ public class Monster {
   // Training Functions
   public int train() {
     Random random = new Random();
-    int number = random.nextInt(10) + 1;
-    this.decrementRest(TRAINING_COST);
+    int number = 0;
+    try {
+      number = random.nextInt(10) + 1;
+      this.decrementRest(TRAINING_COST);
+      this.incrementExp(10);
+    } catch (UnsupportedOperationException exception) {
+      return 0;
+    }
     return number;
   }
 
@@ -194,33 +242,6 @@ public class Monster {
     this.update();
   }
 
-  // private int base_health = 100;
-  // private int base_deck_size = 13;
-  // private int health = 10;
-  // private int strength = 1;
-  // private int defense = 1;
-  // private int health_weight = 0;
-  // private int strength_weight = 0;
-  // private int defense_weight = 0;
-  // Training Functions
-  // public String train(int _attribute) {
-  //   String output = "";
-  //   switch(_attribute) {
-  //     case 1:
-  //     case 2:
-  //     case 3:
-  //     default: output = "Invalid Option";
-  //       break;
-  //   }
-  //   if(_attribute == 1) {
-  //
-  //   } else if
-  //   private int health_weight = 0;
-  //   private int strength_weight = 0;
-  //   private int defense_weight = 0;
-  // }
-
-
   // Find Functions
   public static List<Monster> all() {
     try(Connection con = DB.sql2o.open()) {
@@ -228,6 +249,16 @@ public class Monster {
       List<Monster> allMonsters = con.createQuery(sql)
       .executeAndFetch(Monster.class);
       return allMonsters;
+    }
+  }
+
+  public static Monster find(int _id){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters WHERE id=:id";
+
+      return con.createQuery(sql)
+        .addParameter("id", _id)
+        .executeAndFetchFirst(Monster.class);
     }
   }
 

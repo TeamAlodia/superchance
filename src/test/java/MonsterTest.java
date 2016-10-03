@@ -40,9 +40,9 @@ public class MonsterTest {
     assertEquals(verifyTime, firstMonster.getLast_Interacted().getDay());
   }
 
-  // Increment/Decrement Tests
+  // Experience Tests
   @Test
-  public void incrementexp_monsterIncreasesexp() {
+  public void incrementexp_monsterIncreasesExp() {
     Monster firstMonster = new Monster(1, "Rompy");
     firstMonster.incrementExp(3);
     assertEquals(3, firstMonster.getExp());
@@ -63,6 +63,8 @@ public class MonsterTest {
     assertEquals(4, firstMonster.getLevel());
   }
 
+
+  // Rest Tests
   @Test
   public void incrementRest_monsterRestStaysBelow101() {
     Monster firstMonster = new Monster(1, "Rompy");
@@ -92,8 +94,41 @@ public class MonsterTest {
   public void train_returnsNumber() {
     Monster firstMonster = new Monster(1, "Rompy");
     int test = firstMonster.train();
-    assertTrue(test instanceof int);
+    boolean check = false;
+    if(test < 11 && test > 0) {
+      check = true;
+    }
+    assertEquals(true, check);
   }
+
+  @Test
+  public void trainStrength_increasesStrengthWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainStrength();
+    assertTrue(firstMonster.getStrength_Weight() > 0);
+  }
+
+  @Test
+  public void trainDefense_increasesDefenseWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainDefense();
+    assertTrue(firstMonster.getDefense_Weight() > 0);
+  }
+
+  @Test
+  public void trainHealth_increasesHealthWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainHealth();
+    assertTrue(firstMonster.getHealth_Weight() > 0);
+  }
+
+  @Test
+  public void train_decreasesRest() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainHealth();
+    assertEquals(firstMonster.getRest(), 80);
+  }
+
   // Find Tests
   @Test
   public void all_returnsAllInstancesOfMonster_true() {
