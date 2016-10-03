@@ -137,5 +137,3 @@ public class Combat {
   }
 
 }
->>>>>>> master
->>>>>>> c1c8a8ce9787f4bc56af063e535e681b15e53c45
