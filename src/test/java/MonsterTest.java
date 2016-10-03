@@ -12,12 +12,14 @@ public class MonsterTest {
   @Rule
   public DatabaseRule database = new DatabaseRule();
 
+  // Constructor Tests
   @Test
   public void monster_instantiatesNewMonster() {
     Monster firstMonster = new Monster(1, "Rompy");
     assertTrue(firstMonster instanceof Monster);
   }
 
+  // Getter Tests
   @Test
   public void getName_monsterInstantiatesWithName_Rompy() {
     Monster firstMonster = new Monster(1, "Rompy");
@@ -38,18 +40,19 @@ public class MonsterTest {
     assertEquals(verifyTime, firstMonster.getLast_Interacted().getDay());
   }
 
+  // Increment/Decrement Tests
   @Test
-  public void incrementExperience_monsterIncreasesExperience() {
+  public void incrementexp_monsterIncreasesexp() {
     Monster firstMonster = new Monster(1, "Rompy");
-    firstMonster.incrementExperience(3);
-    assertEquals(3, firstMonster.getExperience());
+    firstMonster.incrementExp(3);
+    assertEquals(3, firstMonster.getExp());
   }
 
   @Test
-  public void incrementExperience_monsterExperienceResetsOnLevel() {
+  public void incrementexp_monsterexpResetsOnLevel() {
     Monster firstMonster = new Monster(1, "Rompy");
-    firstMonster.incrementExperience(101);
-    assertEquals(1, firstMonster.getExperience());
+    firstMonster.incrementExp(101);
+    assertEquals(1, firstMonster.getExp());
     assertEquals(2, firstMonster.getLevel());
   }
 
@@ -70,13 +73,6 @@ public class MonsterTest {
   }
 
   @Test
-  public void decrementRest_monsterRestDecrementsCorrectly() {
-    Monster firstMonster = new Monster(1, "Rompy");
-    firstMonster.decrementRest(20);
-    assertEquals(80, firstMonster.getRest());
-  }
-
-  @Test
   public void incrementRest_monsterRestIncreasesCorrectly() {
     Monster firstMonster = new Monster(1, "Rompy");
     firstMonster.decrementRest(20);
@@ -85,19 +81,20 @@ public class MonsterTest {
   }
 
   @Test
-  public void equals_returnsTrueIfNameAndEmailAreSame_true() {
+  public void decrementRest_monsterRestDecrementsCorrectly() {
     Monster firstMonster = new Monster(1, "Rompy");
-    Monster testMonster = new Monster(1, "Rompy");
-    assertTrue(testMonster.equals(firstMonster));
+    firstMonster.decrementRest(20);
+    assertEquals(80, firstMonster.getRest());
   }
 
+  // Training Tests
   @Test
-  public void save_insertsObjectIntoDatabase_Monster() {
+  public void train_returnsNumber() {
     Monster firstMonster = new Monster(1, "Rompy");
-    firstMonster.save();
-    assertEquals(true, Monster.all().get(0).equals(firstMonster));
+    int test = firstMonster.train();
+    assertTrue(test instanceof int);
   }
-
+  // Find Tests
   @Test
   public void all_returnsAllInstancesOfMonster_true() {
     Monster firstMonster = new Monster(1, "Rompy");
@@ -106,6 +103,14 @@ public class MonsterTest {
     secondMonster.save();
     assertEquals(true, Monster.all().get(0).equals(firstMonster));
     assertEquals(true, Monster.all().get(1).equals(secondMonster));
+  }
+
+  // Database Tests
+  @Test
+  public void save_insertsObjectIntoDatabase_Monster() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.save();
+    assertEquals(true, Monster.all().get(0).equals(firstMonster));
   }
 
   @Test
@@ -123,4 +128,13 @@ public class MonsterTest {
     firstMonster.delete();
     assertEquals(0, Monster.all().size());
   }
+
+  // Override Tests
+  @Test
+  public void equals_returnsTrueIfNameAndEmailAreSame_true() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    Monster testMonster = new Monster(1, "Rompy");
+    assertTrue(testMonster.equals(firstMonster));
+  }
+
 }

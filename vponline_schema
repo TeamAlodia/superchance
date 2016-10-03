@@ -1,0 +1,829 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.0
+-- Dumped by pg_dump version 9.6.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: abilities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE abilities (
+    id integer NOT NULL
+);
+
+
+ALTER TABLE abilities OWNER TO postgres;
+
+--
+-- Name: abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE abilities_id_seq OWNER TO postgres;
+
+--
+-- Name: abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE abilities_id_seq OWNED BY abilities.id;
+
+
+--
+-- Name: battles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE battles (
+    "int" integer NOT NULL,
+    first_monster_id integer,
+    second_monster_id integer,
+    first_monster_done boolean,
+    second_monster_done boolean
+);
+
+
+ALTER TABLE battles OWNER TO postgres;
+
+--
+-- Name: battles_int_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE battles_int_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE battles_int_seq OWNER TO postgres;
+
+--
+-- Name: battles_int_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE battles_int_seq OWNED BY battles."int";
+
+
+--
+-- Name: cards; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE cards (
+    "int" integer NOT NULL,
+    name character varying,
+    card_type character varying,
+    element_id integer,
+    description character varying,
+    target character varying
+);
+
+
+ALTER TABLE cards OWNER TO postgres;
+
+--
+-- Name: cards_abilities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE cards_abilities (
+    "int" integer NOT NULL,
+    ability_id integer,
+    card_id integer,
+    value integer
+);
+
+
+ALTER TABLE cards_abilities OWNER TO postgres;
+
+--
+-- Name: cards_abilities_int_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cards_abilities_int_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cards_abilities_int_seq OWNER TO postgres;
+
+--
+-- Name: cards_abilities_int_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cards_abilities_int_seq OWNED BY cards_abilities."int";
+
+
+--
+-- Name: cards_int_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cards_int_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cards_int_seq OWNER TO postgres;
+
+--
+-- Name: cards_int_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cards_int_seq OWNED BY cards."int";
+
+
+--
+-- Name: cards_monsters_players; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE cards_monsters_players (
+    id integer NOT NULL,
+    card_id integer,
+    monster_id integer,
+    player_id integer
+);
+
+
+ALTER TABLE cards_monsters_players OWNER TO postgres;
+
+--
+-- Name: cards_monsters_players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cards_monsters_players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cards_monsters_players_id_seq OWNER TO postgres;
+
+--
+-- Name: cards_monsters_players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cards_monsters_players_id_seq OWNED BY cards_monsters_players.id;
+
+
+--
+-- Name: elements; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE elements (
+    id integer NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE elements OWNER TO postgres;
+
+--
+-- Name: elements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE elements_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE elements_id_seq OWNER TO postgres;
+
+--
+-- Name: elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE elements_id_seq OWNED BY elements.id;
+
+
+--
+-- Name: elements_vs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE elements_vs (
+    id integer NOT NULL,
+    strong_element_id integer,
+    weak_element_id integer
+);
+
+
+ALTER TABLE elements_vs OWNER TO postgres;
+
+--
+-- Name: elements_vs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE elements_vs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE elements_vs_id_seq OWNER TO postgres;
+
+--
+-- Name: elements_vs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE elements_vs_id_seq OWNED BY elements_vs.id;
+
+
+--
+-- Name: hand; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE hand (
+    id integer NOT NULL,
+    monster_id integer,
+    card_id integer
+);
+
+
+ALTER TABLE hand OWNER TO postgres;
+
+--
+-- Name: hand_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hand_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hand_id_seq OWNER TO postgres;
+
+--
+-- Name: hand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hand_id_seq OWNED BY hand.id;
+
+
+--
+-- Name: monsters; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE monsters (
+    id integer NOT NULL,
+    player_id integer,
+    born timestamp without time zone,
+    last_interacted timestamp without time zone,
+    exp integer,
+    level integer,
+    rest integer,
+    base_health integer,
+    base_deck_size integer,
+    status character varying,
+    health integer,
+    strength integer,
+    defense integer,
+    health_weight integer,
+    strength_weight integer,
+    defense_weight integer,
+    name character varying,
+    in_battle boolean
+);
+
+
+ALTER TABLE monsters OWNER TO postgres;
+
+--
+-- Name: monsters_elements; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE monsters_elements (
+    id integer NOT NULL,
+    monster_id integer,
+    element_id integer
+);
+
+
+ALTER TABLE monsters_elements OWNER TO postgres;
+
+--
+-- Name: monsters_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE monsters_elements_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE monsters_elements_id_seq OWNER TO postgres;
+
+--
+-- Name: monsters_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE monsters_elements_id_seq OWNED BY monsters_elements.id;
+
+
+--
+-- Name: monsters_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE monsters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE monsters_id_seq OWNER TO postgres;
+
+--
+-- Name: monsters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE monsters_id_seq OWNED BY monsters.id;
+
+
+--
+-- Name: monsters_potential_cards; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE monsters_potential_cards (
+    id integer NOT NULL,
+    card_id integer,
+    monster_id integer,
+    number_of integer
+);
+
+
+ALTER TABLE monsters_potential_cards OWNER TO postgres;
+
+--
+-- Name: monsters_potential_cards_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE monsters_potential_cards_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE monsters_potential_cards_id_seq OWNER TO postgres;
+
+--
+-- Name: monsters_potential_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE monsters_potential_cards_id_seq OWNED BY monsters_potential_cards.id;
+
+
+--
+-- Name: players; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE players (
+    id integer NOT NULL,
+    name character varying,
+    created timestamp without time zone,
+    password character varying
+);
+
+
+ALTER TABLE players OWNER TO postgres;
+
+--
+-- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE players_id_seq OWNER TO postgres;
+
+--
+-- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE players_id_seq OWNED BY players.id;
+
+
+--
+-- Name: abilities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY abilities ALTER COLUMN id SET DEFAULT nextval('abilities_id_seq'::regclass);
+
+
+--
+-- Name: battles int; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY battles ALTER COLUMN "int" SET DEFAULT nextval('battles_int_seq'::regclass);
+
+
+--
+-- Name: cards int; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards ALTER COLUMN "int" SET DEFAULT nextval('cards_int_seq'::regclass);
+
+
+--
+-- Name: cards_abilities int; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards_abilities ALTER COLUMN "int" SET DEFAULT nextval('cards_abilities_int_seq'::regclass);
+
+
+--
+-- Name: cards_monsters_players id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards_monsters_players ALTER COLUMN id SET DEFAULT nextval('cards_monsters_players_id_seq'::regclass);
+
+
+--
+-- Name: elements id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY elements ALTER COLUMN id SET DEFAULT nextval('elements_id_seq'::regclass);
+
+
+--
+-- Name: elements_vs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY elements_vs ALTER COLUMN id SET DEFAULT nextval('elements_vs_id_seq'::regclass);
+
+
+--
+-- Name: hand id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hand ALTER COLUMN id SET DEFAULT nextval('hand_id_seq'::regclass);
+
+
+--
+-- Name: monsters id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters ALTER COLUMN id SET DEFAULT nextval('monsters_id_seq'::regclass);
+
+
+--
+-- Name: monsters_elements id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters_elements ALTER COLUMN id SET DEFAULT nextval('monsters_elements_id_seq'::regclass);
+
+
+--
+-- Name: monsters_potential_cards id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters_potential_cards ALTER COLUMN id SET DEFAULT nextval('monsters_potential_cards_id_seq'::regclass);
+
+
+--
+-- Name: players id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::regclass);
+
+
+--
+-- Data for Name: abilities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY abilities (id) FROM stdin;
+\.
+
+
+--
+-- Name: abilities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('abilities_id_seq', 1, false);
+
+
+--
+-- Data for Name: battles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY battles ("int", first_monster_id, second_monster_id, first_monster_done, second_monster_done) FROM stdin;
+\.
+
+
+--
+-- Name: battles_int_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('battles_int_seq', 1, false);
+
+
+--
+-- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cards ("int", name, card_type, element_id, description, target) FROM stdin;
+\.
+
+
+--
+-- Data for Name: cards_abilities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cards_abilities ("int", ability_id, card_id, value) FROM stdin;
+\.
+
+
+--
+-- Name: cards_abilities_int_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cards_abilities_int_seq', 1, false);
+
+
+--
+-- Name: cards_int_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cards_int_seq', 1, false);
+
+
+--
+-- Data for Name: cards_monsters_players; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cards_monsters_players (id, card_id, monster_id, player_id) FROM stdin;
+\.
+
+
+--
+-- Name: cards_monsters_players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cards_monsters_players_id_seq', 1, false);
+
+
+--
+-- Data for Name: elements; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY elements (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: elements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('elements_id_seq', 1, false);
+
+
+--
+-- Data for Name: elements_vs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY elements_vs (id, strong_element_id, weak_element_id) FROM stdin;
+\.
+
+
+--
+-- Name: elements_vs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('elements_vs_id_seq', 1, false);
+
+
+--
+-- Data for Name: hand; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hand (id, monster_id, card_id) FROM stdin;
+\.
+
+
+--
+-- Name: hand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hand_id_seq', 1, false);
+
+
+--
+-- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY monsters (id, player_id, born, last_interacted, exp, level, rest, base_health, base_deck_size, status, health, strength, defense, health_weight, strength_weight, defense_weight, name, in_battle) FROM stdin;
+\.
+
+
+--
+-- Data for Name: monsters_elements; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY monsters_elements (id, monster_id, element_id) FROM stdin;
+\.
+
+
+--
+-- Name: monsters_elements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('monsters_elements_id_seq', 1, false);
+
+
+--
+-- Name: monsters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('monsters_id_seq', 1, false);
+
+
+--
+-- Data for Name: monsters_potential_cards; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY monsters_potential_cards (id, card_id, monster_id, number_of) FROM stdin;
+\.
+
+
+--
+-- Name: monsters_potential_cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('monsters_potential_cards_id_seq', 1, false);
+
+
+--
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY players (id, name, created, password) FROM stdin;
+\.
+
+
+--
+-- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('players_id_seq', 1, false);
+
+
+--
+-- Name: abilities abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY abilities
+    ADD CONSTRAINT abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: battles battles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY battles
+    ADD CONSTRAINT battles_pkey PRIMARY KEY ("int");
+
+
+--
+-- Name: cards_abilities cards_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards_abilities
+    ADD CONSTRAINT cards_abilities_pkey PRIMARY KEY ("int");
+
+
+--
+-- Name: cards_monsters_players cards_monsters_players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards_monsters_players
+    ADD CONSTRAINT cards_monsters_players_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cards cards_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cards
+    ADD CONSTRAINT cards_pkey PRIMARY KEY ("int");
+
+
+--
+-- Name: elements elements_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY elements
+    ADD CONSTRAINT elements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: elements_vs elements_vs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY elements_vs
+    ADD CONSTRAINT elements_vs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hand hand_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hand
+    ADD CONSTRAINT hand_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: monsters_elements monsters_elements_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters_elements
+    ADD CONSTRAINT monsters_elements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: monsters monsters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters
+    ADD CONSTRAINT monsters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: monsters_potential_cards monsters_potential_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monsters_potential_cards
+    ADD CONSTRAINT monsters_potential_cards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY players
+    ADD CONSTRAINT players_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
