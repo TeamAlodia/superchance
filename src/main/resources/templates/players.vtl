@@ -1,0 +1,15 @@
+<h3>All Players</h3>
+#foreach($player in $players)
+  <a href="">$player.getName()</a>
+#end
+
+<h4>Sign Up!</h4>
+<form class="form-group" action="/players" method="post">
+  <label for="name">Name: </label>
+  <input class="form-control" type="text" name="name" required>
+  <label for="password">Password: </label>
+  <input class="form-control" type="text" name="password" required>
+  <label for="password_confirm">Confirm Password:</label>
+  <input class="form-control" type="text" name="password_confirm" required>
+  <button type="submit" class="btn btn-success">Sign Up!</button>
+</form>
