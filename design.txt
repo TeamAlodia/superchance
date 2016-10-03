@@ -1,51 +1,25 @@
-RTStratego
+VPOnline
 
 Concept:
-  The game takes place on a procedurally generated map, composed of different terrain types that affect the power of the units stationed on them. Multiplayer functionality, with each team composed of a certain number of units, each with different abilities and/or strength values. The identity of enemy units is, by default, unknown until they are engaged by friendly units. However, certain units will have the ability to 'scout' an enemy unit's location. The goal of the game is for each side to capture the enemy's HQ.
+Monster training deck game. 
+We take the Virtual Pets concept and create something akin to Virtual Pets Online: a deployable webapp that allows many users to connect to it, raise monsters and battle them in asynchronous combat. It's database heavy, reasonably familiar, includes some basic networking and uses a general concept we're familiar with.
 
-Gameplay:
-  The board is initially evenly divided into three areas. Each player owns an area on opposing sides of the map, with a neutral section in between. At game start, players may place their units anywhere on their area of the board. Once both players are ready, the game switches to real-time mode.
+Proper multiplayer and networking can be further down the line, in other months when we're actually learning the associated concepts. Furthermore, while Java can handle multiplayer networking, it seems to be far, far from the first choice, and many of the resources it can make use of are either outdated or designed specifically for Android. Firebase, for example. (edited)
 
-  Unit selection is done with the mouse and keyboard. The mouse has a circle of a constant radius around it. The player then presses the corresponding key (1-0) to select units of that rank. Multiple units may be selected in this fashion. Selected units can then be moved by right-clicking on different areas of the map.
+As it is, I deeply suspect that we would have neither the learned skills to diagnose problems in networking code, nor the general experience in writing it necessary to create proper code in the first place. Not in four days, with the additional goal of strapping an actual game onto it. (edited)
 
-  Players select their units and send them into battle. Combat is 'touch-based' where a unit simply needs to move into another unit's location in order to triggle combat. The combat is then resolved immediately, with the lower rank, i.e., more powerful, unit winning. Defeated units are respawned according to a timer based on their unit's strength, multiplied by how many times they've been defeated. All units respawn at their team's respective HQ.
+I'm going to throw some time down this VPO concept today. I have a few ideas to differentiate it. And Zach, you'll be happy to know there's a hook. Think Virtual Pets, but with each pet as a deck that earns new cards as it levels up.
 
-  Victory condition is the destruction of enemy HQ. Destruction is achieved by reducing the HQ's health to 0. Each unit attacking the HQ decreases its power by their strength.
+Multiple card types, some neutral and available to all, others specific to types. Three cards upon leveling a monster: one neutral, two specific. Multi-types get one neutral, and one of each type. (edited)
 
-Terrain:
-  Plains/Farmland - No Modifier
-  Hills - +1 to Defender
-  Mountains - Impassable
-  Rivers - Half speed
-  Lakes - Impassable
-  Forest - Obfuscates unit identification
+Monster happiness influences maximum deck size, while monster health translates directly into HP.
 
-Units:
-  # - Name (Strength) (Seconds to respawn) - Special Ability
-  1 - Marshal (1) (60)- Can be captured by Spy
-  1 - General (2) (55)
-  2 - Colonel (3) (50)
-  3 - Major (4) (45)
-  4 - Captain (5) (40)
-  4 - Lieutenant (6) (35)
-  4 - Sergeant (7) (30)
-  5 - Sapper (8) (20) - Can Defuse Bombs
-  8 - Scout (9) (10) - Move twice as fast
-  1 - Spy (S) (20) - Can defeat Marshal
-  6 - Bomb (B) (30) - Destroy all adjacent units
-  1 - Headquarters
+Interacting with your monster gives it a small amount of experience. Winning battles or attacking another player without contest grants more.
 
-Minimum Requirements
-  Board Generation
-  Multiplayer Functionality
-  Unit Pathing
-  Combat Resolution
-  
- 
- Turn Outline
-    Update Respawn Timers
-    Check for User Input
-    Check for Conflict Resolution
-    Check for Removed Units
-    Redraw Altered Map
-    Draw HUD
+Players can only attack other players within a certain level range.
+
+Each monster can initiate battle only once a day, to prevent spamming. (edited)
+
+The max level of a monster should have the same cards as another monster of that level, maxed. Furthermore, a third type of card can be made: monster-specific, in addition to type-specific and neutral.
+
+And monsters you own should be able to build their deck out of all non-monster specific cards available.
