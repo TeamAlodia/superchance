@@ -31,6 +31,8 @@ public class Monster {
   public static final int MAX_REST = 100;
   public static final int MAX_EXPERIENCE = 100;
   public static final int TRAINING_COST = 20;
+  public static final int EXPERIENCE_FOR_LEVEL = 100;
+  public static final int POINTS_GAINED_PER_LEVEL = 10;
 
   public Monster(int _player_id, String _name) {
     player_id = _player_id;
@@ -137,11 +139,14 @@ public class Monster {
 
   // Increment Functions
   public void incrementExp(int _gain) {
+    // Increase experience by an amount determined by level
     exp += Math.ceil(_gain/level);
-    if(exp >= 100) {
+
+    // If new experience total is above the set experience required for level, then attempt level up. Return exception if at max level.
+    if(exp >= EXPERIENCE_FOR_LEVEL) {
       try {
         this.incrementLevel(1);
-        exp = exp - 100;
+        exp = exp - EXPERIENCE_FOR_LEVEL;
       } catch (UnsupportedOperationException exception) {
         maxLevel = true;
       }
@@ -161,18 +166,18 @@ public class Monster {
     int defenseGain = 0;
 
     if(weightTotal > 0) {
-      healthGain = (int)((health_weight / weightTotal) * 10);
-      strengthGain = (int)((strength_weight / weightTotal) * 10);
-      defenseGain = (int)((defense_weight / weightTotal) * 10);
-      totalGain = healthGain + strengthGain + defenseGain;
+      healthGain = (int)((health_weight / weightTotal) * POINTS_GAINED_PER_LEVEL * 10);
+      strengthGain = (int)((strength_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      defenseGain = (int)((defense_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      totalGain = healthGain/10 + strengthGain + defenseGain;
     }
 
 
-    while(totalGain < 10) {
+    while(totalGain < POINTS_GAINED_PER_LEVEL) {
       Random random = new Random();
       int number = random.nextInt(3) + 1;
       if(number == 1) {
-        healthGain += 1;
+        healthGain += 10;
       } else if (number == 2) {
         strengthGain += 1;
       } else {
@@ -186,6 +191,10 @@ public class Monster {
     strength += strengthGain;
     defense += defenseGain;
     base_deck_size += 3;
+    health_weight = 0;
+    defense_weight = 0;
+    strength_weight = 0;
+
     level += _gain;
   }
 

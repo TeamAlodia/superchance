@@ -63,13 +63,6 @@ public class MonsterTest {
     assertEquals(4, firstMonster.getLevel());
   }
 
-  @Test
-  public void incrementLevel_monsterStatsIncreaseBy10() {
-    Monster firstMonster = new Monster(1, "Rompy");
-    firstMonster.incrementLevel(1);
-    int increase = firstMonster.getHealth() + firstMonster.getStrength() + firstMonster.getDefense() - 12;
-    assertEquals(increase, 10);
-  }
 
   // Rest Tests
   @Test
