@@ -169,12 +169,7 @@ public class Monster {
     rest -= _loss;
   }
 
-  // Training Functions
-  public int train() {
-    Random random = new Random();
-    int number = random.nextInt(10) + 1;
-    return number;
-  }
+
 
   // private int base_health = 100;
   // private int base_deck_size = 13;
