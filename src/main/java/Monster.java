@@ -31,6 +31,8 @@ public class Monster {
   public static final int MAX_REST = 100;
   public static final int MAX_EXPERIENCE = 100;
   public static final int TRAINING_COST = 20;
+  public static final int EXPERIENCE_FOR_LEVEL = 100;
+  public static final int POINTS_GAINED_PER_LEVEL = 10;
 
   public Monster(int _player_id, String _name) {
     player_id = _player_id;
@@ -136,23 +138,66 @@ public class Monster {
   }
 
   // Increment Functions
-  public void incrementExp(int _gain) {
+  public boolean incrementExp(int _gain) {
+    if(maxLevel == true) {
+      return false;
+    }
+    // Increase experience by an amount determined by level
     exp += Math.ceil(_gain/level);
-    if(exp >= 100) {
+    // If new experience total is above the set experience required for level, then attempt level up. Return exception if at max level.
+    if(exp >= EXPERIENCE_FOR_LEVEL) {
       try {
         this.incrementLevel(1);
-        exp = exp - 100;
+        exp = exp - EXPERIENCE_FOR_LEVEL;
       } catch (UnsupportedOperationException exception) {
         maxLevel = true;
       }
     }
     this.update();
+    return true;
   }
 
   public void incrementLevel(int _gain) {
     if (level >= MAX_LEVEL) {
       throw new UnsupportedOperationException("This monster has reached its full potential");
     }
+
+    int totalGain = 0;
+    int weightTotal = health_weight + defense_weight + strength_weight;
+    int healthGain = 0;
+    int strengthGain = 0;
+    int defenseGain = 0;
+
+    if(weightTotal > 0) {
+      healthGain = (int)((health_weight / weightTotal) * POINTS_GAINED_PER_LEVEL * 10);
+      strengthGain = (int)((strength_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      defenseGain = (int)((defense_weight / weightTotal) * POINTS_GAINED_PER_LEVEL);
+      totalGain = healthGain/10 + strengthGain + defenseGain;
+    }
+
+
+    while(totalGain < POINTS_GAINED_PER_LEVEL) {
+      Random random = new Random();
+      int number = random.nextInt(3) + 1;
+      if(number == 1) {
+        healthGain += 10;
+      } else if (number == 2) {
+        strengthGain += 1;
+      } else {
+        defenseGain += 1;
+      }
+      totalGain += 1;
+    }
+
+    base_health += healthGain;
+    health += healthGain;
+    strength += strengthGain;
+    defense += defenseGain;
+    base_deck_size += 3;
+    health_weight = 0;
+    defense_weight = 0;
+    strength_weight = 0;
+
     level += _gain;
   }
 
@@ -174,8 +219,14 @@ public class Monster {
   // Training Functions
   public int train() {
     Random random = new Random();
-    int number = random.nextInt(10) + 1;
-    this.decrementRest(TRAINING_COST);
+    int number = 0;
+    try {
+      number = random.nextInt(10) + 1;
+      this.decrementRest(TRAINING_COST);
+      boolean check = this.incrementExp(10);
+    } catch (UnsupportedOperationException exception) {
+      return 0;
+    }
     return number;
   }
 
@@ -193,12 +244,6 @@ public class Monster {
     health_weight += this.train();
     this.update();
   }
-
-  // private int base_health = 100;
-  // private int base_deck_size = 13;
-  // private int health = 10;
-  // private int strength = 1;
-  // private int defense = 1;
 
   // Find Functions
   public static List<Monster> all() {
