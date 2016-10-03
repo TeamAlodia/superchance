@@ -118,7 +118,7 @@ public class Combat {
 
   // Combat Methods
   public void attack(int _attacking_monster_id){
-    // private Monster attacking_monster = Monster.find(_first_monster_id);
+    Monster attacking_monster = Monster.find(_attacking_monster_id);
     // private Monster defending_monster;
     // if(first_monster_id != _attacking_monster_id)
     //   defending_monster = Monster.find(first_monster_id);
