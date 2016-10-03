@@ -30,6 +30,7 @@ public class Monster {
   public static final int MAX_LEVEL = 10;
   public static final int MAX_REST = 100;
   public static final int MAX_EXPERIENCE = 100;
+  public static final int TRAINING_COST = 20;
 
   public Monster(int _player_id, String _name) {
     player_id = _player_id;
@@ -57,7 +58,7 @@ public class Monster {
   public boolean getIn_Battle() {
     return in_battle;
   }
-  public int getExperience() {
+  public int getExp() {
     return exp;
   }
   public int getLevel() {
@@ -100,8 +101,8 @@ public class Monster {
   public void setIn_Battle(boolean _battle) {
     in_battle = _battle;
   }
-  public void setExperience(int _experience) {
-    exp = _experience;
+  public void setExp(int _exp) {
+    exp = _exp;
   }
   public void setLevel(int _level) {
     level = _level;
@@ -135,12 +136,12 @@ public class Monster {
   }
 
   // Increment Functions
-  public void incrementExperience(int _gain) {
-    experience += Math.ceil(_gain/level);
-    if(experience >= 100) {
+  public void incrementExp(int _gain) {
+    exp += Math.ceil(_gain/level);
+    if(exp >= 100) {
       try {
         this.incrementLevel(1);
-        experience = experience - 100;
+        exp = exp - 100;
       } catch (UnsupportedOperationException exception) {
         maxLevel = true;
       }
@@ -170,7 +171,28 @@ public class Monster {
     rest -= _loss;
   }
 
+  // Training Functions
+  public int train() {
+    Random random = new Random();
+    int number = random.nextInt(10) + 1;
+    this.decrementRest(TRAINING_COST);
+    return number;
+  }
 
+  public void trainStrength() {
+    strength_weight += this.train();
+    this.update();
+  }
+
+  public void trainDefense() {
+    defense_weight += this.train();
+    this.update();
+  }
+
+  public void trainHealth() {
+    health_weight += this.train();
+    this.update();
+  }
 
   // private int base_health = 100;
   // private int base_deck_size = 13;
@@ -237,7 +259,7 @@ public class Monster {
 
   public void update() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE monsters SET player_id = :player_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, experience = :experience, level = :level, rest = :rest, base_health = :base_health, base_deck_size = :base_deck_size, health = :health, strength = :strength, defense = :defense, health_weight = :health_weight, strength_weight = :strength_weight, defense_weight = :defense_weight WHERE id = :id";
+      String sql = "UPDATE monsters SET player_id = :player_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, exp = :exp, level = :level, rest = :rest, base_health = :base_health, base_deck_size = :base_deck_size, health = :health, strength = :strength, defense = :defense, health_weight = :health_weight, strength_weight = :strength_weight, defense_weight = :defense_weight WHERE id = :id";
 
       con.createQuery(sql)
         .addParameter("player_id", player_id)

@@ -122,16 +122,18 @@ public class Combat {
         .executeUpdate();
     }
   }
-  // Combat Methods
-  public void attack(int _attacking_monster_id){
-    private Monster attacking_monster = new Monster.find(_first_monster_id);
-    private Monster defending_monster;
-    if(first_monster_id != _attacking_monster_id)
-      defending_monster = new Monster.find(first_monster_id);
-    else
-      defending_monster = new Monster.find(second_monster_id);
-  }
+  // // Combat Methods
+  // public void attack(int _attacking_monster_id){
+  //   private Monster attacking_monster = new Monster.find(_first_monster_id);
+  //   private Monster defending_monster;
+  //   if(first_monster_id != _attacking_monster_id)
+  //     defending_monster = new Monster.find(first_monster_id);
+  //   else
+  //     defending_monster = new Monster.find(second_monster_id);
+  // }
+  //
+  // public void defend(){
+  //
+  // }
 
-  public void defend(){
-
-  }
+}
