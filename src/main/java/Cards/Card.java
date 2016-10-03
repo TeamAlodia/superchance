@@ -1,10 +1,9 @@
 public abstract class Card{
   // Member Variables
   protected int id = 0;
+  protected int element_id = 0;
   protected String name = CardName.NONE;
   protected String type = CardType.NONE;
-  protected String element = Element.NONE;
-  protected String monster = MonsterName.NONE;
   protected String description = "";
   protected String location = CardLocation.DECK;
 
@@ -18,6 +17,9 @@ public abstract class Card{
   // Getters
   public int getId(){
     return id;
+  }
+  public int getElementId(){
+    return elementId;
   }
   public String getName(){
     return name;
@@ -33,6 +35,9 @@ public abstract class Card{
   }
 
   // Setters
+  public void setElementId(int _elementId){
+    elementId = _elementId;
+  }
   public void setName(String _name){
     name = _name;
   }
@@ -45,4 +50,22 @@ public abstract class Card{
   public void setLocation(String _location){
     location = _location;
   }
+
+  // CRUD
+  //// Create
+  public void create(int _elementId){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "INSERT INTO cards (name, elementId, type, description, location) VALUES (:name, :elementId, :type, :description, :location) WHERE id = :id";
+      id = (int) con.createConnetion(sql,true)
+        .executeUpdate()
+        .addParameter("name",name)
+        .addParameter("elementId",elementId)
+        .addParameter("type",type)
+        .addParameter("description",description)
+        .addParameter("location",location)
+        .addParameter("id",id)
+        .getKey();
+    }
+  }
+
 }
