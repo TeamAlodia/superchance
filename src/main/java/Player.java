@@ -78,14 +78,14 @@ public class Player {
       con.createQuery(sql)
         .addParameter("id", id)
         .executeUpdate();
-      String sql3 = "DELETE FROM cards_monsters_players where player_id = :id";
-      con.createQuery(sql3)
-        .addParameter("id", id)
-        .executeUpdate();
-      String sql2 = "DELETE FROM monsters WHERE player_id = :id";
-      con.createQuery(sql2)
-        .addParameter("id", id)
-        .executeUpdate();
+      // String sql3 = "DELETE FROM cards_monsters_players where player_id = :id";
+      // con.createQuery(sql3)
+      //   .addParameter("id", id)
+      //   .executeUpdate();
+      // String sql2 = "DELETE FROM monsters WHERE player_id = :id";
+      // con.createQuery(sql2)
+      //   .addParameter("id", id)
+      //   .executeUpdate();
     }
   }
 
