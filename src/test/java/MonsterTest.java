@@ -92,7 +92,32 @@ public class MonsterTest {
   public void train_returnsNumber() {
     Monster firstMonster = new Monster(1, "Rompy");
     int test = firstMonster.train();
-    assertTrue(test instanceof int);
+    boolean check = false;
+    if(test < 11 && test > 0) {
+      check = true;
+    }
+    assertEquals(true, check);
+  }
+
+  @Test
+  public void trainStrength_increasesStrengthWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainStrength();
+    assertTrue(firstMonster.getStrength_Weight() > 0);
+  }
+
+  @Test
+  public void trainDefense_increasesDefenseWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainDefense();
+    assertTrue(firstMonster.getDefense_Weight() > 0);
+  }
+
+  @Test
+  public void trainHealth_increasesHealthWeight() {
+    Monster firstMonster = new Monster(1, "Rompy");
+    firstMonster.trainHealth();
+    assertTrue(firstMonster.getHealth_Weight() > 0);
   }
   // Find Tests
   @Test

@@ -107,12 +107,12 @@ ALTER SEQUENCE battles_int_seq OWNED BY battles."int";
 --
 
 CREATE TABLE cards (
-    "int" integer NOT NULL,
     name character varying,
     card_type character varying,
     element_id integer,
     description character varying,
-    target character varying
+    target character varying,
+    id integer NOT NULL
 );
 
 
@@ -154,10 +154,10 @@ ALTER SEQUENCE cards_abilities_int_seq OWNED BY cards_abilities."int";
 
 
 --
--- Name: cards_int_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE cards_int_seq
+CREATE SEQUENCE cards_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -165,34 +165,34 @@ CREATE SEQUENCE cards_int_seq
     CACHE 1;
 
 
-ALTER TABLE cards_int_seq OWNER TO postgres;
+ALTER TABLE cards_id_seq OWNER TO postgres;
 
 --
--- Name: cards_int_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE cards_int_seq OWNED BY cards."int";
+ALTER SEQUENCE cards_id_seq OWNED BY cards.id;
 
 
 --
--- Name: cards_monsters_players; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cards_monsters; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE cards_monsters_players (
+CREATE TABLE cards_monsters (
     id integer NOT NULL,
     card_id integer,
     monster_id integer,
-    player_id integer
+    state character varying
 );
 
 
-ALTER TABLE cards_monsters_players OWNER TO postgres;
+ALTER TABLE cards_monsters OWNER TO postgres;
 
 --
--- Name: cards_monsters_players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cards_monsters_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE cards_monsters_players_id_seq
+CREATE SEQUENCE cards_monsters_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -200,13 +200,13 @@ CREATE SEQUENCE cards_monsters_players_id_seq
     CACHE 1;
 
 
-ALTER TABLE cards_monsters_players_id_seq OWNER TO postgres;
+ALTER TABLE cards_monsters_id_seq OWNER TO postgres;
 
 --
--- Name: cards_monsters_players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cards_monsters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE cards_monsters_players_id_seq OWNED BY cards_monsters_players.id;
+ALTER SEQUENCE cards_monsters_id_seq OWNED BY cards_monsters.id;
 
 
 --
@@ -478,10 +478,10 @@ ALTER TABLE ONLY battles ALTER COLUMN "int" SET DEFAULT nextval('battles_int_seq
 
 
 --
--- Name: cards int; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cards id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY cards ALTER COLUMN "int" SET DEFAULT nextval('cards_int_seq'::regclass);
+ALTER TABLE ONLY cards ALTER COLUMN id SET DEFAULT nextval('cards_id_seq'::regclass);
 
 
 --
@@ -492,10 +492,10 @@ ALTER TABLE ONLY cards_abilities ALTER COLUMN "int" SET DEFAULT nextval('cards_a
 
 
 --
--- Name: cards_monsters_players id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: cards_monsters id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY cards_monsters_players ALTER COLUMN id SET DEFAULT nextval('cards_monsters_players_id_seq'::regclass);
+ALTER TABLE ONLY cards_monsters ALTER COLUMN id SET DEFAULT nextval('cards_monsters_id_seq'::regclass);
 
 
 --
@@ -581,7 +581,7 @@ SELECT pg_catalog.setval('battles_int_seq', 1, false);
 -- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY cards ("int", name, card_type, element_id, description, target) FROM stdin;
+COPY cards (name, card_type, element_id, description, target, id) FROM stdin;
 \.
 
 
@@ -601,25 +601,25 @@ SELECT pg_catalog.setval('cards_abilities_int_seq', 1, false);
 
 
 --
--- Name: cards_int_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('cards_int_seq', 1, false);
+SELECT pg_catalog.setval('cards_id_seq', 1, false);
 
 
 --
--- Data for Name: cards_monsters_players; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cards_monsters; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY cards_monsters_players (id, card_id, monster_id, player_id) FROM stdin;
+COPY cards_monsters (id, card_id, monster_id, state) FROM stdin;
 \.
 
 
 --
--- Name: cards_monsters_players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cards_monsters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('cards_monsters_players_id_seq', 1, false);
+SELECT pg_catalog.setval('cards_monsters_id_seq', 1, false);
 
 
 --
@@ -752,11 +752,11 @@ ALTER TABLE ONLY cards_abilities
 
 
 --
--- Name: cards_monsters_players cards_monsters_players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cards_monsters cards_monsters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY cards_monsters_players
-    ADD CONSTRAINT cards_monsters_players_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY cards_monsters
+    ADD CONSTRAINT cards_monsters_pkey PRIMARY KEY (id);
 
 
 --
@@ -764,7 +764,7 @@ ALTER TABLE ONLY cards_monsters_players
 --
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT cards_pkey PRIMARY KEY ("int");
+    ADD CONSTRAINT cards_pkey PRIMARY KEY (id);
 
 
 --

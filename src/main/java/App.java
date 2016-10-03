@@ -32,6 +32,15 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/players/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int player_id = Integer.parseInt(request.params(":id"));
+
+      model.put("player", Player.find(player_id));
+      model.put("template", "templates/player.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     //-------------------------------------------------------
 
     post("/players", (request, response) -> {

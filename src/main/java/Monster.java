@@ -199,27 +199,6 @@ public class Monster {
   // private int health = 10;
   // private int strength = 1;
   // private int defense = 1;
-  // private int health_weight = 0;
-  // private int strength_weight = 0;
-  // private int defense_weight = 0;
-  // Training Functions
-  // public String train(int _attribute) {
-  //   String output = "";
-  //   switch(_attribute) {
-  //     case 1:
-  //     case 2:
-  //     case 3:
-  //     default: output = "Invalid Option";
-  //       break;
-  //   }
-  //   if(_attribute == 1) {
-  //
-  //   } else if
-  //   private int health_weight = 0;
-  //   private int strength_weight = 0;
-  //   private int defense_weight = 0;
-  // }
-
 
   // Find Functions
   public static List<Monster> all() {
@@ -228,6 +207,16 @@ public class Monster {
       List<Monster> allMonsters = con.createQuery(sql)
       .executeAndFetch(Monster.class);
       return allMonsters;
+    }
+  }
+
+  public static Monster find(int _id){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters WHERE id=:id";
+
+      return con.createQuery(sql)
+        .addParameter("id", _id)
+        .executeAndFetchFirst(Monster.class);
     }
   }
 
