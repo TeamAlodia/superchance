@@ -3,6 +3,8 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.lang.Math;
+import java.util.Random;
 
 public class Monster {
   private int id;
@@ -13,6 +15,7 @@ public class Monster {
   private boolean in_battle = false;
   private int experience = 0;
   private int level = 1;
+  private boolean maxLevel = false;
   private int rest = 100;
   private int base_health = 100;
   private int base_deck_size = 13;
@@ -25,6 +28,7 @@ public class Monster {
 
   public static final int MAX_LEVEL = 10;
   public static final int MAX_REST = 100;
+  public static final int MAX_EXPERIENCE = 100;
 
   public Monster(int _player_id, String _name) {
     player_id = _player_id;
@@ -129,6 +133,76 @@ public class Monster {
     defense_weight = _defense_weight;
   }
 
+  // Increment Functions
+  public void incrementExperience(int _gain) {
+    experience += Math.ceil(_gain/level);
+    if(experience >= 100) {
+      try {
+        this.incrementLevel(1);
+        experience = experience - 100;
+      } catch (UnsupportedOperationException exception) {
+        maxLevel = true;
+      }
+    }
+    this.update();
+  }
+
+  public void incrementLevel(int _gain) {
+    if (level >= MAX_LEVEL) {
+      throw new UnsupportedOperationException("This monster has reached its full potential");
+    }
+    level += _gain;
+  }
+
+  public void incrementRest(int _gain) {
+    if (rest >= MAX_REST) {
+      throw new UnsupportedOperationException("This monster is fully rested");
+    }
+    rest += _gain;
+  }
+
+  // Decrement Functions
+  public void decrementRest(int _loss) {
+    if (rest <= 0) {
+      throw new UnsupportedOperationException("This monster is completely exhausted");
+    }
+    rest -= _loss;
+  }
+
+  // Training Functions
+  public int train() {
+    Random random = new Random();
+    int number = random.nextInt(10) + 1;
+    return number;
+  }
+
+  // private int base_health = 100;
+  // private int base_deck_size = 13;
+  // private int health = 10;
+  // private int strength = 1;
+  // private int defense = 1;
+  // private int health_weight = 0;
+  // private int strength_weight = 0;
+  // private int defense_weight = 0;
+  // Training Functions
+  // public String train(int _attribute) {
+  //   String output = "";
+  //   switch(_attribute) {
+  //     case 1:
+  //     case 2:
+  //     case 3:
+  //     default: output = "Invalid Option";
+  //       break;
+  //   }
+  //   if(_attribute == 1) {
+  //
+  //   } else if
+  //   private int health_weight = 0;
+  //   private int strength_weight = 0;
+  //   private int defense_weight = 0;
+  // }
+
+
   // Find Functions
   public static List<Monster> all() {
     try(Connection con = DB.sql2o.open()) {
@@ -167,7 +241,7 @@ public class Monster {
 
   public void update() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE players SET player_id = :player_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, experience = :experience, level = :level, rest = :rest, base_health = :base_health, base_deck_size = :base_deck_size, health = :health, strength = :strength, defense = :defense, health_weight = :health_weight, strength_weight = :strength_weight, defense_weight = :defense_weight WHERE id = :id";
+      String sql = "UPDATE monsters SET player_id = :player_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, experience = :experience, level = :level, rest = :rest, base_health = :base_health, base_deck_size = :base_deck_size, health = :health, strength = :strength, defense = :defense, health_weight = :health_weight, strength_weight = :strength_weight, defense_weight = :defense_weight WHERE id = :id";
       con.createQuery(sql)
         .addParameter("player_id", player_id)
         .addParameter("name", name)
