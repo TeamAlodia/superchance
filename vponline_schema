@@ -111,7 +111,8 @@ CREATE TABLE cards (
     card_type character varying,
     element_id integer,
     description character varying,
-    target character varying
+    target character varying,
+    name character varying
 );
 
 
@@ -582,7 +583,7 @@ SELECT pg_catalog.setval('battles_id_seq', 1, false);
 -- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY cards (id, card_type, element_id, description, target) FROM stdin;
+COPY cards (id, card_type, element_id, description, target, name) FROM stdin;
 \.
 
 
