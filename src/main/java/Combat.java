@@ -16,13 +16,6 @@ public class Combat {
   private boolean first_monster_done;
   private boolean second_monster_done;
 
-  // Class attributes
-  // private Monster first_monster;
-  // private Monster second_monster;
-  //List<Card> fm_cards;
-  //List<Card> second_monster_cards;
-
-
   public Combat(int _first_monster_id, int _second_monster_id){
     first_monster_id = _first_monster_id;
     second_monster_id = _second_monster_id;
@@ -37,19 +30,19 @@ public class Combat {
     return id;
   }
 
-  public int getFirst_monster_id() {
+  public int getFirstMonsterId() {
     return first_monster_id;
   }
 
-  public int getSecond_monster_id() {
+  public int getSecondMonsterId() {
     return second_monster_id;
   }
 
-  public boolean getFirst_monster_done() {
+  public boolean getFirstMonsterDone() {
     return first_monster_done;
   }
 
-  public boolean getSecond_monster_done() {
+  public boolean getSecondMonsterDone() {
     return second_monster_done;
   }
 
@@ -73,7 +66,7 @@ public class Combat {
 
   public void save(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "INSERT INTO battle (first_monster_id, second_monster_id, first_monster_done, second_monster_done) VALUES (:first_monster_id, :second_monster_id, :first_monster_done, :second_monster_done)";
+      String sql = "INSERT INTO battles (first_monster_id, second_monster_id, first_monster_done, second_monster_done) VALUES (:first_monster_id, :second_monster_id, :first_monster_done, :second_monster_done)";
       id = (int) con.createQuery(sql, true)
         .addParameter("first_monster_id", first_monster_id)
         .addParameter("second_monster_id", second_monster_id)
@@ -86,7 +79,7 @@ public class Combat {
 
   public static Combat find(int _id){
     try(Connection con = DB.sql2o.open()){
-      String sql = "SELECT * FROM battle WHERE id=:id";
+      String sql = "SELECT * FROM battles WHERE id=:id";
       return con.createQuery(sql)
         .addParameter("id", _id)
         .executeAndFetchFirst(Combat.class);
@@ -95,14 +88,14 @@ public class Combat {
 
   public static List<Combat> all(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "SELECT * FROM battle";
+      String sql = "SELECT * FROM battles";
       return con.createQuery(sql).executeAndFetch(Combat.class);
     }
   }
 
   public void update(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE battle SET (first_monster_id=:first_monster_id, second_monster_id=:second_monster_id, first_monster_done=:first_monster_done, second_monster_done=:second_monster_done) WHERE id=:id";
+      String sql = "UPDATE battles SET (first_monster_id=:first_monster_id, second_monster_id=:second_monster_id, first_monster_done=:first_monster_done, second_monster_done=:second_monster_done) WHERE id=:id";
       con.createQuery(sql)
         .addParameter("first_monster_id", first_monster_id)
         .addParameter("second_monster_id", second_monster_id)
@@ -115,7 +108,7 @@ public class Combat {
 
   public void delete(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "DELETE FROM battle WHERE id=:id";
+      String sql = "DELETE FROM battles WHERE id=:id";
       con.createQuery(sql)
         .addParameter("id", id)
         .executeUpdate();

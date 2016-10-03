@@ -1,0 +1,16 @@
+DROP DATABASE vponline;
+DROP DATABASE vponline_test;
+CREATE DATABASE vponline;
+\c vponline
+psql vponline < vponline_schema
+CREATE DATABASE vponline_test WITH TEMPLATE vponline;
+
+
+
+CREATE TABLE battles (
+    id serial PRIMARY KEY,
+    first_monster_id integer,
+    second_monster_id integer,
+    first_monster_done boolean,
+    second_monster_done boolean
+);
