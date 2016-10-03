@@ -138,10 +138,12 @@ public class Monster {
   }
 
   // Increment Functions
-  public void incrementExp(int _gain) {
+  public boolean incrementExp(int _gain) {
+    if(maxLevel == true) {
+      return false;
+    }
     // Increase experience by an amount determined by level
     exp += Math.ceil(_gain/level);
-
     // If new experience total is above the set experience required for level, then attempt level up. Return exception if at max level.
     if(exp >= EXPERIENCE_FOR_LEVEL) {
       try {
@@ -152,6 +154,7 @@ public class Monster {
       }
     }
     this.update();
+    return true;
   }
 
   public void incrementLevel(int _gain) {
@@ -220,7 +223,7 @@ public class Monster {
     try {
       number = random.nextInt(10) + 1;
       this.decrementRest(TRAINING_COST);
-      this.incrementExp(10);
+      boolean check = this.incrementExp(10);
     } catch (UnsupportedOperationException exception) {
       return 0;
     }
