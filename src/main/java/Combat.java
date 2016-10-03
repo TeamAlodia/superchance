@@ -6,7 +6,6 @@ import java.util.ArrayList;
 /* Current Assumptions of how combat will work
 
 
-
 */
 public class Combat {
 
@@ -46,19 +45,19 @@ public class Combat {
     return second_monster_id;
   }
 
-  public boolean getFirst_monster_id() {
+  public boolean getFirst_monster_done() {
     return first_monster_done;
   }
 
-  public boolean getSecond_monster_id() {
+  public boolean getSecond_monster_done() {
     return second_monster_done;
   }
 
   public void addCard(int _monster_id, int _card_id) {
-    if(_monster_id == first_monster_id)
-      first_monster_cards.add(Card.find(_card_id));
-    else
-      second_monster_cards.add(Card.find(_card_id));
+    // if(_monster_id == first_monster_id)
+    //   first_monster_cards.add(Card.find(_card_id));
+    // else
+    //   second_monster_cards.add(Card.find(_card_id));
   }
 
   // Database Methods
@@ -122,18 +121,20 @@ public class Combat {
         .executeUpdate();
     }
   }
-  // // Combat Methods
-  // public void attack(int _attacking_monster_id){
-  //   private Monster attacking_monster = new Monster.find(_first_monster_id);
-  //   private Monster defending_monster;
-  //   if(first_monster_id != _attacking_monster_id)
-  //     defending_monster = new Monster.find(first_monster_id);
-  //   else
-  //     defending_monster = new Monster.find(second_monster_id);
-  // }
-  //
-  // public void defend(){
-  //
-  // }
+
+
+  // Combat Methods
+  public void attack(int _attacking_monster_id){
+    // private Monster attacking_monster = Monster.find(_first_monster_id);
+    // private Monster defending_monster;
+    // if(first_monster_id != _attacking_monster_id)
+    //   defending_monster = Monster.find(first_monster_id);
+    // else
+    //   defending_monster = Monster.find(second_monster_id);
+  }
+
+  public void defend(){
+
+  }
 
 }
