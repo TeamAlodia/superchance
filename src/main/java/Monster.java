@@ -231,6 +231,16 @@ public class Monster {
     }
   }
 
+  public static Monster find(int _id){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters WHERE id=:id";
+
+      return con.createQuery(sql)
+        .addParameter("id", _id)
+        .executeAndFetchFirst(Monster.class);
+    }
+  }
+
   // Database Functions
   public void save() {
       try(Connection con = DB.sql2o.open()) {
