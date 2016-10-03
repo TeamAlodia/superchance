@@ -122,6 +122,7 @@ public class Combat {
     }
   }
 
+
   // Combat Methods
   public void attack(int _attacking_monster_id){
     // private Monster attacking_monster = Monster.find(_first_monster_id);
@@ -135,4 +136,5 @@ public class Combat {
   public void defend(){
 
   }
+
 }
