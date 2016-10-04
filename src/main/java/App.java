@@ -34,6 +34,17 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/monsters/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int monster_id = Integer.parseInt(request.params(":id"));
+      Monster monster = Monster.find(monster_id);
+
+      model.put("player", Player.find(monster.getPlayer_Id()));
+      model.put("monster", monster);
+      model.put("template", "templates/monster.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     get("/players", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
 
@@ -69,6 +80,19 @@ public class App {
         response.redirect("/players");
         return "Player not created";
       }
+    });
+
+    post("/monsters", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int player_id = Integer.parseInt(request.queryParams("player_id"));
+      int species_id = Integer.parseInt(request.queryParams("species_id"));
+      String name = request.queryParams("name");
+
+      Monster monster = new Monster(player_id, species_id, name);
+      monster.save();
+
+      response.redirect("/monsters");
+      return "Monster created";
     });
   }
 }
