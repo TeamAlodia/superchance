@@ -247,6 +247,7 @@ public class Monster implements DatabaseManagement{
     }
   }
 
+  // Search Functions
   public static List<Monster> all() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM monsters";
