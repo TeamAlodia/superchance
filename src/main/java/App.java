@@ -62,6 +62,22 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/species", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+
+      model.put("allSpecies", Species.all());
+      model.put("template", "templates/allspecies.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/species/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int species_id = Integer.parseInt(request.params(":id"));
+
+      model.put("species", Species.find(species_id));
+      model.put("template", "templates/species.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
     //-------------------------------------------------------
 
     post("/players", (request, response) -> {
