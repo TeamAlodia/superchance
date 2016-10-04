@@ -10,6 +10,18 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
+    ////////////////////////////////////////
+    // TEST
+    get("/test",(request,response)->{
+      Map<String,Object> model = new HashMap<>();
+
+      OrcDeckCreator testDeck = new OrcDeckCreator();
+
+      return new ModelAndView(model, layout);
+    },new VelocityTemplateEngine());
+
+    ////////////////////////////////////////
+
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
@@ -19,7 +31,6 @@ public class App {
     get("/monsters", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
 
-      model.put("allSpecies", Species.all());
       model.put("monsters", Monster.all());
       model.put("template", "templates/monsters.vtl");
       return new ModelAndView(model, layout);
