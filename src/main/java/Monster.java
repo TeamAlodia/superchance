@@ -18,13 +18,14 @@ public class Monster implements DatabaseManagement{
   private int level = 1;
   private boolean maxLevel = false;
   private int rest = 100;
-  private int base_health = 100;
-  private int base_power;
-  private int base_defense;
+  private int base_health = 100; // Monster's permanent health
+  private int health = 10; // Monster's health for duration of combat
+  private int base_power; // Monster's permanent power
+  private int power = 1; // Monster's power for duration of combat
+  private int base_defense; // Monster's permanent defense
+  private int defense = 1; // Monster's defense for duration of combat
+  private int temp_defense; // Monster's defense for single round of combat
   private int base_deck_size = 13;
-  private int health = 10;
-  private int power = 1;
-  private int defense = 1;
   private int health_weight = 0;
   private int power_weight = 0;
   private int defense_weight = 0;
@@ -85,6 +86,9 @@ public class Monster implements DatabaseManagement{
   public int getBase_Defense() {
     return base_defense;
   }
+  public int getTemp_Defense() {
+    return temp_defense;
+  }
   public int getBase_Deck_Size() {
     return base_deck_size;
   }
@@ -143,6 +147,9 @@ public class Monster implements DatabaseManagement{
   public void setDefense(int _defense) {
     defense = _defense;
   }
+  public void setTemp_Defense(int _defense) {
+    temp_defense = _defense;
+  }
   public void setHealth_Weight(int _health_weight) {
     health_weight = _health_weight;
   }
@@ -181,7 +188,7 @@ public class Monster implements DatabaseManagement{
 
   public void save() {
       try(Connection con = DB.sql2o.open()) {
-        String sql = "INSERT INTO monsters (player_id, species_id, name, born, last_interacted, in_battle, exp, level, rest, base_health, base_power, base_defense, base_deck_size, health, power, defense, health_weight, power_weight, defense_weight, status) VALUES (:player_id, :species_id, :name, :born, :last_interacted, :in_battle, :exp, :level, :rest, :base_health, :base_power, :base_defense, :base_deck_size, :health, :power, :defense, :health_weight, :power_weight, :defense_weight, :status)";
+        String sql = "INSERT INTO monsters (player_id, species_id, name, born, last_interacted, in_battle, exp, level, rest, base_health, base_power, base_defense, base_deck_size, health, power, defense, health_weight, temp_defense, power_weight, defense_weight, status) VALUES (:player_id, :species_id, :name, :born, :last_interacted, :in_battle, :exp, :level, :rest, :base_health, :base_power, :base_defense, :base_deck_size, :health, :power, :defense, :health_weight, :temp_defense, :power_weight, :defense_weight, :status)";
         id = (int) con.createQuery(sql, true)
           .addParameter("player_id", player_id)
           .addParameter("species_id", species_id)
@@ -193,6 +200,7 @@ public class Monster implements DatabaseManagement{
           .addParameter("level", level)
           .addParameter("rest", rest)
           .addParameter("base_health", base_health)
+          .addParameter("temp_defense", temp_defense)
           .addParameter("base_power", base_power)
           .addParameter("base_defense", base_defense)
           .addParameter("base_deck_size", base_deck_size)
@@ -210,7 +218,7 @@ public class Monster implements DatabaseManagement{
 
   public void update() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE monsters SET player_id = :player_id, species_id = :species_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, exp = :exp, level = :level, rest = :rest, base_health = :base_health, base_power = :base_power, base_defense = :base_defense, base_deck_size = :base_deck_size, health = :health, power = :power, defense = :defense, health_weight = :health_weight, power_weight = :power_weight, defense_weight = :defense_weight, status = :status WHERE id = :id";
+      String sql = "UPDATE monsters SET player_id = :player_id, species_id = :species_id, name = :name, born = :born, last_interacted = :last_interacted, in_battle = :in_battle, exp = :exp, level = :level, rest = :rest, base_health = :base_health, base_power = :base_power, base_defense = :base_defense, base_deck_size = :base_deck_size, health = :health, power = :power, temp_defense = :temp_defense, defense = :defense, health_weight = :health_weight, power_weight = :power_weight, defense_weight = :defense_weight, status = :status WHERE id = :id";
 
       con.createQuery(sql)
         .addParameter("player_id", player_id)
@@ -225,6 +233,7 @@ public class Monster implements DatabaseManagement{
         .addParameter("base_health", base_health)
         .addParameter("base_power", base_power)
         .addParameter("base_defense", base_defense)
+        .addParameter("temp_defense", temp_defense)
         .addParameter("base_deck_size", base_deck_size)
         .addParameter("health", health)
         .addParameter("power", power)

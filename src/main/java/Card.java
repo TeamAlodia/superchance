@@ -75,11 +75,12 @@ public class Card{
   //// Create
   public void create(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "INSERT INTO cards (name, element_id, card_type, description) VALUES (:name, :element_id, :card_type, :description)";
+      String sql = "INSERT INTO cards (name, element_id, card_type, description, target) VALUES (:name, :element_id, :card_type, :description, :target)";
       id = (int) con.createQuery(sql,true)
         .addParameter("name",name)
         .addParameter("element_id",element_id)
         .addParameter("card_type",card_type)
+        .addParameter("target", target)
         .addParameter("description",description)
         .executeUpdate()
         .getKey();
@@ -106,12 +107,13 @@ public class Card{
   //// Update
   public void update(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE cards SET element_id=:element_id, name=:name, card_type=:card_type, description=:description WHERE id = :id";
+      String sql = "UPDATE cards SET element_id=:element_id, name=:name, card_type=:card_type, description=:description, target=:target WHERE id = :id";
       con.createQuery(sql)
         .addParameter("element_id",element_id)
         .addParameter("name",name)
         .addParameter("card_type",card_type)
         .addParameter("description",description)
+        .addParameter("target", target)
         .addParameter("id",id)
         .executeAndFetchFirst(Card.class);
     }

@@ -157,6 +157,14 @@ public class MonsterTest {
   }
 
   @Test
+  public void update_updatesMonsterStatsAppropriately() {
+    Monster firstMonster = new Monster(1, 1, "Rompy");
+    firstMonster.save();
+    firstMonster.setHealth(5);
+    firstMonster.update();
+    assertEquals(5, Monster.find(firstMonster.getId()).getHealth());
+  }
+  @Test
   public void delete_deletesMonster_true() {
     Monster firstMonster = new Monster(1, 1, "Rompy");
     firstMonster.save();
@@ -168,7 +176,7 @@ public class MonsterTest {
   @Test
   public void equals_returnsTrueIfNameAndEmailAreSame_true() {
     Monster firstMonster = new Monster(1, 1, "Rompy");
-    Monster secondMonster = new Monster(2, 2, "Sniffles");
+    Monster secondMonster = Monster.find(firstMonster.getId());
     assertTrue(secondMonster.equals(firstMonster));
   }
 
