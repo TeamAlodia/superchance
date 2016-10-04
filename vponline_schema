@@ -301,7 +301,8 @@ CREATE TABLE monsters (
     power integer,
     base_power integer,
     base_defense integer,
-    power_weight integer
+    power_weight integer,
+    temp_defense integer
 );
 
 
@@ -660,7 +661,7 @@ SELECT pg_catalog.setval('elements_vs_id_seq', 1, false);
 -- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY monsters (id, player_id, born, last_interacted, exp, level, rest, base_health, base_deck_size, status, health, defense, health_weight, defense_weight, name, in_battle, species_id, power, base_power, base_defense, power_weight) FROM stdin;
+COPY monsters (id, player_id, born, last_interacted, exp, level, rest, base_health, base_deck_size, status, health, defense, health_weight, defense_weight, name, in_battle, species_id, power, base_power, base_defense, power_weight, temp_defense) FROM stdin;
 \.
 
 
