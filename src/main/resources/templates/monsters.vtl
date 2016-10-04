@@ -1,19 +1,21 @@
 <h3>All Monsters</h3>
 #foreach($monster in $monsters)
-  <a href="">$monster.getName()</a>
+  <a href="/monsters/$monster.getId()">$monster.getName()</a> / 
 #end
 
 <h4>Dev Tools</h4>
-<form class="" action="/monsters" method="post">
-  <select class="" name="player_id">
+<form class="form-group" action="/monsters" method="post">
+  <select class="form-control" name="player_id">
     #foreach($player in $players)
       <option value="$player.getId()">$player.getName()</option>
     #end
   </select>
-  <select>
+  <select class="form-control" name="species_id">
   #foreach($species in $allSpecies)
     <option value="$species.getId()">$species.getName()</option>
   #end
   </select>
+  <label for="name">Name: </label>
+  <input class="form_control" type="text" name="name" required>
   <button type="submit" class="btn btn-success">Create Monster</button>
 </form>

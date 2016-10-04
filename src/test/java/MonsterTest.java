@@ -174,10 +174,11 @@ public class MonsterTest {
 
   // Override Tests
   @Test
-  public void equals_returnsTrueIfNameAndEmailAreSame_true() {
+  public void equals_returnsTrueIfId_true() {
     Monster firstMonster = new Monster(1, 1, "Rompy");
-    Monster secondMonster = Monster.find(firstMonster.getId());
-    assertTrue(secondMonster.equals(firstMonster));
+    firstMonster.save();
+    Monster testMonster = Monster.find(firstMonster.getId());
+    assertTrue(testMonster.equals(firstMonster));
   }
 
 }
