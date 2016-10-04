@@ -11,13 +11,13 @@ public class SpeciesTest {
   @Test
   public void species_InstantiatesCorrectly(){
     Species firstSpecies = new Species();
-
     assertTrue(firstSpecies instanceof Species);
   }
 
   @Test
   public void find_ReturnsCorrectly(){
-    Species firstSpecies = Species.find(1);
-    assertTrue(firstSpecies.getName != null);
+    Species firstSpecies = new Species();
+    firstSpecies.save();
+    assertEquals(firstSpecies, Species.find(firstSpecies.getId()));
   }
 }

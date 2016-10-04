@@ -16,9 +16,7 @@ public class AbilityTest {
     jim.save();
     Monster jack = new Monster(2, 2, "Jack");
     jack.save();
-    System.out.println(jim.getId());
-    System.out.println(jack.getId());
     Ability.action(1, jack.getId(), 3);
-    assertEquals(9, jack.getHealth());
+    assertEquals(13, Monster.find(jack.getId()).getHealth());
   }
 }

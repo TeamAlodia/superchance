@@ -115,7 +115,7 @@ public class Card{
         .addParameter("description",description)
         .addParameter("target", target)
         .addParameter("id",id)
-        .executeAndFetchFirst(Card.class);
+        .executeUpdate();
     }
   }
 

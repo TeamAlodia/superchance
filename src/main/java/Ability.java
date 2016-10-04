@@ -10,25 +10,27 @@ public class Ability {
   }
 
   public static void action(int _id, int _targetId, int _value) {
+    Monster target = Monster.find(_targetId);
     switch (_id) {
       // Change health of target for combat
       case 1:
-        Monster.find(_targetId).setHealth(Monster.find(_targetId).getHealth() + _value);
-        System.out.println(Monster.find(_targetId).getName());
-        Monster.find(_targetId).update();
-        System.out.println(Monster.find(_targetId).getHealth());
+        target.setHealth(target.getHealth() + _value);
+        target.update();
         break;
       // Change defense of target for combat
       case 2:
-        Monster.find(_targetId).setDefense(Monster.find(_targetId).getDefense() + _value);
+        target.setDefense(target.getDefense() + _value);
+        target.update();
         break;
       // Change defense of target for round
       case 3:
-        Monster.find(_targetId).setTemp_Defense(_value);
+        target.setTemp_Defense(_value);
+        target.update();
         break;
       // Change power of target for combat
       case 4:
-        Monster.find(_targetId).setPower(Monster.find(_targetId).getPower() + _value);
+        target.setPower(target.getPower() + _value);
+        target.update();
         break;
       default:
         break;
