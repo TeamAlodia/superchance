@@ -4,7 +4,7 @@ import org.junit.*;
 import org.sql2o.*;
 import static org.junit.Assert.*;
 
-public class AttackTest {
+public class CardTest {
 
   // Rules
   @Rule
@@ -14,36 +14,36 @@ public class AttackTest {
   //// Constructor
   @Test
   public void constructor_instantiatesCorrectly(){
-    Attack testAttack = new Attack();
-    assertEquals(true, testAttack instanceof Attack);
+    Card testAttack = new Card();
+    assertEquals(true, testAttack instanceof Card);
   }
 
   //// Read All
   @Test
   public void readAll_returnsAllCardsFromDB_ListCard(){
-    Attack testAttack1 = new Attack();
-    Attack testAttack2 = new Attack();
+    Card testAttack1 = new Card();
+    Card testAttack2 = new Card();
     testAttack1.create();
     testAttack2.create();
-    List<Attack>expectedOutput = new ArrayList<>();
+    List<Card>expectedOutput = new ArrayList<>();
     expectedOutput.add(testAttack1);
     expectedOutput.add(testAttack2);
-    assertEquals(expectedOutput, Attack.readAll());
+    assertEquals(expectedOutput, Card.readAll());
   }
 
   //// Equals
   @Test
   public void equals_returnsFalseAppropriately_false(){
-    Attack testAttack1 = new Attack();
-    Attack testAttack2 = new Attack();
+    Card testAttack1 = new Card();
+    Card testAttack2 = new Card();
     testAttack1.create();
     testAttack2.create();
     assertEquals(false, testAttack1.equals(testAttack2));
   }
   @Test
   public void equals_returnsTrueAppropriately_true(){
-    Attack testAttack1 = new Attack();
-    Attack testAttack2 = testAttack1;
+    Card testAttack1 = new Card();
+    Card testAttack2 = testAttack1;
     testAttack1.create();
     testAttack2.create();
     assertEquals(true, testAttack1.equals(testAttack2));
@@ -52,19 +52,19 @@ public class AttackTest {
   //// Update
   @Test
   public void update_modifiesDBAppropriately_true(){
-    Attack testAttack = new Attack();
+    Card testAttack = new Card();
     testAttack.create();
     testAttack.setName("Test Name");
     testAttack.update();
-    assertEquals(testAttack.getName(), Attack.readById(testAttack.getId()).getName());
+    assertEquals(testAttack.getName(), Card.readById(testAttack.getId()).getName());
   }
 
   //// Delete
   @Test
   public void delete_removesFromDBAppropriately_true(){
-    Attack testAttack = new Attack();
+    Card testAttack = new Card();
     testAttack.create();
     testAttack.delete();
-    assertEquals(0, Attack.readAll().size());
+    assertEquals(0, Card.readAll().size());
   }
 }

@@ -1,27 +1,34 @@
 import java.util.List;
 import org.sql2o.*;
 
-public abstract class Card{
+public class Card{
   // Member Variables
   protected int id = 0;
-  protected int elementId = 0;
+  protected int element_id = 0;
   protected String name = CardName.NONE;
-  protected String type = CardType.NONE;
+  protected String card_type = CardType.NONE;
   protected String description = "";
+  protected String target = Target.NONE;
 
   // Constructors
+  //// Placeholder
+  public Card(){
+    
+  }
   //// No element -- falls back to default of 0
-  public Card(String _name, String _type, String _description){
+  public Card(String _name, String _type, String _description, String _target){
     name = _name;
-    type = _type;
+    card_type = _type;
     description = _description;
+    target = _target;
   }
   //// element
-  public Card(String _name, String _type, String _description, int _elementId){
+  public Card(String _name, String _type, String _description, String _target, int _elementId){
     name = _name;
-    type = _type;
+    card_type = _type;
     description = _description;
-    elementId = _elementId;
+    target = _target;
+    element_id = _elementId;
   }
 
   // Getters
@@ -29,13 +36,13 @@ public abstract class Card{
     return id;
   }
   public int getElementId(){
-    return elementId;
+    return element_id;
   }
   public String getName(){
     return name;
   }
   public String getType(){
-    return type;
+    return card_type;
   }
   public String getDescription(){
     return description;
@@ -43,13 +50,13 @@ public abstract class Card{
 
   // Setters
   public void setElementId(int _elementId){
-    elementId = _elementId;
+    element_id = _elementId;
   }
   public void setName(String _name){
     name = _name;
   }
   public void setType(String _type){
-    type = _type;
+    card_type = _type;
   }
   public void setDescription(String _description){
     description = _description;
@@ -68,11 +75,11 @@ public abstract class Card{
   //// Create
   public void create(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "INSERT INTO cards (name, element_id, card_type, description) VALUES (:name, :elementId, :type, :description)";
+      String sql = "INSERT INTO cards (name, element_id, card_type, description) VALUES (:name, :element_id, :card_type, :description)";
       id = (int) con.createQuery(sql,true)
         .addParameter("name",name)
-        .addParameter("elementId",elementId)
-        .addParameter("type",type)
+        .addParameter("element_id",element_id)
+        .addParameter("card_type",card_type)
         .addParameter("description",description)
         .executeUpdate()
         .getKey();
@@ -99,11 +106,11 @@ public abstract class Card{
   //// Update
   public void update(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE cards SET element_id=:elementId, name=:name, card_type=:type, description=:description WHERE id = :id";
+      String sql = "UPDATE cards SET element_id=:element_id, name=:name, card_type=:card_type, description=:description WHERE id = :id";
       con.createQuery(sql)
-        .addParameter("elementId",elementId)
+        .addParameter("element_id",element_id)
         .addParameter("name",name)
-        .addParameter("type",type)
+        .addParameter("card_type",card_type)
         .addParameter("description",description)
         .addParameter("id",id)
         .executeAndFetchFirst(Card.class);
