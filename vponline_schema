@@ -292,14 +292,16 @@ CREATE TABLE monsters (
     base_deck_size integer,
     status character varying,
     health integer,
-    strength integer,
     defense integer,
     health_weight integer,
     strength_weight integer,
     defense_weight integer,
     name character varying,
     in_battle boolean,
-    species_id integer
+    species_id integer,
+    power integer,
+    base_power integer,
+    base_defense integer
 );
 
 
@@ -369,7 +371,6 @@ CREATE TABLE species (
     id integer NOT NULL,
     name character varying,
     base_health integer,
-    base_strength integer,
     base_defense integer
 );
 
@@ -658,7 +659,7 @@ SELECT pg_catalog.setval('elements_vs_id_seq', 1, false);
 -- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY monsters (id, player_id, born, last_interacted, exp, level, rest, base_health, base_deck_size, status, health, strength, defense, health_weight, strength_weight, defense_weight, name, in_battle, species_id) FROM stdin;
+COPY monsters (id, player_id, born, last_interacted, exp, level, rest, base_health, base_deck_size, status, health, defense, health_weight, strength_weight, defense_weight, name, in_battle, species_id, power, base_power, base_defense) FROM stdin;
 \.
 
 
@@ -688,7 +689,7 @@ SELECT pg_catalog.setval('players_id_seq', 1, false);
 -- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY species (id, name, base_health, base_strength, base_defense) FROM stdin;
+COPY species (id, name, base_health, base_defense) FROM stdin;
 \.
 
 
