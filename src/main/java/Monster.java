@@ -187,34 +187,34 @@ public class Monster implements DatabaseManagement{
   }
 
   public void save() {
-      try(Connection con = DB.sql2o.open()) {
-        String sql = "INSERT INTO monsters (player_id, species_id, name, born, last_interacted, in_battle, exp, level, rest, base_health, base_power, base_defense, base_deck_size, health, power, defense, health_weight, temp_defense, power_weight, defense_weight, status) VALUES (:player_id, :species_id, :name, :born, :last_interacted, :in_battle, :exp, :level, :rest, :base_health, :base_power, :base_defense, :base_deck_size, :health, :power, :defense, :health_weight, :temp_defense, :power_weight, :defense_weight, :status)";
-        id = (int) con.createQuery(sql, true)
-          .addParameter("player_id", player_id)
-          .addParameter("species_id", species_id)
-          .addParameter("name", name)
-          .addParameter("born", born)
-          .addParameter("last_interacted", last_interacted)
-          .addParameter("in_battle", in_battle)
-          .addParameter("exp", exp)
-          .addParameter("level", level)
-          .addParameter("rest", rest)
-          .addParameter("base_health", base_health)
-          .addParameter("temp_defense", temp_defense)
-          .addParameter("base_power", base_power)
-          .addParameter("base_defense", base_defense)
-          .addParameter("base_deck_size", base_deck_size)
-          .addParameter("health", health)
-          .addParameter("power", power)
-          .addParameter("defense", defense)
-          .addParameter("health_weight", health_weight)
-          .addParameter("power_weight", power_weight)
-          .addParameter("defense_weight", defense_weight)
-          .addParameter("status", status)
-          .executeUpdate()
-          .getKey();
-      }
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO monsters (player_id, species_id, name, born, last_interacted, in_battle, exp, level, rest, base_health, base_power, base_defense, base_deck_size, health, power, defense, health_weight, temp_defense, power_weight, defense_weight, status) VALUES (:player_id, :species_id, :name, :born, :last_interacted, :in_battle, :exp, :level, :rest, :base_health, :base_power, :base_defense, :base_deck_size, :health, :power, :defense, :health_weight, :temp_defense, :power_weight, :defense_weight, :status)";
+      id = (int) con.createQuery(sql, true)
+        .addParameter("player_id", player_id)
+        .addParameter("species_id", species_id)
+        .addParameter("name", name)
+        .addParameter("born", born)
+        .addParameter("last_interacted", last_interacted)
+        .addParameter("in_battle", in_battle)
+        .addParameter("exp", exp)
+        .addParameter("level", level)
+        .addParameter("rest", rest)
+        .addParameter("base_health", base_health)
+        .addParameter("temp_defense", temp_defense)
+        .addParameter("base_power", base_power)
+        .addParameter("base_defense", base_defense)
+        .addParameter("base_deck_size", base_deck_size)
+        .addParameter("health", health)
+        .addParameter("power", power)
+        .addParameter("defense", defense)
+        .addParameter("health_weight", health_weight)
+        .addParameter("power_weight", power_weight)
+        .addParameter("defense_weight", defense_weight)
+        .addParameter("status", status)
+        .executeUpdate()
+        .getKey();
     }
+  }
 
   public void update() {
     try(Connection con = DB.sql2o.open()) {

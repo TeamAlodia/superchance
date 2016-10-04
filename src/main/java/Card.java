@@ -95,6 +95,25 @@ public class Card{
         .executeAndFetch(Card.class);
     }
   }
+
+  public static List<Card> readAllNormal() {
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM cards WHERE element_id = :none";
+      return con.createQuery(sql)
+        .addParameter("none", 0)
+        .executeAndFetch(Card.class);
+    }
+  }
+
+  public static List<Card> readAllTypeSpecific() {
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM cards WHERE element_id > :none";
+      return con.createQuery(sql)
+        .addParameter("none", 0)
+        .executeAndFetch(Card.class);
+    }
+  }
+
   public static Card readById(int _id){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM cards WHERE id = :id";
@@ -103,6 +122,14 @@ public class Card{
         .executeAndFetchFirst(Card.class);
     }
   }
+  // public static Card readByName(String _name){
+  //   try(Connection con = DB.sql2o.open()){
+  //     String sql = "SELECT * FROM cards WHERE name = :name";
+  //     return con.createQuery(sql)
+  //       .addParameter("name",_name)
+  //       .executeAndFetchFirst(Card.class);
+  //   }
+  // }
 
   //// Update
   public void update(){

@@ -22,8 +22,10 @@ public class App {
     get("/test",(request,response)->{
       Map<String,Object> model = new HashMap<>();
 
-      OrcDeckCreator testDeck = new OrcDeckCreator();
+      // OrcDeckCreator testDeck = new OrcDeckCreator();
+      // DeckCreator realDeck = new DeckCreator();
 
+      model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     },new VelocityTemplateEngine());
 
