@@ -7,7 +7,8 @@
 // Implemented DatabaseManagement
 
 
-// NOTE: Seperate your logic further. Don't call updates internally, and especially not inconsistently. It's just begging for someone to forget which method they have to manually update with.
+// Seperate your logic further. Don't call updates internally, and especially not inconsistently. It's just begging for someone to forget which method they have to manually update with.
+// What is this maxLevel boolean you didn't tell me about? You don't even need it. you just compare level to MAX_LEVEL.
 
 import java.util.List;
 import org.sql2o.*;
