@@ -19,6 +19,7 @@ public class App {
     get("/monsters", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
 
+      model.put("players", Player.all());
       model.put("allSpecies", Species.all());
       model.put("monsters", Monster.all());
       model.put("template", "templates/monsters.vtl");
