@@ -10,5 +10,10 @@
       <option value="$player.getId()">$player.getName()</option>
     #end
   </select>
+  <select>
+  #foreach($species in $allSpecies)
+    <option value="$species.getId()">$species.getName()</option>
+  #end
+  </select>
   <button type="submit" class="btn btn-success">Create Monster</button>
 </form>
