@@ -13,28 +13,37 @@ public class Species {
   public int getId(){
     return id;
   }
-  public String name(){
+  public String getName(){
     return name;
   }
-  public int base_health(){
+  public int getBase_Health(){
     return base_health;
   }
-  public int base_power(){
+  public int getBase_Power(){
     return base_power;
   }
-  public int base_defense(){
+  public int getBase_Defense(){
     return base_defense;
   }
 
   // Database functions
 
-  public Species find(_id){
+  public static Species find(int _id){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM species WHERE id=:id";
 
       return con.createQuery(sql)
-        .addParameter("id", id)
+        .addParameter("id", _id)
         .executeAndFetchFirst(Species.class);
+    }
+  }
+
+  public static List<Species> all(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM species";
+
+      return con.createQuery(sql)
+        .executeAndFetch(Species.class);
     }
   }
 }

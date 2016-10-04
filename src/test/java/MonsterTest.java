@@ -168,8 +168,8 @@ public class MonsterTest {
   @Test
   public void equals_returnsTrueIfNameAndEmailAreSame_true() {
     Monster firstMonster = new Monster(1, 1, "Rompy");
-    Monster firstMonster = new Monster(1, 1, "Rompy");
-    assertTrue(testMonster.equals(firstMonster));
+    Monster secondMonster = new Monster(2, 2, "Sniffles");
+    assertTrue(secondMonster.equals(firstMonster));
   }
 
 }
