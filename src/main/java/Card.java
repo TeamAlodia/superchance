@@ -13,7 +13,7 @@ public class Card{
   // Constructors
   //// Placeholder
   public Card(){
-    
+
   }
   //// No element -- falls back to default of 0
   public Card(String _name, String _type, String _description, String _target){

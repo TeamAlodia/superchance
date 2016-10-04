@@ -28,6 +28,7 @@ public class Species {
 
   // Database functions
 
+
   public static Species find(int _id){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM species WHERE id=:id";
