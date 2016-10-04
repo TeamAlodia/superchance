@@ -1,15 +1,3 @@
-// Replaced strength with power, updated all Function
-// Updated functions for new database structure
-// Set up constructor for species_id
-// Add getters for new variables
-// Organize methods
-// Set equals up for full-state comparison, immediately used it to find out where you were missing vriables in your save/update
-// Implemented DatabaseManagement
-
-
-// Seperate your logic further. Don't call updates internally, and especially not inconsistently. It's just begging for someone to forget which method they have to manually update with.
-// What is this maxLevel boolean you didn't tell me about? You don't even need it. you just compare level to MAX_LEVEL.
-
 import java.util.List;
 import org.sql2o.*;
 import java.util.ArrayList;
@@ -49,8 +37,9 @@ public class Monster implements DatabaseManagement{
   public static final int EXPERIENCE_FOR_LEVEL = 100;
   public static final int POINTS_GAINED_PER_LEVEL = 10;
 
-  public Monster(int _player_id, String _name, int _species_id) {
+  public Monster(int _player_id, int _species_id, String _name) {
     player_id = _player_id;
+    species_id = _species_id;
     name = _name;
     born = new Timestamp(new Date().getTime());
     last_interacted = new Timestamp(new Date().getTime());
@@ -187,8 +176,7 @@ public class Monster implements DatabaseManagement{
       defense == newMonster.getDefense() &&
       health_weight == newMonster.getHealth_Weight() &&
       power_weight == newMonster.getPower_Weight() &&
-      defense_weight == newMonster.getPower_Weight();// &&
-      // status.equals(newMonster.getStatus());
+      defense_weight == newMonster.getPower_Weight();
   }
 
   public void save() {
