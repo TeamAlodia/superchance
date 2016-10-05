@@ -170,7 +170,7 @@ public class Combat {
 
     // add all cards as inactive
     for(Integer card_id : monsterCards){
-	     addCardToDeck(card_id, _monster_id);
+	     addMonsterCard(card_id, _monster_id, CardStatus.INACTIVE);
     }
 
   }
@@ -193,13 +193,13 @@ public class Combat {
     return deck_size;
   }
 
-  public void addCardToDeck (int _card_id, int _monster_id){
+  public void addMonsterCard(int _card_id, int _monster_id, String _card_type){
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (:card_id, :monster_id, :state)";
       con.createQuery(sql, true)
         .addParameter("card_id", _card_id)
         .addParameter("monster_id", _monster_id)
-        .addParameter("state", CardStatus.DECK)
+        .addParameter("state", _card_type)
         .executeUpdate();
     }
   }
@@ -232,29 +232,31 @@ public class Combat {
     int card_index = deckCards.get(randomInt(0, deckCards.size()-1));
     updateMonsterCard(card_index, CardStatus.HAND);
 
-    //return Card.readById(5);
   }
 
-  //  Marks card discarded and returns the card_id
+  // marks card discarded and returns the card_id
   public int playCard(int _card_monsters_id){
+
+    // discard
+    updateMonsterCard(_card_monsters_id, CardStatus.DISCARD);
+
+    // get the card_id and return it
+    return getCardID(_card_monsters_id);
+
+  }
+
+  public int getCardID(int _card_monsters_id){
     try(Connection con = DB.sql2o.open()){
 
       String sql = "SELECT card_id FROM cards_monsters WHERE id=:id";
-      int card_id = con.createQuery(sql)
+      return con.createQuery(sql)
         .addParameter("id", _card_monsters_id)
         .executeAndFetchFirst(Integer.class);
 
-      sql = "UPDATE cards_monsters SET state=:state WHERE id=:id";
-      con.createQuery(sql)
-        .addParameter("state", CardStatus.DISCARD)
-        .addParameter("id", _card_monsters_id)
-        .executeUpdate();
-
-      return card_id;
     }
   }
 
-  // returns a list of all of the card_ids for cards in the HAND
+  // returns a list of all of the ids for the given type
   public List<Integer> getMonsterCards(int _monster_id, String _card_type){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT id FROM cards_monsters WHERE monster_id=:monster_id AND state=:state";
@@ -270,6 +272,7 @@ public class Combat {
     return rand.nextInt(max - min)+min;
   }
 
+  // clears out all monster's cards from cards_monsters
   public void deleteMonsterCards(int _monster_id){
     try(Connection con = DB.sql2o.open()){
       String sql = "DELETE FROM cards_monsters WHERE monster_id = :monster_id";
