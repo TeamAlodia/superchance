@@ -7,7 +7,7 @@ public class Monster {
   private int id;
   private int player_id;
   private int species_id;
-  private String species_name;
+  private String species_name = "";
   private String name;
   private int max_health;
   private int base_power;
@@ -132,6 +132,92 @@ public class Monster {
     status = _status;
   }
 
+  @Override
+  public boolean equals(Object _otherObject){
+    if(!(_otherObject instanceof Monster)){
+      return false;
+    }else{
+      Monster otherObject = (Monster) _otherObject;
+      return id == otherObject.getId() &&
+        name.equals(otherObject.getName()) &&
+        player_id == otherObject.getPlayer_Id() &&
+        species_id == otherObject.getSpecies_Id() &&
+        species_name.equals(otherObject.getSpecies_Name()) &&
+        max_health == otherObject.getMax_Health() &&
+        base_power == otherObject.getBase_Power() &&
+        base_defense == otherObject.getBase_Defense() &&
+        wins == otherObject.getWins() &&
+        losses == otherObject.getLosses();
+    }
+  }
+
+  public void save(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "INSERT INTO monsters (player_id, species_id, species_name, name, max_health, base_power, base_defense, wins, losses) VALUES (:player_id, :species_id, :species_name, :name, :max_health, :base_power, :base_defense, :wins, :losses)";
+
+      id = (int) con.createQuery(sql, true)
+        .addParameter("player_id", player_id)
+        .addParameter("species_id", species_id)
+        .addParameter("species_name", species_name)
+        .addParameter("name", name)
+        .addParameter("max_health", max_health)
+        .addParameter("base_power", base_power)
+        .addParameter("base_defense", base_defense)
+        .addParameter("wins", wins)
+        .addParameter("losses", losses)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static Monster find(int _id){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters WHERE id=:id";
+      return con.createQuery(sql)
+        .addParameter("id", _id)
+        .executeAndFetchFirst(Monster.class);
+    }
+  }
+
+  public static List<Monster> all(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters";
+
+      return con.createQuery(sql)
+        .executeAndFetch(Monster.class);
+    }
+
+  }
+
+  public void update(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "UPDATE monsters SET player_id = :player_id, species_id = :species_id, species_name = :species_name, name = :name, max_health = :max_health, base_power = :base_power, base_defense = :base_defense, wins = :wins, losses = :losses WHERE id=:id";
+
+      con.createQuery(sql)
+        .addParameter("player_id", player_id)
+        .addParameter("species_id", species_id)
+        .addParameter("species_name", species_name)
+        .addParameter("name", name)
+        .addParameter("max_health", max_health)
+        .addParameter("base_power", base_power)
+        .addParameter("base_defense", base_defense)
+        .addParameter("wins", wins)
+        .addParameter("losses", losses)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void delete(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "DELETE FROM monsters WHERE id=:id";
+
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
   // increaseHealth
   // receives int
   // increases health by int
@@ -159,9 +245,4 @@ public class Monster {
   // receives int
   // decreases defense by int
   //
-  // incrementWins
-  // increases wins by one
-  //
-  // incrementLosses
-  // increses losses by one
 }
