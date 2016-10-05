@@ -23,11 +23,17 @@ public class Monster {
   private boolean alive = true;
   private String status;
 
-  public Monster(int _species_id, String _name){
+  public Monster(int _species_id, String _name, int _player_id){
     species_id = _species_id;
     name = _name;
+    player_id = _player_id;
 
     // Instantiate a species of the right type and populate remaining vars
+    Species species = Species.find(_species_id);
+    max_health = species.getMax_Health();
+    base_power = species.getBase_Power();
+    base_defense = species.getBase_Defense();
+    species_name = species.getSpecies_Name();
   }
 
 
@@ -222,27 +228,61 @@ public class Monster {
   // receives int
   // increases health by int
   // if over maximum, sets to maximum
-  //
+  public void increaseHealth(int _healthAmt){
+    health += _healthAmt;
+    if(health > max_health)
+      health = max_health;
+  }
+
+
   // decreaseHealth
   // receives int
   // decreases health by int
   // set alive to false if health <= 0
   // if status is asleep or confused, sets to normal
-  //
-  // increaseStrength
+  public void decreaseHealth(int _healthAmt){
+
+    if(status.equals(Battle.STATUS_ASLEEP) || status.equals(Battle.STATUS_CONFUSED))
+      status = Battle.STATUS_NORMAL;
+
+    health -= _healthAmt;
+
+    if(health <= 0)
+      alive = false;
+
+  }
+
+  // increasePower
   // receives int
-  // increases strength by int
-  //
-  // decreaseStrength
+  // increases power by int
+  public void increasePower(int _powerAmt){
+    power += _powerAmt;
+  }
+
+  // decreasePower
   // receives int
-  // decreases strength by int
-  //
+  // decreases power by int
+  public void decreasePower(int _powerAmt){
+    power -= _powerAmt;
+    if(power < 6)
+      power = 6;
+
+  }
+
   // increaseDefense
   // receives int
   // increases defense by int
-  //
+  public void increaseDefense(int _defenseAmt){
+    defense += _defenseAmt;
+  }
+
   // decreaseDefense
   // receives int
   // decreases defense by int
-  //
+  public void decreaseDefense(int _defenseAmt){
+    defense -= _defenseAmt;
+
+    if(defense < 1)
+      defense = 1;
+  }
 }
