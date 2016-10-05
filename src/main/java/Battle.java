@@ -37,6 +37,31 @@ public class Battle {
   // if listening = true then set player_card_id to card_id of keypress
   //
 
+  public Battle(Monster _player_one_monster, Monster _player_two_monster, int _player_one_id, int _player_two_id){
+    player_one_monster = _player_one_monster;
+    player_two_monster = _player_two_monster;
+    player_one_id = _player_one_id;
+    player_two_id = _player_two_id;
+
+    this.buildDeck(player_one_monster);
+    this.buildDeck(player_two_monster);
+
+  }
+
+  public void buildDeck(Monster _monster){
+
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT card_id FROM species_cards WHERE species_id = :species_id";
+
+      List<Integer> results = con.createQuery(sql)
+        .addParameter("species_id", player_one_monster.getSpecies_Id())
+        .executeAndFetch(Integer.class);
+
+      player_one_monster.setDeck(results);
+
+    }
+  }
+
   public void incrementRound(){
     round++;
   }
@@ -47,11 +72,11 @@ public class Battle {
 
     listening = false;
 
-    // resolveStatus(player_one_monster);
-    // resolveStatus(player_two_monster);
+    resolveStatus(player_one_monster, 1);
+    resolveStatus(player_two_monster, 2);
     //
-    executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster);
-    executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster);
+    executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster, 1);
+    executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster, 2);
     //
     // discard(player_one_card_id);
     // discard(player_two_card_id);
@@ -71,31 +96,23 @@ public class Battle {
   }
 
 
-  // public void resolveStatus(int currentMonster){
-  //   Monster monster;
-  //
-  //   if(currentMonster == 1){
-  //     monster = player_one_monster;
-  //   }else {
-  //     monster = player_two_monster;
-  //   }
-  //
-  //   Random myRandomGenerator = new Random();
-  //   int random = myRandomGenerator.nextInt(10);
-  //
-  //   switch (monster.getStatus()){
-  //     case Battle.STATUS_STUNNED: player_one_card_id = 0;
-  //       monster.setStatus(Battle.STATUS_NORMAL);
-  //       break;
-  //     case Battle.STATUS_PARALYZED: player_one_card_id = 0;
-  //       if(random == 0){
-  //         monster.setStatus(Battle.STATUS_NORMAL);
-  //       }
-  //       break;
-  //     default: break;
-  //
-  //   }
-  // }
+  public void resolveStatus(Monster _activeMonster, int _activePlayer){
+
+    Random myRandomGenerator = new Random();
+    int random = myRandomGenerator.nextInt(10);
+
+    switch (_activeMonster.getStatus()){
+      case Battle.STATUS_STUNNED: player_one_card_id = 0;
+        _activeMonster.setStatus(Battle.STATUS_NORMAL);
+        break;
+      case Battle.STATUS_PARALYZED: player_one_card_id = 0;
+        if(random == 0){
+          _activeMonster.setStatus(Battle.STATUS_NORMAL);
+        }
+        break;
+      default: break;
+    }
+  }
 
 
   // resolveStatus()
@@ -109,7 +126,10 @@ public class Battle {
   //   berserk sets card_id to 0 if card type is a defense type and has a 50% chance to set to normal
   //   confused sets card_id to a random card from the five positions and has a 25% chance to set to normal
   //   poisoned deals 5 damage to monster and has a 50% chance to set to normal
-  //
+
+  public void discard(Monster _monster, int _card_id){
+
+  }
   // discard()
   // takes in player number, card_id
   // discriminates by player number, setting temp versions of hand and discard
@@ -135,7 +155,7 @@ public class Battle {
   // discriminates by player number again, setting the appropriate vars from the temp vars
 
 
-  public void executeAbilities(int _active_card_id, int passive_card_id, Monster _active_monster, Monster passive_monster){
+  public void executeAbilities(int _active_card_id, int _passive_card_id, Monster _active_monster, Monster _passive_monster, int _activePlayer){
 
     switch (_active_card_id){
       case 1: break;
@@ -152,9 +172,4 @@ public class Battle {
     }
 
   }
-  // executeAbilities()
-  // takes in card_id, active monster, passive monster
-  // run down a switch case based on card_id
-  // call static ability functions in appropriate case, with each returning a Monster
-  // blank cards are 0 and should hit default and do nothing
 }

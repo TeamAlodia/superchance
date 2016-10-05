@@ -248,6 +248,10 @@ public class Monster {
     }
   }
 
+  public void removeFromDeck(int _card_id){
+    
+  }
+
   // increaseHealth
   // receives int
   // increases health by int
