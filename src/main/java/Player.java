@@ -13,6 +13,36 @@ public class Player {
     name = _name;
   }
 
+  // Getters/Setters
+  public int getId(){
+    return id;
+  }
+
+  public String getName(){
+    return name;
+  }
+
+  public int getWins(){
+    return wins;
+  }
+
+  public int getLosses(){
+    return losses;
+  }
+
+  public void setName(String _name){
+    name = _name;
+  }
+
+  public void incrementWins(){
+    wins++;
+  }
+
+  public void incrementLosses(){
+    losses++;
+  }
+
+
 
   // incrementWins
   // increases wins by one
