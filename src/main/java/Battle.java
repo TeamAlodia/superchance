@@ -14,15 +14,6 @@ public class Battle {
   private int player_one_card_id;
   private int player_two_card_id;
 
-  private List<Integer> player_one_deck = new ArrayList<Integer>();
-  private List<Integer> player_two_deck = new ArrayList<Integer>();
-
-  private List<Integer> player_one_hand = new ArrayList<Integer>();
-  private List<Integer> player_two_hand = new ArrayList<Integer>();
-
-  private List<Integer> player_one_discard = new ArrayList<Integer>();
-  private List<Integer> player_two_discard = new ArrayList<Integer>();
-
   private int round = 0;
   private boolean listening = false;
 

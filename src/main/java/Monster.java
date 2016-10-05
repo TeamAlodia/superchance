@@ -23,6 +23,12 @@ public class Monster {
   private boolean alive = true;
   private String status;
 
+  private List<Integer> deck = new ArrayList<Integer>();
+
+  private List<Integer> hand = new ArrayList<Integer>();
+
+  private List<Integer> discard = new ArrayList<Integer>();
+
   public Monster(int _species_id, String _name){
     species_id = _species_id;
     name = _name;
@@ -96,6 +102,18 @@ public class Monster {
     return status;
   }
 
+  public List<Integer> getDeck(){
+    return deck;
+  }
+
+  public List<Integer> getHand(){
+    return hand;
+  }
+
+  public List<Integer> getDiscard(){
+    return discard;
+  }
+
   public void setName(String _name){
     name = _name;
   }
@@ -130,6 +148,18 @@ public class Monster {
 
   public void setStatus(String _status){
     status = _status;
+  }
+
+  public void setDeck(List<Integer> _deck){
+    deck = _deck;
+  }
+
+  public void setHand(List<Integer> _hand){
+    hand = _hand;
+  }
+
+  public void setDiscard(List<Integer> _discard){
+    discard = _discard;
   }
 
   @Override

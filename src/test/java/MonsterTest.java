@@ -47,6 +47,26 @@ public class MonsterTest {
   }
 
   @Test
+  public void setDeck_SetsCorrectly_SecondItem(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+
+    List<Integer> firstDeck = new ArrayList<Integer>();
+    firstDeck.add(1);
+    firstDeck.add(2);
+
+    firstMonster.setDeck(firstDeck);
+
+    List<Integer> secondDeck = firstMonster.getDeck();
+
+    System.out.println(firstDeck.get(1));
+    System.out.println(secondDeck.get(1));
+
+    Integer expectedOutput = 2;
+    assertEquals(expectedOutput, secondDeck.get(1));
+  }
+
+  @Test
   public void save_SavesCorrectly(){
     Monster firstMonster = new Monster(1, "Bulbasaur");
     firstMonster.save();
