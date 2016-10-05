@@ -1,16 +1,70 @@
 DROP DATABASE vponline;
 DROP DATABASE vponline_test;
 CREATE DATABASE vponline;
-\c vponline
-psql vponline < vponline_schema
+# psql vponline < vponline_schema
 CREATE DATABASE vponline_test WITH TEMPLATE vponline;
 
+INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (1, 1, 'deck');
+INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (2, 1, 'deck');
+INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (3, 1, 'deck');
 
 
-CREATE TABLE battles (
-    id serial PRIMARY KEY,
-    first_monster_id integer,
-    second_monster_id integer,
-    first_monster_done boolean,
-    second_monster_done boolean
-);
+
+//Join Statment That Gets All Monsters Cards
+public List<Card> getAllMonsterCards(int _monster_id){
+  Monster monster = Monster.find(_monster_id);
+  try(Connection con = DB.sql2o.open()){
+    String sql = "SELECT cards.id, element_id, name, card_type, description, target " +
+                  "FROM cards " +
+                  "JOIN species_potential_cards" +
+                  "ON cards.id = species_potential_cards.card_id" +
+                  "WHERE species_potential_cards.species_id = :species_id";
+    return con.createQuery(sql)
+    .addParameter("species_id", monster.getSpecies_Id())
+    .executeAndFetch(Card.class);
+  }
+}
+
+//-------------- Tony Temp Work Space -------------------
+get("/tf_tmp",(request,response)->{
+  Map<String,Object> model = new HashMap<>();
+
+  //OrcDeckCreator testDeck = new OrcDeckCreator();
+
+  int first_monster_id = 1;
+  int second_monster_id = 1;
+
+  Combat newCombat = new Combat(first_monster_id, second_monster_id);
+
+  int first_monster_decksize = newCombat.getDeckSize(first_monster_id);
+  //int second_monster_decksize = newCombat.getDeckSize(second_monster_id);
+
+  newCombat.initializeCombat(first_monster_id);
+  //newCombat.initializeCombat(second_monster_id);
+
+  //model.put("first_monster_cards", newCombat.getMonsterCards(first_monster_id, CardStatus.INACTIVE));
+  // model.put("second_monster_cards", newCombat.getMonsterCards(second_monster_id, CardStatus.INACTIVE));
+  //
+  // // Players select their deck
+  // for(int i=0; i<first_monster_decksize; ++i) {
+  //     newCombat.updateMonsterCard (card_id, CardStatus.DECK)
+  // }
+  //   //for(second_monster_decksize)
+  //     //newCombat.updateMonsterCard (card_id, CardStatus.DECK)
+  //
+  for(int i=0; i<5; ++i){
+    newCombat.getRandomDeckCard(first_monster_id);
+    //newCombat.getRandomDeckCard(second_monster_id);
+  }
+  //
+  // // Players select the card they want to play
+  //   //int 1st_card_id = newCombat.playCard(1st_monster_card_id);
+  //   //int 2nd_card_id =newCombat.playCard(2nd_monster_card_id);
+  //   //monster1.setIn_Battle(true);
+  //   //monster2.setIn_Battle(true);
+  //
+  // //if (first_monster_done == true && second_monster_done = true)
+
+
+  return new ModelAndView(model, layout);
+},new VelocityTemplateEngine());
