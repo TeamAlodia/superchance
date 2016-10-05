@@ -3,9 +3,9 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-/* Combat pseudo code
+/* Battle pseudo code
 
-// Pre Combat Work
+// Pre Battle Work
 1. Update IN_BATTLE = true for both monsters
 2. Calculate HEALTH = base_health(REST/100)
 3. POWER = base_power && DEFENSE = base_defense
@@ -21,7 +21,7 @@ For each Player:
 2. Select card from DECK and put in HAND
 3. Player selects card from HAND and mark XXX_monster_done = true
 
-// Combat Logic (if (first_monster_done == true && second_monster_done = true)
+// Battle Logic (if (first_monster_done == true && second_monster_done = true)
 1. Select ABILITY from cards_abilities where cards_abilities.card_id == cards.id
 2. ABILITY.action(cards_abilities.ability_id, card.targetId(), cards_abilities.value);
 [update target monster](depends on how we want to seperate concerns)
@@ -29,7 +29,7 @@ For each Player:
 4. Update HEALTH for both monsters
 5. Update card state to DISCARD
 
-// Post Combat Work (if first_monster.HEALTH == 0 || second_monster.HEALTH ==0)
+// Post Battle Work (if first_monster.HEALTH == 0 || second_monster.HEALTH ==0)
 1. Determine Winner and Loser
 2. Update Monsters:
   a. Winner gets 100% XP
@@ -45,7 +45,7 @@ For each Player:
 - Case where both DEFEND?
 
 */
-public class Combat {
+public class Battle {
 
   // Database attributes
   private int id;
@@ -58,7 +58,7 @@ public class Combat {
   int first_monster_deck_size;
   int second_monster_deck_size;
 
-  public Combat(int _first_monster_id, int _second_monster_id){
+  public Battle(int _first_monster_id, int _second_monster_id){
     first_monster_id = _first_monster_id;
     second_monster_id = _second_monster_id;
     first_monster_done = false;
@@ -91,11 +91,11 @@ public class Combat {
   // Database Methods
   @Override
   public boolean equals(Object _otherObject){
-    if(!(_otherObject instanceof Combat)){
+    if(!(_otherObject instanceof Battle)){
       return false;
     }else{
-      Combat newCombat = (Combat) _otherObject;
-      return newCombat.getId() == this.id;
+      Battle newBattle = (Battle) _otherObject;
+      return newBattle.getId() == this.id;
     }
   }
 
@@ -112,19 +112,19 @@ public class Combat {
     }
   }
 
-  public static Combat find(int _id){
+  public static Battle find(int _id){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM battles WHERE id=:id";
       return con.createQuery(sql)
         .addParameter("id", _id)
-        .executeAndFetchFirst(Combat.class);
+        .executeAndFetchFirst(Battle.class);
     }
   }
 
-  public static List<Combat> all(){
+  public static List<Battle> all(){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM battles";
-      return con.createQuery(sql).executeAndFetch(Combat.class);
+      return con.createQuery(sql).executeAndFetch(Battle.class);
     }
   }
 
@@ -150,9 +150,9 @@ public class Combat {
     }
   }
 
-//----------------- Custom Combat Methods -------------
+//----------------- Custom Battle Methods -------------
 
-  public void initializeCombat(int _monster_id){
+  public void initializeBattle(int _monster_id){
 
     deleteMonsterCards(_monster_id);
 
