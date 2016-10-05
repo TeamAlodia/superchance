@@ -1,6 +1,8 @@
 import java.util.List;
 import org.sql2o.*;
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Battle {
   // Local vars
@@ -48,8 +50,8 @@ public class Battle {
     // resolveStatus(player_one_monster);
     // resolveStatus(player_two_monster);
     //
-    // executeAbilities(player_one_card_id);
-    // executeAbilities(player_two_card_id);
+    executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster);
+    executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster);
     //
     // discard(player_one_card_id);
     // discard(player_two_card_id);
@@ -67,12 +69,35 @@ public class Battle {
     }
 
   }
-  // resolveTurn()
-  // call executeAbilities() for both cards
-  // run discard() for both cards
-  // run getAlive() for both monsters
-  // return winner, tie or continue string based on getAlive() results
+
+
+  // public void resolveStatus(int currentMonster){
+  //   Monster monster;
   //
+  //   if(currentMonster == 1){
+  //     monster = player_one_monster;
+  //   }else {
+  //     monster = player_two_monster;
+  //   }
+  //
+  //   Random myRandomGenerator = new Random();
+  //   int random = myRandomGenerator.nextInt(10);
+  //
+  //   switch (monster.getStatus()){
+  //     case Battle.STATUS_STUNNED: player_one_card_id = 0;
+  //       monster.setStatus(Battle.STATUS_NORMAL);
+  //       break;
+  //     case Battle.STATUS_PARALYZED: player_one_card_id = 0;
+  //       if(random == 0){
+  //         monster.setStatus(Battle.STATUS_NORMAL);
+  //       }
+  //       break;
+  //     default: break;
+  //
+  //   }
+  // }
+
+
   // resolveStatus()
   // takes in player_monster
   // run down switch case based on status of monster
@@ -108,7 +133,25 @@ public class Battle {
   // If it does, moves said amount of cards from draw to hand
   // If not, shuffle()
   // discriminates by player number again, setting the appropriate vars from the temp vars
-  //
+
+
+  public void executeAbilities(int _active_card_id, int passive_card_id, Monster _active_monster, Monster passive_monster){
+
+    switch (_active_card_id){
+      case 1: break;
+      case 2: break;
+      case 3: break;
+      case 4: break;
+      case 5: break;
+      case 6: break;
+      case 7: break;
+      case 8: break;
+      case 9: break;
+      case 10: break;
+      default: break;
+    }
+
+  }
   // executeAbilities()
   // takes in card_id, active monster, passive monster
   // run down a switch case based on card_id
