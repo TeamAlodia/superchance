@@ -38,5 +38,67 @@ public class MonsterTest {
     assertEquals(firstMonster, secondMonster);
   }
 
+  @Test
+  public void save_SavesCorrectly(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+
+    assertEquals(firstMonster, Monster.find(firstMonster.getId()));
+  }
+
+  @Test
+  public void find_FindsCorrectly_SecondItem(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+    Monster secondMonster = new Monster(2, "Charizard");
+    secondMonster.save();
+
+    assertEquals(secondMonster, Monster.find(secondMonster.getId()));
+  }
+
+  @Test
+  public void all_ReturnsCorrectly_AllItems_TwoItems(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+    Monster secondMonster = new Monster(2, "Charizard");
+    secondMonster.save();
+
+    assertEquals(2, Monster.all().size());
+  }
+
+  @Test
+  public void all_ReturnsCorrectly_SecondItem(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+    Monster secondMonster = new Monster(2, "Charizard");
+    secondMonster.save();
+
+    assertEquals(secondMonster, Monster.all().get(1));
+  }
+
+  @Test
+  public void update_UpdatesCorrectly_AllFields(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+
+    firstMonster.setName("Charizard");
+    firstMonster.update();
+
+    Monster updatedMonster = Monster.find(firstMonster.getId());
+
+    assertEquals("Charizard", updatedMonster.getName());
+  }
+
+  @Test
+  public void delete_DeletesCorrectly_FirstItem(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+    Monster secondMonster = new Monster(2, "Charizard");
+    secondMonster.save();
+    firstMonster.delete();
+
+    assertEquals(1, Monster.all().size());
+    assertEquals(null, Monster.find(firstMonster.getId()));
+  }
 
 }
