@@ -34,14 +34,6 @@ public class Player {
     name = _name;
   }
 
-  public void incrementWins(){
-    wins++;
-  }
-
-  public void incrementLosses(){
-    losses++;
-  }
-
   @Override
   public boolean equals(Object _otherObject){
     if(!(_otherObject instanceof Player)){
@@ -112,11 +104,17 @@ public class Player {
 
   // incrementWins
   // increases wins by one
-  //
+  public void incrementWins(){
+    ++wins;
+  }
+
   // incrementLosses
   // increses losses by one
+  public void incrementLosses(){
+    ++losses;
+  }
 
-  // addPlayer
-  // takes in monster_id
-  // adds entry into players_players
+
+
+
 }
