@@ -8,8 +8,6 @@ INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (1, 1, 'deck');
 INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (2, 1, 'deck');
 INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (3, 1, 'deck');
 
-
-
 //Join Statment That Gets All Monsters Cards
 public List<Card> getAllMonsterCards(int _monster_id){
   Monster monster = Monster.find(_monster_id);
@@ -24,6 +22,15 @@ public List<Card> getAllMonsterCards(int _monster_id){
     .executeAndFetch(Card.class);
   }
 }
+
+
+echo "host  all  all 0.0.0.0/0 md5" >> /usr/local/var/postgres/pg_hba.conf
+postgres -i
+ALTER USER tonyf WITH PASSWORD 'AAA';
+psql -h 10.10.10.169
+
+https://docs.openclinica.com/3.1/technical-documents/system-administration/configure-postgres-allow-additional-connections
+
 
 //-------------- Tony Temp Work Space -------------------
 get("/tf_tmp",(request,response)->{
