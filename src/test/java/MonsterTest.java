@@ -6,6 +6,9 @@ import java.util.List;
 
 public class MonsterTest {
 
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
+
   @Test
   public void monster_InstantiatesCorrectly(){
     Monster firstMonster = new Monster(1, "Bulbasaur");
