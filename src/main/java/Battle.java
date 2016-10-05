@@ -114,47 +114,6 @@ public class Battle {
     }
   }
 
-
-  // resolveStatus()
-  // takes in player_monster
-  // run down switch case based on status of monster
-  //   normal proceeds as usual
-  //   stunned has card_id set to 0 and sets status to normal
-  //   paralyzed sets card_id to 0 and has a 50% chance to set to normal
-  //   asleep sets card_id to 0 and has a 25% chance to set to normal
-  //   afraid checks card_id to 0 if card type is an attack type and has a 50% chance to set to normal
-  //   berserk sets card_id to 0 if card type is a defense type and has a 50% chance to set to normal
-  //   confused sets card_id to a random card from the five positions and has a 25% chance to set to normal
-  //   poisoned deals 5 damage to monster and has a 50% chance to set to normal
-
-  public void discard(Monster _monster, int _card_id){
-
-  }
-  // discard()
-  // takes in player number, card_id
-  // discriminates by player number, setting temp versions of hand and discard
-  // takes in player_hand, player_discard, card_id
-  // removes first instance of card_id from player_hand
-  // adds card_id to player_discard
-  // discriminates by player number again, setting the appropriate vars from the temp vars
-  //
-  // shuffle()
-  // takes in player number
-  // discriminates by player number, setting temp versions of deck, hand and discard
-  // sets all card_ids in hand to 0 and moves all cards from discard to deck
-  // discriminates by player number again, setting the appropriate vars from the temp vars
-  //
-  // draw()
-  // takes in player number
-  // discriminates by player number, setting temp versions of deck, hand and discard
-  // Removes all cards with id 0 from hand
-  // Checks how many cards it takes to increase hand to 5
-  // Checks if deck has that many cards
-  // If it does, moves said amount of cards from draw to hand
-  // If not, shuffle()
-  // discriminates by player number again, setting the appropriate vars from the temp vars
-
-
   public void executeAbilities(int _active_card_id, int _passive_card_id, Monster _active_monster, Monster _passive_monster, int _activePlayer){
 
     switch (_active_card_id){
@@ -173,3 +132,15 @@ public class Battle {
 
   }
 }
+
+// resolveStatus()
+// takes in player_monster
+// run down switch case based on status of monster
+//   normal proceeds as usual
+//   stunned has card_id set to 0 and sets status to normal
+//   paralyzed sets card_id to 0 and has a 50% chance to set to normal
+//   asleep sets card_id to 0 and has a 25% chance to set to normal
+//   afraid checks card_id to 0 if card type is an attack type and has a 50% chance to set to normal
+//   berserk sets card_id to 0 if card type is a defense type and has a 50% chance to set to normal
+//   confused sets card_id to a random card from the five positions and has a 25% chance to set to normal
+//   poisoned deals 5 damage to monster and has a 50% chance to set to normal

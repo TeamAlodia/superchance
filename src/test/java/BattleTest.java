@@ -18,6 +18,10 @@ public class BattleTest {
 
     Battle firstBattle = new Battle(firstMonster, secondMonster, 1, 2);
 
+    firstMonster.draw();
+    firstMonster.removeFromHand(firstMonster.getHand().get(0));
+    firstMonster.shuffle();
+
     assertTrue(firstBattle instanceof Battle);
   }
 

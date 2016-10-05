@@ -1,6 +1,7 @@
 import java.util.List;
 import org.sql2o.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Monster {
   // Database vars
@@ -28,17 +29,17 @@ public class Monster {
   private List<Integer> discard = new ArrayList<Integer>();
 
 
-  public Monster(int _species_id, String _name, int _player_id) {
+  public Monster(int _species_id, String _name) {
     species_id = _species_id;
     name = _name;
-    player_id = _player_id;
+    // player_id = _player_id;
 
     // Instantiate a species of the right type and populate remaining vars
-    Species species = Species.find(_species_id);
-    max_health = species.getMax_Health();
-    base_power = species.getBase_Power();
-    base_defense = species.getBase_Defense();
-    species_name = species.getSpecies_Name();
+    // Species species = Species.find(_species_id);
+    // max_health = species.getMax_Health();
+    // base_power = species.getBase_Power();
+    // base_defense = species.getBase_Defense();
+    // species_name = species.getSpecies_Name();
   }
 
 
@@ -253,8 +254,37 @@ public class Monster {
     }
   }
 
-  public void removeFromDeck(int _card_id){
-    
+  public void removeFromHand(int _card_id){
+    int index = hand.indexOf(_card_id);
+    // System.out.println(discard.size());
+    discard.add(hand.get(index));
+    hand.remove(index);
+    // System.out.println(discard.size());
+    // System.out.println(hand.size());
+  }
+
+  public void draw(){
+    int handSize = hand.size();
+    int diff = 5 - hand.size();
+
+    for(int i = 0; i < diff; i++){
+      int deckSize = deck.size();
+      Random myRandomGenerator = new Random();
+      int random = myRandomGenerator.nextInt(deckSize);
+      hand.add(deck.get(random));
+      deck.remove(random);
+      // System.out.println(hand.get(i));
+
+    }
+  }
+
+  public void shuffle(){
+    System.out.println(deck.size());
+    System.out.println(discard.size());
+    deck.addAll(discard);
+    discard.clear();
+    System.out.println(deck.size());
+    System.out.println(discard.size());
   }
 
   // increaseHealth

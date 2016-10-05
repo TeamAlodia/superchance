@@ -19,8 +19,8 @@ public class DatabaseRule extends ExternalResource {
       sql = "DELETE FROM players *;";
       con.createQuery(sql).executeUpdate();
 
-      sql = "DELETE FROM species *;";
-      con.createQuery(sql).executeUpdate();
+      // sql = "DELETE FROM species *;";
+      // con.createQuery(sql).executeUpdate();
 
       // sql = "DELETE FROM cards *;";
       // con.createQuery(sql).executeUpdate();

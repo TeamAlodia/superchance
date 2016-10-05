@@ -10,12 +10,12 @@ public class Species {
   private int base_power;
   private int base_defense;
 
-  public Species(String _name, int _max_health, int _base_power, int _base_defense){
-    species_name = _name;
-    max_health = _max_health;
-    base_power = _base_power;
-    base_defense = _base_defense;
-  }
+  // public Species(String _name, int _max_health, int _base_power, int _base_defense){
+  //   species_name = _name;
+  //   max_health = _max_health;
+  //   base_power = _base_power;
+  //   base_defense = _base_defense;
+  // }
 
   public int getId(){
     return id;
