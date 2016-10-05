@@ -75,11 +75,12 @@ public class Card{
   //// Create
   public void create(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "INSERT INTO cards (name, element_id, card_type, description) VALUES (:name, :element_id, :card_type, :description)";
+      String sql = "INSERT INTO cards (name, element_id, card_type, description, target) VALUES (:name, :element_id, :card_type, :description, :target)";
       id = (int) con.createQuery(sql,true)
         .addParameter("name",name)
         .addParameter("element_id",element_id)
         .addParameter("card_type",card_type)
+        .addParameter("target", target)
         .addParameter("description",description)
         .executeUpdate()
         .getKey();
@@ -94,6 +95,25 @@ public class Card{
         .executeAndFetch(Card.class);
     }
   }
+
+  public static List<Card> readAllNormal() {
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM cards WHERE element_id = :none";
+      return con.createQuery(sql)
+        .addParameter("none", 0)
+        .executeAndFetch(Card.class);
+    }
+  }
+
+  public static List<Card> readAllTypeSpecific() {
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM cards WHERE element_id > :none";
+      return con.createQuery(sql)
+        .addParameter("none", 0)
+        .executeAndFetch(Card.class);
+    }
+  }
+
   public static Card readById(int _id){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM cards WHERE id = :id";
@@ -102,18 +122,27 @@ public class Card{
         .executeAndFetchFirst(Card.class);
     }
   }
+  // public static Card readByName(String _name){
+  //   try(Connection con = DB.sql2o.open()){
+  //     String sql = "SELECT * FROM cards WHERE name = :name";
+  //     return con.createQuery(sql)
+  //       .addParameter("name",_name)
+  //       .executeAndFetchFirst(Card.class);
+  //   }
+  // }
 
   //// Update
   public void update(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE cards SET element_id=:element_id, name=:name, card_type=:card_type, description=:description WHERE id = :id";
+      String sql = "UPDATE cards SET element_id=:element_id, name=:name, card_type=:card_type, description=:description, target=:target WHERE id = :id";
       con.createQuery(sql)
         .addParameter("element_id",element_id)
         .addParameter("name",name)
         .addParameter("card_type",card_type)
         .addParameter("description",description)
+        .addParameter("target", target)
         .addParameter("id",id)
-        .executeAndFetchFirst(Card.class);
+        .executeUpdate();
     }
   }
 
