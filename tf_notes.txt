@@ -8,8 +8,6 @@ INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (1, 1, 'deck');
 INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (2, 1, 'deck');
 INSERT INTO cards_monsters (card_id, monster_id, state) VALUES (3, 1, 'deck');
 
-
-
 //Join Statment That Gets All Monsters Cards
 public List<Card> getAllMonsterCards(int _monster_id){
   Monster monster = Monster.find(_monster_id);

@@ -259,12 +259,10 @@ public class Battle {
 
   public int getCardID(int _card_monsters_id){
     try(Connection con = DB.sql2o.open()){
-
       String sql = "SELECT card_id FROM cards_monsters WHERE id=:id";
       return con.createQuery(sql)
         .addParameter("id", _card_monsters_id)
         .executeAndFetchFirst(Integer.class);
-
     }
   }
 
