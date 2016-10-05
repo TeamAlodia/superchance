@@ -17,17 +17,17 @@ public class Battle {
   private int round = 0;
   private boolean listening = false;
 
-  private static final String STATUS_NORMAL = "normal";
+  public static final String STATUS_NORMAL = "normal";
 
-  private static final String STATUS_STUNNED = "stunned";
-  private static final String STATUS_PARALYZED = "paralyzed";
-  private static final String STATUS_ASLEEP = "asleep";
+  public static final String STATUS_STUNNED = "stunned";
+  public static final String STATUS_PARALYZED = "paralyzed";
+  public static final String STATUS_ASLEEP = "asleep";
 
-  private static final String STATUS_AFRAID = "afraid";
-  private static final String STATUS_BERSERK = "berserk";
-  private static final String STATUS_CONFUSED = "confused";
+  public static final String STATUS_AFRAID = "afraid";
+  public static final String STATUS_BERSERK = "berserk";
+  public static final String STATUS_CONFUSED = "confused";
 
-  private static final String STATUS_POISONED = "poisoned";
+  public static final String STATUS_POISONED = "poisoned";
 
   //--Probably needs to be in App.java--
   // event handler for keypress
