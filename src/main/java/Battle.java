@@ -14,15 +14,6 @@ public class Battle {
   private int player_one_card_id;
   private int player_two_card_id;
 
-  private List<Integer> player_one_deck = new ArrayList<Integer>();
-  private List<Integer> player_two_deck = new ArrayList<Integer>();
-
-  private List<Integer> player_one_hand = new ArrayList<Integer>();
-  private List<Integer> player_two_hand = new ArrayList<Integer>();
-
-  private List<Integer> player_one_discard = new ArrayList<Integer>();
-  private List<Integer> player_two_discard = new ArrayList<Integer>();
-
   private int round = 0;
   private boolean listening = false;
 
@@ -43,12 +34,40 @@ public class Battle {
   // listens for keypress
   // if listening = true then set player_card_id to card_id of keypress
   //
-  // incrementRound
-  // increase round by one
-  //
+
+  public void incrementRound(){
+    round++;
+  }
+
+  public String resolveTurn(int _player_one_card_id, int _player_two_card_id){
+    player_one_card_id = _player_one_card_id;
+    player_two_card_id = _player_two_card_id;
+
+    listening = false;
+
+    // resolveStatus(player_one_monster);
+    // resolveStatus(player_two_monster);
+    //
+    // executeAbilities(player_one_card_id);
+    // executeAbilities(player_two_card_id);
+    //
+    // discard(player_one_card_id);
+    // discard(player_two_card_id);
+
+    if(player_one_monster.getAlive() == player_two_monster.getAlive()){
+      if(player_one_monster.getAlive()){
+        return "Continue";
+      }else {
+        return "Draw";
+      }
+    }else if(player_one_monster.getAlive()){
+      return "Player One";
+    }else {
+      return "Player Two";
+    }
+
+  }
   // resolveTurn()
-  // set listening to false
-  // run resolveStatus() for each monster
   // call executeAbilities() for both cards
   // run discard() for both cards
   // run getAlive() for both monsters
