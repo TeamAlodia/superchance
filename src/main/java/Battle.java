@@ -19,7 +19,7 @@ import java.util.Random;
 For each Player:
 1. If DECK size == 0, shuffle INACTIVE hards into DECK
 2. Select card from DECK and put in HAND
-3. Player selects card from HAND and mark XXX_monster_done = true
+3. Player selects card from HAND and set*MonsterDone(true)
 
 // Battle Logic (if (first_monster_done == true && second_monster_done = true)
 1. Select ABILITY from cards_abilities where cards_abilities.card_id == cards.id
@@ -28,6 +28,7 @@ For each Player:
 3. ???
 4. Update HEALTH for both monsters
 5. Update card state to DISCARD
+6. set*MonsterDone(false)
 
 // Post Battle Work (if first_monster.HEALTH == 0 || second_monster.HEALTH ==0)
 1. Determine Winner and Loser
@@ -41,8 +42,7 @@ For each Player:
 4. Trigger Winner/Loser UI
 
 // ???
-- Where to put the combat loop? App.java
-- Case where both DEFEND?
+- Where to put the combat loop?
 
 */
 public class Battle {
@@ -54,17 +54,11 @@ public class Battle {
   private boolean first_monster_done;
   private boolean second_monster_done;
 
-  // Class Variables
-  int first_monster_deck_size;
-  int second_monster_deck_size;
-
   public Battle(int _first_monster_id, int _second_monster_id){
     first_monster_id = _first_monster_id;
     second_monster_id = _second_monster_id;
     first_monster_done = false;
     second_monster_done = false;
-
-    this.save();
   }
 
   // Getters/Setters
@@ -86,6 +80,14 @@ public class Battle {
 
   public boolean getSecondMonsterDone() {
     return second_monster_done;
+  }
+
+  public void setFirstMonsterDone(boolean _first_monster_done) {
+    first_monster_done = _first_monster_done;
+  }
+
+  public void setSecondMonsterDone(boolean _second_monster_done) {
+    second_monster_done = _second_monster_done;
   }
 
   // Database Methods
@@ -160,7 +162,7 @@ public class Battle {
 
     int battleHealth = monster.getBase_Health() * (1/monster.getRest());
 
-    monster.setIn_Battle(false);
+    monster.setIn_Battle(true);
     monster.setHealth(battleHealth);
     monster.setPower(monster.getBase_Power());
     monster.setDefense(monster.getBase_Defense());
@@ -169,9 +171,8 @@ public class Battle {
     List<Integer> monsterCards = getAllPotentialCardIds(_monster_id);
 
     // add all cards as inactive
-    for(Integer card_id : monsterCards){
-	     addMonsterCard(card_id, _monster_id, CardStatus.INACTIVE);
-    }
+    for(Integer card_id : monsterCards)
+      addMonsterCard(card_id, _monster_id, CardStatus.INACTIVE);
 
   }
 
@@ -216,6 +217,12 @@ public class Battle {
 
   public void getRandomDeckCard(int _monster_id) {
 
+    // usable but prob not the best place for this:
+    if(_monster_id == first_monster_id)
+      setFirstMonsterDone(false);
+    else
+      setSecondMonsterDone(false);
+
     List<Integer> deckCards = getMonsterCards(_monster_id, CardStatus.DECK);
 
     //Reshuffle deck if depleated
@@ -235,7 +242,12 @@ public class Battle {
   }
 
   // marks card discarded and returns the card_id
-  public int playCard(int _card_monsters_id){
+  public int playCard(int _monster_id, int _card_monsters_id){
+
+    if(_monster_id == first_monster_id)
+      setFirstMonsterDone(true);
+    else
+      setSecondMonsterDone(true);
 
     // discard
     updateMonsterCard(_card_monsters_id, CardStatus.DISCARD);
@@ -269,7 +281,7 @@ public class Battle {
 
   private int randomInt(int min, int max){
     Random rand = new Random();
-    return rand.nextInt(max - min)+min;
+    return(rand.nextInt(max - min)+min);
   }
 
   // clears out all monster's cards from cards_monsters
@@ -281,14 +293,5 @@ public class Battle {
         .executeUpdate();
     }
   }
-
-
-
-
-
-
-
-
-
 
 }

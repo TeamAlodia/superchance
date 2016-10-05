@@ -25,6 +25,15 @@ public List<Card> getAllMonsterCards(int _monster_id){
   }
 }
 
+
+echo "host  all  all 0.0.0.0/0 md5" >> /usr/local/var/postgres/pg_hba.conf
+postgres -i
+ALTER USER tonyf WITH PASSWORD 'AAA';
+psql -h 10.10.10.169
+
+https://docs.openclinica.com/3.1/technical-documents/system-administration/configure-postgres-allow-additional-connections
+
+
 //-------------- Tony Temp Work Space -------------------
 get("/tf_tmp",(request,response)->{
   Map<String,Object> model = new HashMap<>();
