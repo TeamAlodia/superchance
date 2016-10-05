@@ -31,6 +31,14 @@ public class MonsterTest {
   }
 
   @Test
+  public void monster_InstantiatesWithId_Serial(){
+    Monster firstMonster = new Monster(1, "Bulbasaur");
+    firstMonster.save();
+
+    assertTrue(firstMonster.getId() > 0);
+  }
+
+  @Test
   public void equals_ComparesCorrectly_WhenEqual(){
     Monster firstMonster = new Monster(1, "Bulbasaur");
     Monster secondMonster = firstMonster;

@@ -17,6 +17,14 @@ public class CardTest {
   }
 
   @Test
+  public void card_InstantiatesWithId_Serial(){
+    Card firstCard = new Card();
+    firstCard.save();
+
+    assertTrue(firstCard.getId() > 0);
+  }
+
+  @Test
   public void equals_ComparesCorrectly_WhenEqual(){
     Card firstCard = new Card();
     Card secondCard = firstCard;

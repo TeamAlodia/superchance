@@ -24,6 +24,14 @@ public class PlayerTest {
   }
 
   @Test
+  public void player_InstantiatesWithId_Serial(){
+    Player firstPlayer = new Player("Ash");
+    firstPlayer.save();
+
+    assertTrue(firstPlayer.getId() > 0);
+  }
+
+  @Test
   public void equals_ComparesCorrectly_WhenEqual(){
     Player firstPlayer = new Player("Ash");
     Player secondPlayer = firstPlayer;
