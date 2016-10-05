@@ -10,7 +10,7 @@ public class SpeciesTest {
   public DatabaseRule database = new DatabaseRule();
 
   @Test
-  public void player_InstantiatesCorrectly(){
+  public void species_InstantiatesCorrectly(){
     Species firstSpecies = new Species();
 
     assertTrue(firstSpecies instanceof Species);
