@@ -43,7 +43,6 @@ function turnLogic(event){
 
   } else if (event.keyCode === 59){
     $( "#p2-input" ).attr("value", "4");
-
   }
 };
 
