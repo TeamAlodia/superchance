@@ -1,3 +1,26 @@
+body{
+  margin: 0 auto;
+}
+
+#splash-screen-image{
+  margin: 0 auto;
+  width: 100%;
+  height: 1200px;
+  background-image: url("/images/monster-fight.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#splash-screen-filter{
+  margin: 0 auto;
+  width: 100%;
+  height: 1200px;
+  background-color: rgba(128,128,128,0.65);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .home {
   height: 30%
 }
@@ -16,4 +39,42 @@
 
 img{
   width: 100%
+}
+.jumbotron{
+  margin-top: 50px;
+  margin-bottom: 0;
+  text-align: center;
+  background-color: brown;
+  color: papayawhip;
+}
+
+.jumbotron,
+.navbar-brand {
+  font-family: 'Lalezar', cursive;
+}
+
+.jumbotron h1 {
+  font-size: 10rem;
+}
+
+.superscript{
+  font-size: 2rem;
+}
+
+#button-battle{
+  display: inline-block;
+  height: 100px;
+  width: 250px;
+  background-color: rgba(165,42,42,.8);
+  color: papayawhip;
+  font-size: 6rem;
+  margin: 350px auto 0;
+  border-radius: 50px;
+  box-shadow: 0 0 5px 5px white;
+  border: none;
+}
+#splash-screen-filter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
