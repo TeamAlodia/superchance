@@ -1,0 +1,17 @@
+<h3>Battle Will Commence Shortly</h3>
+
+<form action="/battle" method="post">
+  <label for="teamOne">Player One Monster</label>
+  <select name="teamOne">
+    #foreach($monster in $teamOne)
+      <option value="$monster.getId()">$monster.getName()</option>
+    #end
+  </select>
+  <label for="teamTwo">Player Two Monster</label>
+  <select name="teamTwo">
+    #foreach($monster in $teamTwo)
+      <option value="$monster.getId()">$monster.getName()</option>
+    #end
+  </select>
+  <button type="submit" name="button">Submit</button>
+</form>

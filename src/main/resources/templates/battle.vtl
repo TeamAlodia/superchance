@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row home">
+    <div class="col-md-2">
+      <p>HP</p>
+      <p>Deck Size: $monsterOne.getDeck().size()</p>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+      <p><img src='/images/cardback.jpg'/></p>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+      <p><img src='/images/cardback.jpg'/></p>
+    </div>
+  </div>
+  <div class="row space">
+  </div>
+  <div class="row hand">
+    <div class="col-md-2 col-md-offset-1">
+      <p><img src="/images/$monsterOne.getImage(0)"/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterOne.getImage(1)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterOne.getImage(2)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterOne.getImage(3)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterOne.getImage(4)'/></p>
+    </div>
+  </div>
+  <div class="row space">
+  </div>
+  <div class="row choice">
+    <div class="col-md-2 col-md-offset-4">
+      <p>Player 1 Choice</p>
+      <p><img src='/images/prog.jpg'/></p>
+    </div>
+    <div class="col-md-2">
+      <p>Player 2 Choice</p>
+      <p><img src='/images/subzero.jpg'/></p>
+    </div>
+  </div>
+  <div class="row space">
+  </div>
+  <div class="row hand">
+    <div class="col-md-2 col-md-offset-1">
+      <p><img src='/images/$monsterTwo.getImage(0)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterTwo.getImage(1)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterTwo.getImage(2)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterTwo.getImage(3)'/></p>
+    </div>
+    <div class="col-md-2">
+      <p><img src='/images/$monsterTwo.getImage(4)'/></p>
+    </div>
+  </div>
+  <div class="row space">
+  </div>
+  <div class="row home">
+    <div class="col-md-2">
+      <p>HP</p>
+      <p>Deck Size: $monsterTwo.getDeck().size()</p>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+      <p><img src='/images/cardback.jpg'/></p>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+      <p><img src='/images/cardback.jpg'/></p>
+    </div>
+  </div>
+</div>
+
+<form name="battle" action="/battle" method="post">
+  <input id="p1-input" name="p1-input" type="hidden" value="">
+  <input id="p2-input" name="p2-input" type="hidden" value="">
+</form>

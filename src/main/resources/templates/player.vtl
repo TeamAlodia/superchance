@@ -1,0 +1,9 @@
+<h3>$player.getName()</h3>
+
+Wins: $player.getWins() <br>
+Losses: $player.getLosses() <br>
+
+Monsters:
+#foreach($monster in $monsters)
+  <a href="/monsters/$monster.getId()">$monster.getName()</a> / 
+#end

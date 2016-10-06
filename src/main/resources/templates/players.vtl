@@ -1,0 +1,11 @@
+#foreach($player in $players)
+  <a href="/players/$player.getId()">$player.getName()</a> /
+#end
+
+<form action="/players" method="post">
+  <label for="name">Player Name</label>
+  <input name="name" type="text">
+  <label for="monster_name">Name your starter monster!</label>
+  <input type="text" name="monster_name" required>
+  <button type="submit" name="button">Submit</button>
+</form>
