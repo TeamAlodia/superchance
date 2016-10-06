@@ -145,19 +145,9 @@ public class Battle {
       case 1:
         if(!(_passive_card.getType().equals("block"))) {
           if(_passive_card.getType().equals("shield")) {
-            System.out.println("Shielded, extra damage taken");
-            System.out.println("Player One Power:" + _active_monster.getPower());
-            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
-
             int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1.25);
-
-            System.out.println("Damage done:" + damage);
-
             _passive_monster.decreaseHealth(damage);
           } else {
-            System.out.println("Not blocked");
-            System.out.println("Player One Power:" + _active_monster.getPower());
-            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
             int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1);
             _passive_monster.decreaseHealth(damage);
           }
@@ -166,26 +156,16 @@ public class Battle {
       case 2:
         if(!(_passive_card.getType().equals("shield"))) {
           if(_passive_card.getType().equals("block")) {
-            System.out.println("Shielded, extra damage taken");
-            System.out.println("Player One Power:" + _active_monster.getPower());
-            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
-
             int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1.25);
-
-            System.out.println("Damage done:" + damage);
-
             _passive_monster.decreaseHealth(damage);
           } else {
-            System.out.println("Not blocked");
-            System.out.println("Player One Power:" + _active_monster.getPower());
-            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
             int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1);
             _passive_monster.decreaseHealth(damage);
           }
         }
         break;
       case 3:
-        if(_passive_card.getType().equals("dodge") || _passive_card.getType().equals("none")) {
+        if(_passive_card.getType().equals("dodge") || _passive_card.getType().equals("none") || _passive_card.getType().equals("other")) {
           int damage = this.calcDamage(_active_monster, _passive_monster, 2, 2);
           _passive_monster.decreaseHealth(damage);
         }
@@ -196,10 +176,35 @@ public class Battle {
       case 7:
         _active_monster.increaseHealth(15);
         break;
-      case 8: break;
-      case 9: break;
-      case 10: break;
-      default: break;
+      case 8:
+        _active_monster.increasePower(2);
+        break;
+      case 9:
+        _passive_monster.decreaseDefense(1);
+        break;
+      case 10:
+        if(!(_passive_card.getType().equals("block"))) {
+          if(_passive_card.getType().equals("shield")) {
+            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1.25);
+            _passive_monster.decreaseHealth(damage);
+          } else {
+            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1);
+            _passive_monster.decreaseHealth(damage);
+          }
+        }
+
+        if(!(_passive_card.getType().equals("shield"))) {
+          if(_passive_card.getType().equals("block")) {
+            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1.25);
+            _passive_monster.decreaseHealth(damage);
+          } else {
+            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1);
+            _passive_monster.decreaseHealth(damage);
+          }
+        }
+        break;
+      default:
+        break;
     }
 
   }
