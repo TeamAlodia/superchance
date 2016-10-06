@@ -43,23 +43,17 @@ public class Battle {
     player_one_id = _player_one_id;
     player_two_id = _player_two_id;
 
-    this.buildDeck(player_one_monster);
-    this.buildDeck(player_two_monster);
+    player_one_monster.buildDeck();
+    player_two_monster.buildDeck();
 
   }
 
-  public void buildDeck(Monster _monster){
+  public Monster getPlayer_One_Monster(){
+    return player_one_monster;
+  }
 
-    try(Connection con = DB.sql2o.open()){
-      String sql = "SELECT card_id FROM species_cards WHERE species_id = :species_id";
-
-      List<Integer> results = con.createQuery(sql)
-        .addParameter("species_id", player_one_monster.getSpecies_Id())
-        .executeAndFetch(Integer.class);
-
-      player_one_monster.setDeck(results);
-
-    }
+  public Monster getPlayer_Two_Monster(){
+    return player_two_monster;
   }
 
   public void incrementRound(){

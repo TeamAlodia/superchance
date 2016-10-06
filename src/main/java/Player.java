@@ -72,11 +72,9 @@ public class Player {
   public static List<Player> all(){
     try(Connection con = DB.sql2o.open()){
       String sql = "SELECT * FROM players";
-
       return con.createQuery(sql)
         .executeAndFetch(Player.class);
     }
-
   }
 
   public void update(){

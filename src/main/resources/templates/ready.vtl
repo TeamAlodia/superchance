@@ -1,0 +1,19 @@
+<h3>Battle will commence soon.</h3>
+
+
+<form action="/set" method="post">
+  <label for="playerOne">Player One</label>
+  <select name="playerOne">
+    #foreach($player in $players)
+      <option value="$player.getId()">$player.getName()</option>
+    #end
+  </select>
+
+  <label for="playerTwo">Player Two</label>
+  <select name="playerTwo" required>
+    #foreach($player in $players)
+      <option value="$player.getId()">$player.getName()</option>
+    #end
+  </select>
+  <button type="submit" name="button">Submit</button>
+</form>

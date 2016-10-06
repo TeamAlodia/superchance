@@ -24,22 +24,32 @@ public class Monster {
   private boolean alive = true;
   private String status;
 
-  private List<Integer> deck = new ArrayList<Integer>();
-  private List<Integer> hand = new ArrayList<Integer>();
-  private List<Integer> discard = new ArrayList<Integer>();
+  private List<Integer> deck;
+  private List<Integer> hand;
+  private List<Integer> discard;
 
+  public Monster(){
+    deck = new ArrayList<Integer>();
+    hand = new ArrayList<Integer>();
+    discard = new ArrayList<Integer>();
+  }
 
-  public Monster(int _species_id, String _name) {
+  public Monster(int _species_id, String _name, int _player_id) {
     species_id = _species_id;
     name = _name;
-    // player_id = _player_id;
+    player_id = _player_id;
+
+
+    deck = new ArrayList<Integer>();
+    hand = new ArrayList<Integer>();
+    discard = new ArrayList<Integer>();
 
     // Instantiate a species of the right type and populate remaining vars
-    // Species species = Species.find(_species_id);
-    // max_health = species.getMax_Health();
-    // base_power = species.getBase_Power();
-    // base_defense = species.getBase_Defense();
-    // species_name = species.getSpecies_Name();
+    Species species = Species.find(_species_id);
+    max_health = species.getMax_Health();
+    base_power = species.getBase_Power();
+    base_defense = species.getBase_Defense();
+    species_name = species.getSpecies_Name();
   }
 
 
@@ -222,7 +232,15 @@ public class Monster {
       return con.createQuery(sql)
         .executeAndFetch(Monster.class);
     }
+  }
 
+  public static List<Monster> allByPlayer(int _player_id){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM monsters WHERE player_id = :player_id";
+      return con.createQuery(sql)
+        .addParameter("player_id", _player_id)
+        .executeAndFetch(Monster.class);
+    }
   }
 
   public void update(){
@@ -256,6 +274,7 @@ public class Monster {
 
   public void removeFromHand(int _card_id){
     int index = hand.indexOf(_card_id);
+    // System.out.println(index);
     // System.out.println(discard.size());
     discard.add(hand.get(index));
     hand.remove(index);
@@ -265,26 +284,46 @@ public class Monster {
 
   public void draw(){
     int handSize = hand.size();
-    int diff = 5 - hand.size();
+    int deckSize = deck.size();
+
+    // System.out.println(">> " + deck.size());
+
+    int diff = 5 - handSize;
+
+    // System.out.println(diff);
 
     for(int i = 0; i < diff; i++){
-      int deckSize = deck.size();
       Random myRandomGenerator = new Random();
       int random = myRandomGenerator.nextInt(deckSize);
+      Integer catcher = deck.get(random);
+      // System.out.println(">" + deck.get(random));
       hand.add(deck.get(random));
       deck.remove(random);
-      // System.out.println(hand.get(i));
+      deckSize = deck.size();
+    }
+  }
+
+  public void buildDeck(){
+
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT card_id FROM species_cards WHERE species_id = :species_id";
+
+      List<Integer> results = con.createQuery(sql)
+        .addParameter("species_id", this.getSpecies_Id())
+        .executeAndFetch(Integer.class);
+
+      this.setDeck(results);
 
     }
   }
 
   public void shuffle(){
-    System.out.println(deck.size());
-    System.out.println(discard.size());
+    // System.out.println(deck.size());
+    // System.out.println(discard.size());
     deck.addAll(discard);
     discard.clear();
-    System.out.println(deck.size());
-    System.out.println(discard.size());
+    // System.out.println(deck.size());
+    // System.out.println(discard.size());
   }
 
   // increaseHealth
@@ -347,5 +386,9 @@ public class Monster {
 
     if(defense < 1)
       defense = 1;
+  }
+
+  public String getImage(int _index){
+    return hand.get(_index) + ".jpg";
   }
 }
