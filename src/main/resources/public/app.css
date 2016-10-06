@@ -69,7 +69,10 @@ img{
   margin-bottom: 0;
   text-align: center;
   background-color: brown;
+}
+.jumbotron h1 a{
   color: papayawhip;
+  text-decoration: none;
 }
 
 .jumbotron,
