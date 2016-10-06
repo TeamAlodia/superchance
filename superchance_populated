@@ -2,17 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.0
--- Dumped by pg_dump version 9.6.0
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -35,21 +30,23 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: cards; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cards; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE cards (
     id integer NOT NULL,
     name character varying,
     description character varying,
-    type character varying
+    type character varying,
+    power_bonus integer,
+    defense_bonus integer
 );
 
 
-ALTER TABLE cards OWNER TO postgres;
+ALTER TABLE cards OWNER TO "Guest";
 
 --
--- Name: cards_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE cards_id_seq
@@ -60,17 +57,17 @@ CREATE SEQUENCE cards_id_seq
     CACHE 1;
 
 
-ALTER TABLE cards_id_seq OWNER TO postgres;
+ALTER TABLE cards_id_seq OWNER TO "Guest";
 
 --
--- Name: cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE cards_id_seq OWNED BY cards.id;
 
 
 --
--- Name: monsters; Type: TABLE; Schema: public; Owner: postgres
+-- Name: monsters; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE monsters (
@@ -87,10 +84,10 @@ CREATE TABLE monsters (
 );
 
 
-ALTER TABLE monsters OWNER TO postgres;
+ALTER TABLE monsters OWNER TO "Guest";
 
 --
--- Name: monsters_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: monsters_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE monsters_id_seq
@@ -101,17 +98,17 @@ CREATE SEQUENCE monsters_id_seq
     CACHE 1;
 
 
-ALTER TABLE monsters_id_seq OWNER TO postgres;
+ALTER TABLE monsters_id_seq OWNER TO "Guest";
 
 --
--- Name: monsters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: monsters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE monsters_id_seq OWNED BY monsters.id;
 
 
 --
--- Name: players; Type: TABLE; Schema: public; Owner: postgres
+-- Name: players; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE players (
@@ -122,10 +119,10 @@ CREATE TABLE players (
 );
 
 
-ALTER TABLE players OWNER TO postgres;
+ALTER TABLE players OWNER TO "Guest";
 
 --
--- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE players_id_seq
@@ -136,17 +133,17 @@ CREATE SEQUENCE players_id_seq
     CACHE 1;
 
 
-ALTER TABLE players_id_seq OWNER TO postgres;
+ALTER TABLE players_id_seq OWNER TO "Guest";
 
 --
--- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE players_id_seq OWNED BY players.id;
 
 
 --
--- Name: species; Type: TABLE; Schema: public; Owner: postgres
+-- Name: species; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE species (
@@ -158,10 +155,10 @@ CREATE TABLE species (
 );
 
 
-ALTER TABLE species OWNER TO postgres;
+ALTER TABLE species OWNER TO "Guest";
 
 --
--- Name: species_cards; Type: TABLE; Schema: public; Owner: postgres
+-- Name: species_cards; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE species_cards (
@@ -171,10 +168,10 @@ CREATE TABLE species_cards (
 );
 
 
-ALTER TABLE species_cards OWNER TO postgres;
+ALTER TABLE species_cards OWNER TO "Guest";
 
 --
--- Name: species_cards_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: species_cards_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE species_cards_id_seq
@@ -185,17 +182,17 @@ CREATE SEQUENCE species_cards_id_seq
     CACHE 1;
 
 
-ALTER TABLE species_cards_id_seq OWNER TO postgres;
+ALTER TABLE species_cards_id_seq OWNER TO "Guest";
 
 --
--- Name: species_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: species_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE species_cards_id_seq OWNED BY species_cards.id;
 
 
 --
--- Name: species_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: species_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE species_id_seq
@@ -206,77 +203,77 @@ CREATE SEQUENCE species_id_seq
     CACHE 1;
 
 
-ALTER TABLE species_id_seq OWNER TO postgres;
+ALTER TABLE species_id_seq OWNER TO "Guest";
 
 --
--- Name: species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE species_id_seq OWNED BY species.id;
 
 
 --
--- Name: cards id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY cards ALTER COLUMN id SET DEFAULT nextval('cards_id_seq'::regclass);
 
 
 --
--- Name: monsters id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY monsters ALTER COLUMN id SET DEFAULT nextval('monsters_id_seq'::regclass);
 
 
 --
--- Name: players id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::regclass);
 
 
 --
--- Name: species id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY species ALTER COLUMN id SET DEFAULT nextval('species_id_seq'::regclass);
 
 
 --
--- Name: species_cards id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY species_cards ALTER COLUMN id SET DEFAULT nextval('species_cards_id_seq'::regclass);
 
 
 --
--- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY cards (id, name, description, type) FROM stdin;
-1	Maul	Bear have claws. Now, so does your face. (Attack: POW+1)	physical
-2	Vengeful Wild Spirits	Spirits angry. Bear call spirits. Spirits hit you. (Attack: POW+0)	special
-3	Bear Hug	Bear hug you and squeeze you and love you forever and ever. (Attack: POW+2)	throw
-4	Thick Padding	Bear have fur. Also fat. (Defend: DEF+0)	block
-5	Wild Spirit Guardian	Spirits like bear. Bear call spirits. Spirits stop you hitting bear. (Defend: DEF+2)	shield
-6	Surprising Speed	Bear cannot be hit when use lighting-ninja skills. (Defend: DEF+1)	dodge
-7	Hibernate	Nap time for Bear. (Recover: 15HP(Max 30))	other
-8	Enrage	Bear have fur. Also fat. (Defend: DEF+0)	other
-9	Intimidating Roar	Spirits like bear. Bear call spirits. Spirits stop you hitting bear. (Defend: DEF+2)	other
-10	Cubs Present	BEAR NO LET YOU HURT CUBS NOW DIE. (Defend type block: DEF+10, Attack type physical: (POW + amount of damage prevented))	other
+COPY cards (id, name, description, type, power_bonus, defense_bonus) FROM stdin;
+1	Maul	Bear have claws. Now, so does your face. (Attack: POW+1)	physical	1	0
+2	Vengeful Wild Spirits	Spirits angry. Bear call spirits. Spirits hit you. (Attack: POW+0)	special	0	0
+3	Bear Hug	Bear hug you and squeeze you and love you forever and ever. (Attack: POW+2)	throw	2	0
+4	Thick Padding	Bear have fur. Also fat. (Defend: DEF+0)	block	0	0
+5	Wild Spirit Guardian	Spirits like bear. Bear call spirits. Spirits stop you hitting bear. (Defend: DEF+2)	shield	0	2
+6	Surprising Speed	Bear cannot be hit when use lighting-ninja skills. (Defend: DEF+1)	dodge	0	0
+7	Hibernate	Nap time for Bear. (Recover: 15HP(Max 30))	other	0	0
+8	Enrage	Bear have fur. Also fat. (Defend: DEF+0)	other	0	0
+10	Cubs Present	BEAR NO LET YOU HURT CUBS NOW DIE. (Defend type block: DEF+10, Attack type physical: (POW + amount of damage prevented))	block	0	10
+9	Intimidating Roar	Spirits like bear. Bear call spirits. Spirits stop you hitting bear. (Defend: DEF+2)	other	0	0
 \.
 
 
 --
--- Name: cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('cards_id_seq', 10, true);
 
 
 --
--- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: monsters; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY monsters (id, player_id, species_id, species_name, name, max_health, base_power, base_defense, wins, losses) FROM stdin;
@@ -284,14 +281,14 @@ COPY monsters (id, player_id, species_id, species_name, name, max_health, base_p
 
 
 --
--- Name: monsters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: monsters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('monsters_id_seq', 1, false);
+SELECT pg_catalog.setval('monsters_id_seq', 16, true);
 
 
 --
--- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY players (id, name, wins, losses) FROM stdin;
@@ -299,23 +296,23 @@ COPY players (id, name, wins, losses) FROM stdin;
 
 
 --
--- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('players_id_seq', 1, false);
+SELECT pg_catalog.setval('players_id_seq', 16, true);
 
 
 --
--- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY species (id, species_name, max_health, base_power, base_defense) FROM stdin;
-1	Bear	30	8	3
+1	Bear	50	8	3
 \.
 
 
 --
--- Data for Name: species_cards; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: species_cards; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY species_cards (id, species_id, card_id) FROM stdin;
@@ -353,21 +350,21 @@ COPY species_cards (id, species_id, card_id) FROM stdin;
 
 
 --
--- Name: species_cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: species_cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('species_cards_id_seq', 30, true);
 
 
 --
--- Name: species_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: species_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('species_id_seq', 1, true);
 
 
 --
--- Name: cards cards_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: cards_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY cards
@@ -375,7 +372,7 @@ ALTER TABLE ONLY cards
 
 
 --
--- Name: monsters monsters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: monsters_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY monsters
@@ -383,7 +380,7 @@ ALTER TABLE ONLY monsters
 
 
 --
--- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: players_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY players
@@ -391,7 +388,7 @@ ALTER TABLE ONLY players
 
 
 --
--- Name: species_cards species_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: species_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY species_cards
@@ -399,11 +396,21 @@ ALTER TABLE ONLY species_cards
 
 
 --
--- Name: species species_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: species_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY species
     ADD CONSTRAINT species_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: epicodus
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM epicodus;
+GRANT ALL ON SCHEMA public TO epicodus;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
