@@ -71,21 +71,31 @@ public class App {
 
     post("/set", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      int playerOne = Integer.parseInt(request.queryParams("playerOne"));
-      int playerTwo = Integer.parseInt(request.queryParams("playerTwo"));
 
-      if(playerOne== playerTwo){
+      int playerOne = 0;
+      int playerTwo = 1;
+
+      if(request.queryParams("playerOne") != null && request.queryParams("playerTwo") != null){
+        playerOne = Integer.parseInt(request.queryParams("playerOne"));
+        playerTwo = Integer.parseInt(request.queryParams("playerTwo"));
+
+        if(playerOne == playerTwo){
+          model.put("players", Player.all());
+          model.put("template", "templates/ready.vtl");
+          return new ModelAndView(model, layout);
+        }
+
+        request.session().attribute("playerOne", playerOne);
+        request.session().attribute("playerTwo", playerTwo);
+        request.session().removeAttribute("battle");
+
+        request.session().attribute("lastCardPlayerOne", "cardback.png");
+        request.session().attribute("lastCardPlayerTwo", "cardback.png");
+      } else{
         model.put("players", Player.all());
         model.put("template", "templates/ready.vtl");
         return new ModelAndView(model, layout);
       }
-
-      request.session().attribute("playerOne", playerOne);
-      request.session().attribute("playerTwo", playerTwo);
-      request.session().removeAttribute("battle");
-
-      request.session().attribute("lastCardPlayerOne", "cardback.png");
-      request.session().attribute("lastCardPlayerTwo", "cardback.png");
 
       model.put("teamOne", Monster.allByPlayer(playerOne));
       model.put("teamTwo", Monster.allByPlayer(playerTwo));

@@ -2,9 +2,17 @@
 <br>
 #if($resolve.equals("Player One"))
   <h2 style="font-size: 350px;color:brown;">$playerOne.getName() WINS!</h2>
+  $playerOne.incrementWins()
+  $playerTwo.incrementLosses()
+  $playerOne.update()
+  $playerTwo.update()
 #end
 #if($resolve.equals("Player Two"))
   <h2 style="font-size: 350px;color:papayawhip;">$playerTwo.getName() WINS!</h2>
+  $playerTwo.incrementWins()
+  $playerOne.incrementLosses()
+  $playerTwo.update()
+  $playerOne.update()
 #end
 #if($resolve.equals("Draw"))
   <h2 style="font-size: 350px;">Everyone loses!</h2>
