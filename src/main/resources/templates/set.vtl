@@ -1,17 +1,28 @@
-<h3>Battle Will Commence Shortly</h3>
-
-<form action="/battle" method="post">
-  <label for="teamOne">Player One Monster</label>
-  <select name="teamOne">
-    #foreach($monster in $teamOne)
-      <option value="$monster.getId()">$monster.getName()</option>
-    #end
-  </select>
-  <label for="teamTwo">Player Two Monster</label>
-  <select name="teamTwo">
-    #foreach($monster in $teamTwo)
-      <option value="$monster.getId()">$monster.getName()</option>
-    #end
-  </select>
-  <button type="submit" name="button">Submit</button>
-</form>
+<div class="container">
+  <div class="row">
+    <h2>Monster Select</h2>
+  </div>
+  <form action="/battle" method="post">
+    <div class="row">
+      <div class="col-md-6 player-select">
+        <label for="teamOne">Player One</label>
+        <select name="teamOne" class="form-control input-lg">
+          #foreach($monster in $teamOne)
+            <option value="$monster.getId()">$monster.getName()</option>
+          #end
+        </select>
+      </div>
+      <div class="col-md-6 player-select">
+        <label for="teamTwo">Player Two</label>
+        <select name="teamTwo" class="form-control input-lg">
+          #foreach($monster in $teamTwo)
+            <option value="$monster.getId()">$monster.getName()</option>
+          #end
+        </select>
+      </div>
+    </div>
+    <div class="row text-center">
+      <button id="button-submitPlayers" class="button" type="submit" name="button">Both Monsters Ready!</button>
+    </div>
+  </form>
+</div>
