@@ -33,6 +33,14 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/cards", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+
+      model.put("cards", Card.all());
+      model.put("template", "templates/cards.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     get("/players/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       int player_id = Integer.parseInt(request.params(":id"));
@@ -179,7 +187,6 @@ public class App {
     }, new VelocityTemplateEngine());
 
     post("/players", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("name");
       Player newPlayer = new Player(name);
       newPlayer.save();
