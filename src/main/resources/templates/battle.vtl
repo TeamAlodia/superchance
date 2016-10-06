@@ -2,8 +2,6 @@
   <p>Hi</p>
   <div class="row home">
     <div class="col-md-2">
-      <p>HP: $monsterOne.getHealth()</p>
-      <p>Deck Size: $monsterOne.getDeck().size()</p>
     </div>
   </div>
   <div class="row space">
@@ -22,23 +20,23 @@
       <p><img src='/images/$monsterOne.getImage(3)'/></p>
     </div>
     <div class="col-md-2">
-      <p><img src='/images/$monsterOne.getImage(4)'/></p>
+        <p><img src='/images/$monsterOne.getImage(4)'/></p>
     </div>
   </div>
   <div class="row space">
   </div>
   <div class="row choice">
-    <div class="col-md-2">
-      <p>Game Status: $resolve</p>
-    </div>
     <div class="col-md-2 col-md-offset-2">
-      <p>Player 1 Choice</p>
-      <p><img src='/images/prog.jpg'/></p>
+      <p style="color:brown; text-align:right;font-size:250px;">$monsterOne.getHealth()</p>
     </div>
     <div class="col-md-2">
-      <p>Player 2 Choice</p>
+      <p><img src='/images/$lastCardPlayerOne'/></p>
+    </div>
     <div class="col-md-2">
-      <p><img src='/images/prog.jpg'/></p>
+      <p><img src='/images/$lastCardPlayerTwo'/></p>
+    </div>
+    <div class="col-md-2">
+      <p style="color:papayawhip;font-size:250px;">$monsterTwo.getHealth()</p>
     </div>
   </div>
   <div class="row space">
@@ -64,8 +62,6 @@
   </div>
   <div class="row home">
     <div class="col-md-2">
-      <p>HP: $monsterTwo.getHealth()</p>
-      <p>Deck Size: $monsterTwo.getDeck().size()</p>
     </div>
   </div>
 </div>
