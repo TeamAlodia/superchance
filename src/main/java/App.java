@@ -70,6 +70,9 @@ public class App {
       request.session().attribute("playerTwo", playerTwo);
       request.session().removeAttribute("battle");
 
+      request.session().attribute("lastCardPlayerOne", "cardback.png");
+      request.session().attribute("lastCardPlayerTwo", "cardback.png");
+
       model.put("teamOne", Monster.allByPlayer(playerOne));
       model.put("teamTwo", Monster.allByPlayer(playerTwo));      model.put("template", "templates/set.vtl");
       return new ModelAndView(model, layout);
@@ -84,6 +87,10 @@ public class App {
       String resolve = "Continue";
       int playedOne;
       int playedTwo;
+
+      String lastCardPlayerOne = request.session().attribute("lastCardPlayerOne");
+      String lastCardPlayerTwo = request.session().attribute("lastCardPlayerTwo");
+
       // If battle is starting for first time
       if(battle == null) {
         int playerOne = request.session().attribute("playerOne");
@@ -108,23 +115,30 @@ public class App {
         if(!(request.queryParams("p1-input").equals(""))){
           int p1input = Integer.parseInt(request.queryParams("p1-input"));
           playedOne = monsterOne.getHand().get(p1input);
+          lastCardPlayerOne = monsterOne.getImage(p1input);
           monsterOne.removeFromHand(playedOne);
         } else {
           playedOne = 0;
+          request.session().attribute("lastCardPlayerOne", "cardback.png");
         }
 
         if(!(request.queryParams("p2-input").equals(""))){
           int p2input = Integer.parseInt(request.queryParams("p2-input"));
 
           playedTwo = monsterTwo.getHand().get(p2input);
+          lastCardPlayerTwo = monsterTwo.getImage(p2input);
           monsterTwo.removeFromHand(playedTwo);
         } else {
           playedTwo = 0;
+          request.session().attribute("lastCardPlayerTwo", "cardback.png");
         }
 
         resolve = battle.resolveTurn(playedOne, playedTwo);
         model.put("resolve", resolve);
       }
+
+      model.put("lastCardPlayerOne", lastCardPlayerOne);
+      model.put("lastCardPlayerTwo", lastCardPlayerTwo);
 
       // If deck is 0, reshuffle
       if(monsterOne.getDeck().size() == 0) {
