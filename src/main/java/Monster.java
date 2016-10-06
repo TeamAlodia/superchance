@@ -389,6 +389,6 @@ public class Monster {
   }
 
   public String getImage(int _index){
-    return hand.get(_index) + ".jpg";
+    return hand.get(_index) + ".png";
   }
 }
