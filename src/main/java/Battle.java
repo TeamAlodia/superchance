@@ -92,6 +92,7 @@ public class Battle {
     if(player_two_card_id != 0) {
       executeAbilities(player_two_card, player_one_card, player_two_monster, player_one_monster, 2);
     }
+
     // listening = false;
 
     // resolveStatus(player_one_monster, 1);
@@ -104,6 +105,14 @@ public class Battle {
 
     if(player_one_monster.getAlive() == player_two_monster.getAlive()){
       if(player_one_monster.getAlive()){
+        if(player_one_monster.getHealthDelay() > 0) {
+          player_one_monster.increaseHealth(player_one_monster.getHealthDelay());
+          player_one_monster.setHealthDelay(0);
+        }
+        if(player_two_monster.getHealthDelay() > 0) {
+          player_two_monster.increaseHealth(player_two_monster.getHealthDelay());
+          player_two_monster.setHealthDelay(0);
+        }
         return "Continue";
       }else {
         return "Draw";
@@ -135,8 +144,8 @@ public class Battle {
     }
   }
 
-  public int calcDamage(Monster _active_monster, Monster _passive_monster, int _bonus, double _advantage){
-    return (int) Math.ceil((_active_monster.getPower() + _bonus) * _advantage) - _passive_monster.getDefense();
+  public int calcDamage(Monster _active_monster, Monster _passive_monster, int _power_bonus, int _defense_bonus, double _advantage){
+    return (int) Math.ceil((_active_monster.getPower() + _power_bonus) * _advantage) - _passive_monster.getDefense() - _defense_bonus;
   }
 
   public void executeAbilities(Card _active_card, Card _passive_card, Monster _active_monster, Monster _passive_monster, int _activePlayer){
@@ -145,10 +154,10 @@ public class Battle {
       case 1:
         if(!(_passive_card.getType().equals("block"))) {
           if(_passive_card.getType().equals("shield")) {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1.25);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1.25);
             _passive_monster.decreaseHealth(damage);
           } else {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1);
             _passive_monster.decreaseHealth(damage);
           }
         }
@@ -156,17 +165,17 @@ public class Battle {
       case 2:
         if(!(_passive_card.getType().equals("shield"))) {
           if(_passive_card.getType().equals("block")) {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1.25);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1.25);
             _passive_monster.decreaseHealth(damage);
           } else {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1);
             _passive_monster.decreaseHealth(damage);
           }
         }
         break;
       case 3:
         if(_passive_card.getType().equals("dodge") || _passive_card.getType().equals("none") || _passive_card.getType().equals("other")) {
-          int damage = this.calcDamage(_active_monster, _passive_monster, 2, 2);
+          int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 2);
           _passive_monster.decreaseHealth(damage);
         }
         break;
@@ -174,7 +183,7 @@ public class Battle {
       case 5: break;
       case 6: break;
       case 7:
-        _active_monster.increaseHealth(15);
+        _active_monster.increaseHealthDelay(15);
         break;
       case 8:
         _active_monster.increasePower(2);
@@ -185,20 +194,20 @@ public class Battle {
       case 10:
         if(!(_passive_card.getType().equals("block"))) {
           if(_passive_card.getType().equals("shield")) {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1.25);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1.25);
             _passive_monster.decreaseHealth(damage);
           } else {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 1, 1);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1);
             _passive_monster.decreaseHealth(damage);
           }
         }
 
         if(!(_passive_card.getType().equals("shield"))) {
           if(_passive_card.getType().equals("block")) {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1.25);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1.25);
             _passive_monster.decreaseHealth(damage);
           } else {
-            int damage = this.calcDamage(_active_monster, _passive_monster, 0, 1);
+            int damage = this.calcDamage(_active_monster, _passive_monster, _active_card.getPower_Bonus(), _passive_card.getDefense_Bonus(), 1);
             _passive_monster.decreaseHealth(damage);
           }
         }

@@ -66,6 +66,12 @@ public class App {
       int playerOne = Integer.parseInt(request.queryParams("playerOne"));
       int playerTwo = Integer.parseInt(request.queryParams("playerTwo"));
 
+      if(playerOne== playerTwo){
+        model.put("players", Player.all());
+        model.put("template", "templates/ready.vtl");
+        return new ModelAndView(model, layout);
+      }
+
       request.session().attribute("playerOne", playerOne);
       request.session().attribute("playerTwo", playerTwo);
       request.session().removeAttribute("battle");
@@ -74,7 +80,8 @@ public class App {
       request.session().attribute("lastCardPlayerTwo", "cardback.png");
 
       model.put("teamOne", Monster.allByPlayer(playerOne));
-      model.put("teamTwo", Monster.allByPlayer(playerTwo));      model.put("template", "templates/set.vtl");
+      model.put("teamTwo", Monster.allByPlayer(playerTwo));
+      model.put("template", "templates/set.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -162,6 +169,8 @@ public class App {
         request.session().attribute("battle", battle);
         monsterOne.setHealth(monsterOne.getMax_Health());
         monsterTwo.setHealth(monsterTwo.getMax_Health());
+        model.put("playerOne", Player.find(monsterOne.getPlayer_Id()));
+        model.put("playerTwo", Player.find(monsterTwo.getPlayer_Id()));
         model.put("resolve", resolve);
         model.put("template", "templates/resolve.vtl");
       }

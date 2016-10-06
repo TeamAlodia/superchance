@@ -15,6 +15,7 @@ public class Monster {
   private int base_defense;
   private int wins = 0;
   private int losses = 0;
+  private int healthDelay = 0;
 
   // Local vars
   private int health;
@@ -110,6 +111,10 @@ public class Monster {
     return advantage;
   }
 
+  public int getHealthDelay(){
+    return healthDelay;
+  }
+
   public boolean getAlive(){
     return alive;
   }
@@ -142,6 +147,9 @@ public class Monster {
     losses++;
   }
 
+  public void setHealthDelay(int _healthDelay) {
+    healthDelay = _healthDelay;
+  }
   public void setHealth(int _health){
     health = _health;
   }
@@ -342,6 +350,10 @@ public class Monster {
   // decreases health by int
   // set alive to false if health <= 0
   // if status is asleep or confused, sets to normal
+
+  public void increaseHealthDelay(int _healthAmt){
+    healthDelay = _healthAmt;
+  }
   public void decreaseHealth(int _healthAmt){
 
     // if(status.equals(Battle.STATUS_ASLEEP) || status.equals(Battle.STATUS_CONFUSED))

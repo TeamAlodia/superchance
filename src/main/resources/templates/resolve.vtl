@@ -1,1 +1,11 @@
-<h3>$resolve</h3>
+<br>
+<br>
+#if($resolve.equals("Player One"))
+  <h2 style="font-size: 350px;color:brown;">$playerOne.getName() WINS!</h2>
+#end
+#if($resolve.equals("Player Two"))
+  <h2 style="font-size: 350px;color:papayawhip;">$playerTwo.getName() WINS!</h2>
+#end
+#if($resolve.equals("Draw"))
+  <h2 style="font-size: 350px;">Everyone loses!</h2>
+#end

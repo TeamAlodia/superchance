@@ -9,6 +9,9 @@ public class Card {
   private String description = "";
   private String type = "";
 
+  private int power_bonus;
+  private int defense_bonus;
+
   private static final String TYPE_PHYSICAL = "physical";
   private static final String TYPE_SPECIAL = "special";
   private static final String TYPE_THROW = "throw";
@@ -39,6 +42,14 @@ public class Card {
     return type;
   }
 
+  public int getPower_Bonus() {
+    return power_bonus;
+  }
+
+  public int getDefense_Bonus() {
+    return defense_bonus;
+  }
+  
   public void setName(String _name){
     _name = _name;
   }
@@ -58,12 +69,14 @@ public class Card {
 
   public void save(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "INSERT INTO cards (name, description, type) VALUES (:name, :description, :type)";
+      String sql = "INSERT INTO cards (name, description, type, power_bonus, defense_bonus) VALUES (:name, :description, :type, :power_bonus, :defense_bonus)";
 
       id = (int) con.createQuery(sql, true)
         .addParameter("name", name)
         .addParameter("description", description)
         .addParameter("type", type)
+        .addParameter("power_bonus", power_bonus)
+        .addParameter("defense_bonus", defense_bonus)
         .executeUpdate()
         .getKey();
     }
@@ -90,12 +103,14 @@ public class Card {
 
   public void update(){
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE id = :name = :name, description = :description, type = :type WHERE id=:id";
+      String sql = "UPDATE id = :name = :name, description = :description, type = :type, power_bonus = :power_bonus, defense_bonus = :defense_bonus WHERE id=:id";
 
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("description", description)
         .addParameter("type", type)
+        .addParameter("power_bonus", power_bonus)
+        .addParameter("defense_bonus", defense_bonus)
         .addParameter("id", id)
         .executeUpdate();
     }
