@@ -6,6 +6,9 @@ div.battle_layout{
   width: 75%;
   margin-top: 50px;
 }
+.input-text{
+  color: black;
+}
 
 #splash-screen-image{
   margin: 0 auto;
