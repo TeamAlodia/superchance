@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href='/app.css'>
@@ -9,14 +10,36 @@
     <title>Super Chance</title>
   </head>
   <body>
-    <div class="container">
-      #parse($template)
-      <br>
-      <a href="/">Home</a> / <a href="/species">All Species</a> / <a href="/monsters">All Monsters</a> / <a href="/cards">All Cards</a> / <a href="/battles">All Battles</a> / <a href="/players">All Players</a>
-    </div>
-
-    <element onkeypress="loadPage()">
-
-
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Super Chance Monsters</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/species">Species</a></li>
+                <li><a href="/monsters">Monsters</a></li>
+                <li><a href="/cards">Cards</a></li>
+                <li><a href="/battles">Battles</a></li>
+                <li><a href="/players">Players</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </nav>
+      <div class="jumbotron">
+        <div class="container">
+          <h1>Super Chance Monsters<span class="superscript">Alpha</span></h1>
+        </div>
+      </div>
+      <div id="splash-screen-image">
+        <div id="splash-screen-filter">
+          #parse($template)
+        </div>
+      </div>
   </body>
 </html>
