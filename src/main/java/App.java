@@ -73,7 +73,8 @@ public class App {
 
       Monster monsterOne = new Monster();
       Monster monsterTwo = new Monster();
-
+      String resolve = "Continue";
+      // If battle is starting for first time
       if(battle == null) {
         int playerOne = request.session().attribute("playerOne");
         int playerTwo = request.session().attribute("playerTwo");
@@ -87,40 +88,60 @@ public class App {
         // System.out.println(monsterOne.getDeck().size());
 
         request.session().attribute("battle", battle);
-      } else{
+      }
+      // If battle is continuing
+      else{
         monsterOne = battle.getPlayer_One_Monster();
         monsterTwo = battle.getPlayer_Two_Monster();
         // New Code
 
-        System.out.println("Player One Input:" + request.queryParams("p1-input"));
         if(!(request.queryParams("p1-input").equals(""))){
           int p1input = Integer.parseInt(request.queryParams("p1-input"));
+          if(p1input == 0) {
+            monsterOne.decreaseHealth(24);
+          }
           int playedOne = monsterOne.getHand().get(p1input);
           monsterOne.removeFromHand(playedOne);
         }
-        System.out.println("Player Two Input:" + request.queryParams("p2-input"));
+
         if(!(request.queryParams("p2-input").equals(""))){
           int p2input = Integer.parseInt(request.queryParams("p2-input"));
+          if(p2input == 0) {
+            monsterTwo.decreaseHealth(24);
+          }
           int playedTwo = monsterTwo.getHand().get(p2input);
           monsterTwo.removeFromHand(playedTwo);
         }
-
+        resolve = battle.resolveTurn(monsterOne.getId(), monsterTwo.getId());
+        model.put("resolve", resolve);
       }
 
+      // If deck is 0, reshuffle
       if(monsterOne.getDeck().size() == 0) {
         monsterOne.shuffle();
       }
       if(monsterTwo.getDeck().size() == 0) {
         monsterTwo.shuffle();
       }
+
+      // Bring hand up to 5
       monsterOne.draw();
       monsterTwo.draw();
+      if(resolve.equals("Continue")) {
+        model.put("monsterOne", monsterOne);
+        model.put("monsterTwo", monsterTwo);
+        model.put("handOne", monsterOne.getHand());
+        model.put("handTwo", monsterTwo.getHand());
+        model.put("template", "templates/battle.vtl");
+      } else {
+        battle = null;
+        request.session().attribute("battle", battle);
+        monsterOne.setHealth(monsterOne.getMax_Health());
+        monsterTwo.setHealth(monsterTwo.getMax_Health());
+        model.put("resolve", resolve);
+        model.put("template", "templates/resolve.vtl");
+      }
 
-      model.put("monsterOne", monsterOne);
-      model.put("monsterTwo", monsterTwo);
-      model.put("handOne", monsterOne.getHand());
-      model.put("handTwo", monsterTwo.getHand());
-      model.put("template", "templates/battle.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

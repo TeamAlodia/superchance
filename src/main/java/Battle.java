@@ -64,13 +64,13 @@ public class Battle {
     player_one_card_id = _player_one_card_id;
     player_two_card_id = _player_two_card_id;
 
-    listening = false;
+    // listening = false;
 
-    resolveStatus(player_one_monster, 1);
-    resolveStatus(player_two_monster, 2);
-    //
-    executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster, 1);
-    executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster, 2);
+    // resolveStatus(player_one_monster, 1);
+    // resolveStatus(player_two_monster, 2);
+
+    // executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster, 1);
+    // executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster, 2);
     //
     // discard(player_one_card_id);
     // discard(player_two_card_id);

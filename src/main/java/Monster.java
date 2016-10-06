@@ -344,8 +344,8 @@ public class Monster {
   // if status is asleep or confused, sets to normal
   public void decreaseHealth(int _healthAmt){
 
-    if(status.equals(Battle.STATUS_ASLEEP) || status.equals(Battle.STATUS_CONFUSED))
-      status = Battle.STATUS_NORMAL;
+    // if(status.equals(Battle.STATUS_ASLEEP) || status.equals(Battle.STATUS_CONFUSED))
+    //   status = Battle.STATUS_NORMAL;
 
     health -= _healthAmt;
 
