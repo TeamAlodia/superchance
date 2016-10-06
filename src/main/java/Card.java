@@ -19,6 +19,10 @@ public class Card {
 
   private static final String TYPE_OTHER = "other";
 
+  public Card(int _id, String _type) {
+    id = _id;
+    type = _type;
+  }
   public int getId(){
     return id;
   }
