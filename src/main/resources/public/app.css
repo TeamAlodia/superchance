@@ -29,6 +29,25 @@ div.battle_layout{
   background-repeat: no-repeat;
 }
 
+#battle-screen-image{
+  margin: 0 auto;
+  width: 100%;
+  height: 1200px;
+  background-image: url("/images/Cave_Battle_Background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#battle-screen-filter{
+  margin: 0 auto;
+  width: 100%;
+  height: 1200px;
+  background-color: rgba(64,64,64,0.5);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .home {
   height: 30%
 }
@@ -68,23 +87,28 @@ img{
 .superscript{
   font-size: 2rem;
 }
-
-#button-battle{
-  display: inline-block;
+.button{
   height: 100px;
   width: 250px;
   background-color: rgba(165,42,42,.8);
   color: papayawhip;
   font-size: 6rem;
-  margin: 350px auto 0;
   border-radius: 50px;
   box-shadow: 0 0 5px 5px white;
   border: none;
+  display: inline-block;
 }
-#splash-screen-filter {
-  /*display: flex;
+#button-battle{
+  margin: 350px auto 0;
+}
+#button-submitPlayers{
+  margin: 100px auto 0;
+  width: 750px;
+}
+.flexbox-me {
+  display: flex;
   justify-content: center;
-  align-items: flex-start;*/
+  align-items: flex-start;
 }
 
 #howto {
@@ -100,7 +124,10 @@ img{
 #howto li {
   font-size: 1.5rem;
 }
-
+h2{
+  font-size: 12rem;
+  text-align: center;
+}
 #howto h2{
   font-size: 4rem;
 }
@@ -120,13 +147,19 @@ ol > li{
 }
 
 .player-select{
-  border: 1px solid fuchsia;
+  /*border: 1px solid fuchsia;*/
+  box-sizing: border-box;
+  text-align: center;
 }
 .player-select > label {
   font-size: 6rem;
 }
 .player-select > select {
-  width: 400px;
-  height: 200px;
+  width: 100%;
+  height: 100px;
   padding: 5%;
+  font-size: 6rem;
+}
+.player-select > select > option{
+  text-align: center;
 }
