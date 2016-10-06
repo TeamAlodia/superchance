@@ -110,4 +110,8 @@ public class Card {
         .executeUpdate();
     }
   }
+
+  public String getImage(){
+    return id + ".png";
+  }
 }

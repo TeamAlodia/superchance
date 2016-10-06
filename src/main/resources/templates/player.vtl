@@ -1,9 +1,22 @@
-<h3>$player.getName()</h3>
 
-Wins: $player.getWins() <br>
-Losses: $player.getLosses() <br>
-
-Monsters:
-#foreach($monster in $monsters)
-  <a href="/monsters/$monster.getId()">$monster.getName()</a> / 
-#end
+<div class="flexbox-me">
+  <div class="background-box">
+    <h2>Player: $player.getName()</h2>
+    <ul>
+      <li>Wins: $player.getWins()</li>
+      <li>Losses: $player.getLosses()</li>
+    </ul>
+    <hr>
+    #foreach($monster in $monsters)
+    <h2>Monster: $monster.getName()</h2>
+      <ul>
+        <li>Species: $monster.getSpecies_Name()</li>
+        <li>Health: $monster.getMax_Health()</li>
+        <li>Power: $monster.getBase_Power()</li>
+        <li>Defense: $monster.getBase_Defense()</li>
+        <li>Wins: $monster.getWins()</li>
+        <li>Losses: $monster.getLosses()</li>
+      </ul>
+    #end
+  </div>
+</div>

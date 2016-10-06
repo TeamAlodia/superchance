@@ -1,11 +1,29 @@
-#foreach($player in $players)
-  <a href="/players/$player.getId()">$player.getName()</a> /
-#end
 
-<form action="/players" method="post">
-  <label for="name">Player Name</label>
-  <input name="name" type="text">
-  <label for="monster_name">Name your starter monster!</label>
-  <input type="text" name="monster_name" required>
-  <button type="submit" name="button">Submit</button>
-</form>
+
+<div class="flexbox-me">
+  <div class="background-box">
+    <h2>Current Players:</h2>
+    <ul>
+    #foreach($player in $players)
+      <li><a href="/players/$player.getId()">$player.getName()</a></li>
+    #end
+    </ul>
+    <hr>
+    <h2>Add New Player:</h2>
+    <form action="/players" method="post">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" type="text">
+      </div>
+      <div class="form-group">
+        <label for="monster_name">Name Your Monster</label>
+        <input type="text" name="monster_name" required>
+      </div>
+      <hr>
+      <br>
+      <div class="text-center">
+        <button type="submit" id="button-addPlayer" class="button text-center" name="button">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

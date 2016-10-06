@@ -1,0 +1,47 @@
+
+<div class="flexbox-me">
+  <div id="extra-wide" class="background-box">
+    <h2>Cards</h2>
+    <hr>
+    <div id="cardsDisplay" class="container">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-1">
+          #foreach ($card in $cards)
+            #if($card.getId()%5==1)
+              <img src="/images/$card.getImage()">
+            #end
+          #end
+        </div>
+        <div class="col-md-2">
+          #foreach ($card in $cards)
+            #if($card.getId()%5==2)
+              <img src="/images/$card.getImage()">
+            #end
+          #end
+        </div>
+        <div class="col-md-2">
+          #foreach ($card in $cards)
+            #if($card.getId()%5==3)
+              <img src="/images/$card.getImage()">
+            #end
+          #end
+        </div>
+        <div class="col-md-2">
+          #foreach ($card in $cards)
+            #if($card.getId()%5==4)
+              <img src="/images/$card.getImage()">
+            #end
+          #end
+        </div>
+        <div class="col-md-2">
+          #foreach ($card in $cards)
+            #if($card.getId()%5==0)
+              <img src="/images/$card.getImage()">
+            #end
+          #end
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
