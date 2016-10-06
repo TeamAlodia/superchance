@@ -106,6 +106,7 @@ public class App {
         }
 
       }
+
       if(monsterOne.getDeck().size() == 0) {
         monsterOne.shuffle();
       }
