@@ -4,7 +4,7 @@ function loadPage(){
 }
 
 window.onload=function(){
-    window.setTimeout("redirect()", 1000);
+  window.setTimeout("redirect()", 1000);
 };
 
 function redirect() {
@@ -43,7 +43,7 @@ function turnLogic(event){
 
   } else if (event.keyCode === 59){
     $( "#p2-input" ).attr("value", "4");
-  } 
+  }
 };
 
 $(document).ready(function(){
