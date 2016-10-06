@@ -74,9 +74,9 @@ img{
   border: none;
 }
 #splash-screen-filter {
-  display: flex;
+  /*display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start;*/
 }
 
 #howto {
@@ -109,4 +109,16 @@ ol > li{
   display: inline-block;
   width: 45%;
   padding: 2.5%;
+}
+
+.player-select{
+  border: 1px solid fuchsia;
+}
+.player-select > label {
+  font-size: 6rem;
+}
+.player-select > select {
+  width: 400px;
+  height: 200px;
+  padding: 5%;
 }

@@ -1,19 +1,26 @@
-<h3>Battle will commence soon.</h3>
-
-
+<div class="row">
+  <h2>Player Select</h2>  
+</div>
 <form action="/set" method="post">
-  <label for="playerOne">Player One</label>
-  <select name="playerOne">
-    #foreach($player in $players)
-      <option value="$player.getId()">$player.getName()</option>
-    #end
-  </select>
-
-  <label for="playerTwo">Player Two</label>
-  <select name="playerTwo" required>
-    #foreach($player in $players)
-      <option value="$player.getId()">$player.getName()</option>
-    #end
-  </select>
-  <button type="submit" name="button">Submit</button>
+  <div class="row">
+    <div class="col-md-6 player-select">
+      <label for="playerOne">Player One</label>
+      <select name="playerOne">
+        #foreach($player in $players)
+          <option value="$player.getId()">$player.getName()</option>
+        #end
+      </select>
+    </div>
+    <div class="col-md-6 player-select">
+      <label for="playerTwo">Player Two</label>
+      <select name="playerTwo" required>
+        #foreach($player in $players)
+          <option value="$player.getId()">$player.getName()</option>
+        #end
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <button type="submit" name="button">Submit</button>
+  </div>
 </form>
