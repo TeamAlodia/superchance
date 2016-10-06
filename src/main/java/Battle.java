@@ -2,7 +2,7 @@ import java.util.List;
 import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.lang.Math;
 
 public class Battle {
   // Local vars
@@ -42,8 +42,16 @@ public class Battle {
     player_two_monster = _player_two_monster;
     player_one_id = _player_one_id;
     player_two_id = _player_two_id;
+
     player_one_monster.setHealth(player_one_monster.getMax_Health());
     player_two_monster.setHealth(player_two_monster.getMax_Health());
+
+    player_one_monster.setPower(player_one_monster.getBase_Power());
+    player_two_monster.setPower(player_two_monster.getBase_Power());
+
+    player_one_monster.setDefense(player_one_monster.getBase_Defense());
+    player_two_monster.setDefense(player_two_monster.getBase_Defense());
+
     player_one_monster.buildDeck();
     player_two_monster.buildDeck();
 
@@ -64,14 +72,32 @@ public class Battle {
   public String resolveTurn(int _player_one_card_id, int _player_two_card_id){
     player_one_card_id = _player_one_card_id;
     player_two_card_id = _player_two_card_id;
+    Card player_one_card;
+    Card player_two_card;
+    if(player_one_card_id != 0) {
+      player_one_card = Card.find(player_one_card_id);
+    } else {
+      player_one_card =  new Card(0, "none");
+    }
+    if(player_two_card_id != 0) {
+      player_two_card = Card.find(player_two_card_id);
+    } else {
+      player_two_card = new Card(0, "none");
+    }
 
+
+    if(player_one_card_id != 0) {
+      executeAbilities(player_one_card, player_two_card, player_one_monster, player_two_monster, 1);
+    }
+    if(player_two_card_id != 0) {
+      executeAbilities(player_two_card, player_one_card, player_two_monster, player_one_monster, 2);
+    }
     // listening = false;
 
     // resolveStatus(player_one_monster, 1);
     // resolveStatus(player_two_monster, 2);
 
-    // executeAbilities(player_one_card_id, player_two_card_id, player_one_monster, player_two_monster, 1);
-    // executeAbilities(player_two_card_id, player_one_card_id, player_two_monster, player_one_monster, 2);
+
     //
     // discard(player_one_card_id);
     // discard(player_two_card_id);
@@ -109,10 +135,30 @@ public class Battle {
     }
   }
 
-  public void executeAbilities(int _active_card_id, int _passive_card_id, Monster _active_monster, Monster _passive_monster, int _activePlayer){
+  public void executeAbilities(Card _active_card, Card _passive_card, Monster _active_monster, Monster _passive_monster, int _activePlayer){
 
-    switch (_active_card_id){
-      case 1: break;
+    switch (_active_card.getId()){
+      case 1:
+        if(!(_passive_card.getType().equals("block"))) {
+          if(_passive_card.getType().equals("shield")) {
+            System.out.println("Shielded, extra damage taken");
+            System.out.println("Player One Power:" + _active_monster.getPower());
+            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
+
+            int damage = (int) Math.ceil((_active_monster.getPower() + 1) * 1.25) - _passive_monster.getDefense();
+
+            System.out.println("Damage done:" + damage);
+
+            _passive_monster.decreaseHealth(damage);
+          } else {
+            System.out.println("Not blocked");
+            System.out.println("Player One Power:" + _active_monster.getPower());
+            System.out.println("Player Two Defense:" + _passive_monster.getDefense());
+            int damage = _active_monster.getPower() + 1 - _passive_monster.getDefense();
+            _passive_monster.decreaseHealth(damage);
+          }
+        }
+      break;
       case 2: break;
       case 3: break;
       case 4: break;

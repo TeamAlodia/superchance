@@ -11,6 +11,7 @@ public class App {
   public static void main(String[] args) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
+    String battleLayout = "templates/battle-layout.vtl";
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -67,6 +68,7 @@ public class App {
 
       request.session().attribute("playerOne", playerOne);
       request.session().attribute("playerTwo", playerTwo);
+      request.session().removeAttribute("battle");
 
       model.put("teamOne", Monster.allByPlayer(playerOne));
       model.put("teamTwo", Monster.allByPlayer(playerTwo));      model.put("template", "templates/set.vtl");
@@ -80,6 +82,8 @@ public class App {
       Monster monsterOne = new Monster();
       Monster monsterTwo = new Monster();
       String resolve = "Continue";
+      int playedOne;
+      int playedTwo;
       // If battle is starting for first time
       if(battle == null) {
         int playerOne = request.session().attribute("playerOne");
@@ -103,22 +107,22 @@ public class App {
 
         if(!(request.queryParams("p1-input").equals(""))){
           int p1input = Integer.parseInt(request.queryParams("p1-input"));
-          if(p1input == 0) {
-            monsterOne.decreaseHealth(24);
-          }
-          int playedOne = monsterOne.getHand().get(p1input);
+          playedOne = monsterOne.getHand().get(p1input);
           monsterOne.removeFromHand(playedOne);
+        } else {
+          playedOne = 0;
         }
 
         if(!(request.queryParams("p2-input").equals(""))){
           int p2input = Integer.parseInt(request.queryParams("p2-input"));
-          if(p2input == 0) {
-            monsterTwo.decreaseHealth(24);
-          }
-          int playedTwo = monsterTwo.getHand().get(p2input);
+
+          playedTwo = monsterTwo.getHand().get(p2input);
           monsterTwo.removeFromHand(playedTwo);
+        } else {
+          playedTwo = 0;
         }
-        resolve = battle.resolveTurn(monsterOne.getId(), monsterTwo.getId());
+
+        resolve = battle.resolveTurn(playedOne, playedTwo);
         model.put("resolve", resolve);
       }
 
@@ -148,7 +152,7 @@ public class App {
         model.put("template", "templates/resolve.vtl");
       }
 
-      return new ModelAndView(model, layout);
+      return new ModelAndView(model, battleLayout);
     }, new VelocityTemplateEngine());
 
     post("/players", (request, response) -> {
