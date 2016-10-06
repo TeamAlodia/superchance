@@ -42,7 +42,8 @@ public class Battle {
     player_two_monster = _player_two_monster;
     player_one_id = _player_one_id;
     player_two_id = _player_two_id;
-
+    player_one_monster.setHealth(player_one_monster.getMax_Health());
+    player_two_monster.setHealth(player_two_monster.getMax_Health());
     player_one_monster.buildDeck();
     player_two_monster.buildDeck();
 

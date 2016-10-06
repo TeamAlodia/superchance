@@ -1,4 +1,4 @@
-INSERT INTO species (species_name, max_health, base_power, base_defense) VALUES ('Bear',30,8,3);
+INSERT INTO species (species_name, max_health, base_power, base_defense) VALUES ('Bear',80,8,3);
 INSERT INTO cards (name, description, type) VALUES ('Maul', 'Bear have claws. Now, so does your face. (Attack: POW+1)', 'physical');
 INSERT INTO cards (name, description, type) VALUES ('Vengeful Wild Spirits', 'Spirits angry. Bear call spirits. Spirits hit you. (Attack: POW+0)', 'special');
 INSERT INTO cards (name, description, type) VALUES ('Bear Hug', 'Bear hug you and squeeze you and love you forever and ever. (Attack: POW+2)', 'throw');

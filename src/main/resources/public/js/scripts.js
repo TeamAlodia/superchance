@@ -4,7 +4,7 @@ function loadPage(){
 }
 
 window.onload=function(){
-  window.setTimeout("redirect()", 1000);
+  window.setTimeout("redirect()", 5000);
 };
 
 function redirect() {
