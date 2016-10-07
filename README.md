@@ -1,4 +1,4 @@
-# Superchance Bear Time
+# Super Chance Monsters
 
 * by Alaina Traxler, Justin Kincaid, Tony Fuentes, Zachary Matthewstearn
 
