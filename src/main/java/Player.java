@@ -100,19 +100,11 @@ public class Player {
     }
   }
 
-  // incrementWins
-  // increases wins by one
   public void incrementWins(){
     ++wins;
   }
 
-  // incrementLosses
-  // increses losses by one
   public void incrementLosses(){
     ++losses;
   }
-
-
-
-
 }

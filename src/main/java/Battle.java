@@ -31,12 +31,6 @@ public class Battle {
 
   public static final String STATUS_POISONED = "poisoned";
 
-  //--Probably needs to be in App.java--
-  // event handler for keypress
-  // listens for keypress
-  // if listening = true then set player_card_id to card_id of keypress
-  //
-
   public Battle(Monster _player_one_monster, Monster _player_two_monster, int _player_one_id, int _player_two_id){
     player_one_monster = _player_one_monster;
     player_two_monster = _player_two_monster;
@@ -85,23 +79,12 @@ public class Battle {
       player_two_card = new Card(0, "none");
     }
 
-
     if(player_one_card_id != 0) {
       executeAbilities(player_one_card, player_two_card, player_one_monster, player_two_monster, 1);
     }
     if(player_two_card_id != 0) {
       executeAbilities(player_two_card, player_one_card, player_two_monster, player_one_monster, 2);
     }
-
-    // listening = false;
-
-    // resolveStatus(player_one_monster, 1);
-    // resolveStatus(player_two_monster, 2);
-
-
-    //
-    // discard(player_one_card_id);
-    // discard(player_two_card_id);
 
     if(player_one_monster.getAlive() == player_two_monster.getAlive()){
       if(player_one_monster.getAlive()){
@@ -218,15 +201,3 @@ public class Battle {
 
   }
 }
-
-// resolveStatus()
-// takes in player_monster
-// run down switch case based on status of monster
-//   normal proceeds as usual
-//   stunned has card_id set to 0 and sets status to normal
-//   paralyzed sets card_id to 0 and has a 50% chance to set to normal
-//   asleep sets card_id to 0 and has a 25% chance to set to normal
-//   afraid checks card_id to 0 if card type is an attack type and has a 50% chance to set to normal
-//   berserk sets card_id to 0 if card type is a defense type and has a 50% chance to set to normal
-//   confused sets card_id to a random card from the five positions and has a 25% chance to set to normal
-//   poisoned deals 5 damage to monster and has a 50% chance to set to normal

@@ -282,29 +282,19 @@ public class Monster {
 
   public void removeFromHand(int _card_id){
     int index = hand.indexOf(_card_id);
-    // System.out.println(index);
-    // System.out.println(discard.size());
     discard.add(hand.get(index));
     hand.remove(index);
-    // System.out.println(discard.size());
-    // System.out.println(hand.size());
   }
 
   public void draw(){
     int handSize = hand.size();
     int deckSize = deck.size();
-
-    // System.out.println(">> " + deck.size());
-
     int diff = 5 - handSize;
-
-    // System.out.println(diff);
 
     for(int i = 0; i < diff; i++){
       Random myRandomGenerator = new Random();
       int random = myRandomGenerator.nextInt(deckSize);
       Integer catcher = deck.get(random);
-      // System.out.println(">" + deck.get(random));
       hand.add(deck.get(random));
       deck.remove(random);
       deckSize = deck.size();
@@ -326,39 +316,21 @@ public class Monster {
   }
 
   public void shuffle(){
-    // System.out.println(deck.size());
-    // System.out.println(discard.size());
     deck.addAll(discard);
     discard.clear();
-    // System.out.println(deck.size());
-    // System.out.println(discard.size());
   }
 
-  // increaseHealth
-  // receives int
-  // increases health by int
-  // if over maximum, sets to maximum
   public void increaseHealth(int _healthAmt){
     health += _healthAmt;
     if(health > max_health)
       health = max_health;
   }
 
-
-  // decreaseHealth
-  // receives int
-  // decreases health by int
-  // set alive to false if health <= 0
-  // if status is asleep or confused, sets to normal
-
   public void increaseHealthDelay(int _healthAmt){
     healthDelay = _healthAmt;
   }
+
   public void decreaseHealth(int _healthAmt){
-
-    // if(status.equals(Battle.STATUS_ASLEEP) || status.equals(Battle.STATUS_CONFUSED))
-    //   status = Battle.STATUS_NORMAL;
-
     health -= _healthAmt;
 
     if(health <= 0)
@@ -366,16 +338,10 @@ public class Monster {
 
   }
 
-  // increasePower
-  // receives int
-  // increases power by int
   public void increasePower(int _powerAmt){
     power += _powerAmt;
   }
 
-  // decreasePower
-  // receives int
-  // decreases power by int
   public void decreasePower(int _powerAmt){
     power -= _powerAmt;
     if(power < 6)
@@ -383,19 +349,12 @@ public class Monster {
 
   }
 
-  // increaseDefense
-  // receives int
-  // increases defense by int
   public void increaseDefense(int _defenseAmt){
     defense += _defenseAmt;
   }
 
-  // decreaseDefense
-  // receives int
-  // decreases defense by int
   public void decreaseDefense(int _defenseAmt){
     defense -= _defenseAmt;
-
     if(defense < 1)
       defense = 1;
   }

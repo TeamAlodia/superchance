@@ -127,8 +127,6 @@ public class App {
 
         battle = new Battle(monsterOne, monsterTwo, playerOne, playerTwo);
 
-        // System.out.println(monsterOne.getDeck().size());
-
         request.session().attribute("battle", battle);
       }
       // If battle is continuing
